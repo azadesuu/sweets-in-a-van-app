@@ -8,7 +8,7 @@ app.use(express.json())  // replaces body-parser
 
 
 // include Mongoose stuff
-const {Item} = require('./db.js')
+const {menu} = require('./db.js')
 const {User} = require('./db.js')
 
 
@@ -19,7 +19,7 @@ app.get('/', async (req, res) => {
 
 // menu page
 app.get('/menu', async(req, res) => {
-    result = await Item.find( {}, {} )
+    result = await menu.find( {}, {} )
     res.send(result)
 })
 
