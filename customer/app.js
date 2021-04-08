@@ -11,7 +11,7 @@ const customerController = require('./controllers/customerController.js')
 var path = require('path')
 
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, '/static/home.html'))
+    res.sendFile(path.join(__dirname, '/static/home.html')) 
 })
 
 app.use('/menu', customerController.getAllItems)

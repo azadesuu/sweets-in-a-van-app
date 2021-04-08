@@ -5,7 +5,7 @@ const userSchema = new mongoose.Schema({
     email: {type: String},
     password: {type: String},
     user_ID: {type: String, required: true, unique: true}
-})
+},{ collection : 'user' })
 
 const User = mongoose.model('user', userSchema)
 module.exports = User
