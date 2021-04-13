@@ -5,7 +5,9 @@ const userSchema = new mongoose.Schema({
     last_name: {type: String},
     email: {type: String},
     password: {type: String},
-    user_ID: {type: String, required: true, unique: true},
+    user_ID: {type: String, required: true, unique: true}, 
+    longtitude: {type: Number},
+    latitude: {type: Number},
     orders: [order.orderSchema]
 },{ collection : 'users' })
 
