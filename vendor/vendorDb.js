@@ -9,23 +9,19 @@ db.once('open', () => {
     console.log('connected to Mongo')
 })
 
-const locationSchema = new mongoose.Schema({
-    latitude:{type: Number},
-    longtitude:{type: Number}
-})
 
 const orderSchema = new mongoose.Schema({
     id: {type: Number, required: true, unique: true},
     isFulfilled: {type: Boolean, default:false}
-})
+},{collection: 'orders'})
 
 const vendorSchema = new mongoose.Schema({
     name: {type: String, required: true, unique: true},
     isReadyForOrders:{type: Boolean, default: true},
-    location: [locationSchema]
-})
+    latitude:{type: Number},
+    longtitude:{type: Number}
+},{collection: 'vendors'})
 
-const location = mongoose.model('Location', locationSchema)
 const vendor = mongoose.model('Vendor', vendorSchema)
 const order = mongoose.model('Order',orderSchema)
-module.exports = {vendor, order, location}
+module.exports = {vendor, order}

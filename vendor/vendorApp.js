@@ -10,10 +10,8 @@ app.use(express.json())  // replaces body-parser
 
 
 //Mongoose stuff
-const {Vendor} = require('./vendorDb.js')
-const {Order} = require('./vendorDb.js')
-const {Location} = require('./vendorDb.js')
-
+const {vendor} = require('./vendorDb.js')
+const {order} = require('./vendorDb.js')
 //hbs
 // app.engine('hbs', exphbs({
 // 	defaultlayout: 'main',
@@ -26,17 +24,17 @@ const {Location} = require('./vendorDb.js')
 
 //home 
 app.get('/', async (req, res) => {
-    res.sendFile(path.join(__dirname, 'menu.html'))
+    res.sendFile(path.join(__dirname, '/static/menu.html'))
 })
 
 //outstandingorders 
 app.get('/allOutstandingOrders', async(req, res)=> {
-    result = await Order.find( {}, {} )
+    result = await order.find( {}, {} )
     res.send(result)
 })
 //setting van location
 app.get('/setLocation', async(req, res)=>{
-    res.sendFile(path.join(__dirname, 'setVanLocation.html'))
+    res.sendFile(path.join(__dirname, '/static/setVanLocation.html'))
 })
 
 // app.post('/setLocation', async(req, res)=>{
