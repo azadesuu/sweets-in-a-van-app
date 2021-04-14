@@ -5,7 +5,6 @@ mongoose.connect(connectionURL, {
         useCreateIndex: true,
         useUnifiedTopology: true, 
         useFindAndModify: false,
-        useCreateIndex: true, 
         dbName: 'app-server'})
 const db = mongoose.connection
 
