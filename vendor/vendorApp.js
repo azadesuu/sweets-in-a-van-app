@@ -1,17 +1,14 @@
 // setup Express
+const mongoose = require("mongoose")
 const express = require('express')
 const app = express()
 // process.env.PORT ||
 const port =  8080
 const bodyParser = require('body-parser')
 const exphbs = require('express-handlebars')
-//app.use(express.json())  // replaces body-parser
-
-
-//Mongoose stuff
-const {vendor} = require('./vendorDb.js')
-const {order} = require('./vendorDb.js')
-//hbs
+require('./models');
+const vendorRouter = require('./routes/vendorRouter.js')
+const vendorController = require('./controllers/vendorController.js')
 app.engine('hbs', exphbs({
 	defaultlayout: 'main',
 	extname: 'hbs'
@@ -25,28 +22,17 @@ app.get('/', async (req, res) => {
     res.render('index')
 })
 
-//outstandingorders 
-app.get('/allOutstandingOrders', async(req, res)=> {
-    result = await order.find( {}, {} )
-    res.send(result)
-})
-//setting van location
-app.get('/setLocation', async(req, res)=>{
+app.get('/setVanLocation', async(req, res)=>{
     res.render('setVanLocation')
 })
 
-app.post('/insertStatus', async(req, res)=>{
-    const newLocation = new Location({
-        latitude: req.body.latitude,
-        longtitude: req.body.longtitude
-    })
-    newLocation.save((err, result)=>{
-        if(err) res.send(err)
-        return res.send(result)
-    })
+//this one does not really print anything 
+app.post('/setVanLocation',async(req,res)=>{
+    res.send(JSON.stringify(req.body))
 })
 
-// start the server listening
+app.use('/vendor-management',vendorController.getAllOrders)
+
 app.listen(port, () => {
     console.log(`server is listening on port`, port)
 })
