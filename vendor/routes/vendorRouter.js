@@ -8,10 +8,8 @@ vendorRouter.get('/',async(req, res)=>{
     res.render('index')
 })
 
-//vendorRouter.get('/allOutstandingOrders', vendorController.getAllOrders(req,res))
-
-vendorRouter.get('/setLocation', async(req, res)=>{
-    res.render('serVanLocation')
-})
+vendorRouter.get('/setVanStatus', (req,res)=>vendorController.setVanStatus(req,res))
+//get one order
+vendorRouter.get('/allOutstandingOrders',(req,res)=>vendorController.getAllOrders(req,res))
 
 module.exports = vendorRouter

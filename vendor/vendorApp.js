@@ -17,21 +17,12 @@ app.engine('hbs', exphbs({
 app.set('view engine', 'hbs')
 app.use(bodyParser.urlencoded({extended:true}))
 
-//home 
-app.get('/', async (req, res) => {
-    res.render('index')
-})
 
 app.get('/setVanLocation', async(req, res)=>{
-    res.render('setVanLocation')
+    res.render('setVanStatus')
 })
 
-//this one does not really print anything 
-app.post('/setVanLocation',async(req,res)=>{
-    res.send(JSON.stringify(req.body))
-})
-
-app.use('/vendor-management',vendorController.getAllOrders)
+app.use('/',vendorRouter)
 
 app.listen(port, () => {
     console.log(`server is listening on port`, port)

@@ -1,0 +1,17 @@
+<h1> Set Van status </h1>
+<ul>
+    <body>
+        <form action = "setVanLocation" method="POST">
+
+        <p>location</p>
+        <form method="post" action = "/setVanStatus">
+        <input id="latitude" placeholder="Enter latitude" name ="latitude">
+        <input id="longtitude" placeholder="Enter longtitude" name ="longtitude">
+        <br>
+        <input type="checkbox" id = "isReadyForOrder" value="Ready for order" placeholder="Ready for order" name ="isReadyForOrder">
+        <label for= "isReadyForOrder">Ready for order</label>
+        <br>
+        <button type = "submit" onclick="getLocation()" id ="btn">Confirm</button>
+    </body>
+</ul>
+
