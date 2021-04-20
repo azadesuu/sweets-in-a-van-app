@@ -1,10 +1,8 @@
 <h1>All outstanding Orders</h1>
 <ul>
-    {{#each orders}}
-    <li>
-        <a href="/orders/{{this._id}}">{{this.name}}</a>
-        <input type="checkbox" name ="fulfilled">
-    </li>
-    {{/each}}
-    <input type = "submit" value = "confirm">
+        {{#each orders}}
+        <li>
+            <a href="/orders/{{this.id}}">{{this.id}}</a>
+        </li>
+        {{/each}}
 </ul>

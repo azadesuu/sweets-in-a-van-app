@@ -1,28 +1,27 @@
 // setup Express
-const mongoose = require("mongoose")
 const express = require('express')
 const app = express()
+app.use(express.static('public'))
+app.use(express.urlencoded({ extended: true }))
 // process.env.PORT ||
 const port =  8080
-const bodyParser = require('body-parser')
+//handlebar 
 const exphbs = require('express-handlebars')
-require('./models');
-const vendorRouter = require('./routes/vendorRouter.js')
-const vendorController = require('./controllers/vendorController.js')
 app.engine('hbs', exphbs({
 	defaultlayout: 'main',
 	extname: 'hbs'
 }))
-
 app.set('view engine', 'hbs')
-app.use(bodyParser.urlencoded({extended:true}))
-
-
-app.get('/setVanLocation', async(req, res)=>{
-    res.render('setVanStatus')
-})
+//connect database
+require('./models');
+//connect router
+const vendorRouter = require('./routes/vendorRouter.js')
 
 app.use('/',vendorRouter)
+
+app.all('*', (req, res) => {  // 'default' route to catch user errors
+	res.status(404).render('error', {errorCode: '404', message: 'That route is invalid.'})
+})
 
 app.listen(port, () => {
     console.log(`server is listening on port`, port)

@@ -1,7 +1,18 @@
-<h1> Home page </h1>
+<h1> Search Van </h1>
 <ul>
-    <!-- <li> <a href="/">all vendors</a> </li> -->
-    <li> <a href="/setVanLocation">set location</a> </li>
-    <li> <a href="/allOutstandingOrders">show all outstanding orders</a> </li>
-</ul>
+        <form method="post" action = "/search">
+        <input type = "search" name ="van_ID" placeholder="Enter Van ID">
+        <input type = "submit" value = "Search">
+        </form>
 
+    <ul>
+
+        {{#each vendors}}
+        <li>
+            <a href="/vendors/{{this.van_ID}}">{{this.van_ID}}</a>
+        </li>
+
+        {{/each}}
+        
+    </ul>
+</ul>
