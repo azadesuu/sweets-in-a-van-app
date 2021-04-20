@@ -2,6 +2,7 @@ const mongoose = require("mongoose")
 
 // import models
 const Menu = mongoose.model("menu")
+const Order = mongoose.model("orders")
 
 
 
@@ -39,19 +40,17 @@ const getItemDetail = async (req, res) => {
     }
 }
 
-// handle requests to add an author
-const addItem = (req, res) => {
-    // assemble a new author
-    newItem = req.body
-    // add to database
-    Menu.push(newItem)
-    // return entire authors list to browser as a check that it worked
-    res.send(authors)
+// get one food - user specifies its name
+const orderItems = async (req, res) => {
+    try {
+        // do something
+    } catch (err) {
+        // handling the err
+    }
 }
 
 module.exports = {
     getAllItems,
     displayMenu,
-    getItemDetail, 
-    addItem
+    getItemDetail
 }
