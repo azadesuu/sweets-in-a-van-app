@@ -2,7 +2,6 @@ const mongoose = require("mongoose")
 
 // import models
 const Menu = mongoose.model("menu")
-const User = mongoose.model("users")
 
 
 
@@ -28,6 +27,18 @@ const displayMenu = async (req, res) => {
     }
 }
 
+
+// get one food - user specifies its name
+const getItemDetail = async (req, res) => {
+    try {
+        const menu_items = await Menu.find({item_name:req.params.name}, {})
+        return res.send(menu_items)
+    } catch (err) {
+        res.status(400)
+        return res.send("Database query failed")
+    }
+}
+
 // handle requests to add an author
 const addItem = (req, res) => {
     // assemble a new author
@@ -40,6 +51,7 @@ const addItem = (req, res) => {
 
 module.exports = {
     getAllItems,
-    displayMenu, 
+    displayMenu,
+    getItemDetail, 
     addItem
 }
