@@ -7,7 +7,7 @@ const customerRouter = express.Router()
 const customerController = require('../controllers/customerController.js')
 
 // handle the GET request to get all authors
-customerRouter.get('/menu', (req,res) => customerController.getAllItems(req,res))
+customerRouter.get('/', customerController.displayMenu)
 
 // export the router
 module.exports = customerRouter

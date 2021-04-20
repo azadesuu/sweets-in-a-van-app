@@ -5,6 +5,7 @@ const Menu = mongoose.model("menu")
 const User = mongoose.model("users")
 
 
+
 // get all items
 const getAllItems = async (req, res) => {
     try {
@@ -27,7 +28,18 @@ const displayMenu = async (req, res) => {
     }
 }
 
+// handle requests to add an author
+const addItem = (req, res) => {
+    // assemble a new author
+    newItem = req.body
+    // add to database
+    Menu.push(newItem)
+    // return entire authors list to browser as a check that it worked
+    res.send(authors)
+}
+
 module.exports = {
     getAllItems,
-    displayMenu
+    displayMenu, 
+    addItem
 }

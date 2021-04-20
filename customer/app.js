@@ -14,7 +14,7 @@ app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, '/static/home.html')) 
 })
 
-app.use('/menu', customerController.displayMenu)
+app.use('/menu', customerRouter)
 
 app.listen(port, () => {
 	console.log('Snacks in a van server listening for requests ...')
