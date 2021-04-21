@@ -6,11 +6,20 @@ const Vendor = mongoose.model("vendors")
 
 
 
-const setVanStatus = async (req,res) => {
-    console.log(req.params.id)
-    const vendor = await Vendor.findOne( {_id: req.params.id} ).lean()
-    res.render('setVanStatus',{"Vendor":vendor})
+const showSetVanStatus = async (req,res) => {
+    try {
+        const vendor = await Vendor.findOne( {_id: req.params.id} ).lean()
+        res.render('setVanStatus',{"Vendor":vendor})
+    }
+    catch(err){
+        console.log(err)
+    }
+}
+
+const submitAndBack = async(req,res)=>{
+    const vendor = await Vendor.findOne({_id:req.params.id}).lean()
     var query = {}
+    //update this query to the current vendor
     if(req.body.latitude && req.body.longtitude !==''){
         query["latitude"] = {$regex: new RegExp(req.body.latitude, 'i') }
         query["longtitude"] = {$regex: new RegExp(req.body.longtitude, 'i') }
@@ -18,18 +27,15 @@ const setVanStatus = async (req,res) => {
     if(req.body.isReadyForOrder){
         query["isReadyForOrder"] = true
     }
-    try {
-        //update this query to the current vendor
-        vendor.updateMany(query,{$set: {latitude:query[latitude], longtitude:query[longtitude],isReadyForOrder:query[isReadyForOrder]}})
-    }
-    catch(err){
+    try{
+        Vendor.updateMany(vendor,{$set: {latitude:query["latitude"], longtitude:query["longtitude"],isReadyForOrder:query["isReadyForOrder"]}})
+        if(req.body !== null){
+            res.render('success',{"Vendor":vendor})
+        }   
+    }catch(err){
         console.log(err)
     }
-}
-
-const back = async(req,res)=>{
-    const vender = await Vendor.findOne({_id:req.params.id}).lean()
-    res.render('success',{"Vendor":vender})
+    
 }
 
 const getAllOrders = async(req, res)=>{
@@ -79,8 +85,8 @@ const markOrderAsReady = async(req,res)=>{
 module.exports = {
     getAllOrders,
     searchVendorID,
-    setVanStatus,
+    showSetVanStatus,
     getOneVendor,
     markOrderAsReady,
-    back
+    submitAndBack
 }
