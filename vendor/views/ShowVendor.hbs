@@ -1,8 +1,6 @@
-<h1> Home page </h1>
 <ul>
-    <!-- <li> <a href="/">all vendors</a> </li> -->
-    <h>{{Vendor.van_ID}}</h>>
-    <li> <a href="/setVanLocation">set location</a> </li>
-    <li> <a href="/allOutstandingOrders">show all outstanding orders</a> </li>
+    <h>{{Vendor.van_ID}}</h>
+    <li> <a href="/vendors/{{Vendor._id}}/setVanStatus">set van status</a> </li>
+    <li> <a href="/vendors/{{Vendor._id}}/allOutstandingOrders">show all outstanding orders</a> </li>
 </ul>
 

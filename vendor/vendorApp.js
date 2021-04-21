@@ -2,6 +2,7 @@
 const express = require('express')
 const app = express()
 app.use(express.static('public'))
+app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 // process.env.PORT ||
 const port =  8080
@@ -19,9 +20,9 @@ const vendorRouter = require('./routes/vendorRouter.js')
 
 app.use('/',vendorRouter)
 
-app.all('*', (req, res) => {  // 'default' route to catch user errors
-	res.status(404).render('error', {errorCode: '404', message: 'That route is invalid.'})
-})
+// app.all('*', (req, res) => {  // 'default' route to catch user errors
+// 	res.status(404).render('error', {errorCode: '404', message: 'That route is invalid.'})
+// })
 
 app.listen(port, () => {
     console.log(`server is listening on port`, port)
