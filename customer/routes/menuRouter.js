@@ -12,6 +12,9 @@ menuRouter.get('/', menuController.displayMenu)
 // handle the GET request to get one author
 menuRouter.get('/:name', menuController.getItemDetail)
 
+// handle the GET request to get one author
+menuRouter.post('/order', menuController.orderItems)
+
 // export the router
 module.exports = menuRouter
 

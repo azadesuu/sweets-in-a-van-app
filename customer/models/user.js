@@ -7,8 +7,7 @@ const userSchema = new mongoose.Schema({
     password: {type: String},
     user_ID: {type: String, required: true, unique: true}, 
     longtitude: {type: Number},
-    latitude: {type: Number},
-    orders: [order.orderSchema]
+    latitude: {type: Number}
 },{ collection : 'users' })
 
 const User = mongoose.model('users', userSchema)
