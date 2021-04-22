@@ -7,12 +7,12 @@ const orderItemSchema = new mongoose.Schema({
 })
 
 const orderSchema = new mongoose.Schema({
-    userId : {type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User'},
-    vanId : {type: mongoose.Schema.Types.ObjectId, required: true, ref :'Vendor'},
+    user_ID : {type: String, required: true, ref: 'User'},
+    van_ID : {type: String, required: true, ref :'Vendor'},
     orderItems : [orderItemSchema],
-    status : {type: String},
-    paymentTotal : {type: Number, detault: 0},
-    late_fulfillment : {type: Boolean, default: true},
+    status : {type: String, default: 'Unfulfilled'},
+    paymentTotal : {type: Number, default: 0},
+    late_fulfillment : {type: Boolean, default: false},
     when: {type: Date, default: Date.now}
 },{ collection : 'orders' })
 

@@ -49,14 +49,14 @@ const orderItems = async (req, res) => {
         var i;
         var calculatedTotalPayment = 0
         for (i=0; i<req.body.orderItems.length;i++) {
-            var singlePrice = (await Menu.findOne({item_name:req.body.orderItems[i].item_name},{})).item_price
+            var singlePrice = await (await Menu.findOne({item_name:req.body.orderItems[i].item_name.toLowerCase()},{})).item_price
             // console.log(singlePrice)
             calculatedTotalPayment = calculatedTotalPayment + req.body.orderItems[i].quantity * singlePrice
             // console.log(calculatedTotalPayment)
         }
         const newOrder = new Order({
-            userId : req.body.userId,
-            vanId : req.body.vanId,
+            user_ID : req.body.user_ID,
+            van_ID : req.body.van_ID,
             orderItems : req.body.orderItems,
             paymentTotal : calculatedTotalPayment
         })

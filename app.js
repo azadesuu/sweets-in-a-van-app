@@ -1,18 +1,11 @@
 // setup Express
 const express = require('express')
 const app = express()
-app.use(express.static('public'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 // process.env.PORT ||
-const port =  8080
-//handlebar 
-const exphbs = require('express-handlebars')
-app.engine('hbs', exphbs({
-	defaultlayout: 'main',
-	extname: 'hbs'
-}))
-app.set('view engine', 'hbs')
+const port =  8082
+
 //connect database
 require('./models');
 //connect router

@@ -8,10 +8,10 @@ const Vendor = mongoose.model("vendors")
 
 const getOneVendor = async(req,res)=>{
     try{
-        console.log(req.params.van_name);
-        const queriedvendor = await Vendor.findOne( {van_name: req.params.van_name} ).lean()
-        if (queriedvendor== null) res.send("Queried vendor not found");
-        else res.send(queriedvendor);
+        console.log(req.params.van_ID);
+        vendor = await Vendor.findOne( {van_ID: req.params.van_ID} )
+        if (vendor== null) res.send("Queried vendor not found");
+        else res.send(vendor);
 
     }catch(err){
         console.log(err)
@@ -29,14 +29,10 @@ const getOneOrder = async(req,res)=>{
 
 const updateOrderStatus = async(req,res)=>{
     try{
-        var update = {isReadyForOrder: req.body.isReadyForOrder}
-        await Order.findOneAndUpdate({_id: req.params.order_id}, update, function (err){    
-        if (err) res.json('failed to update');
-        else {res.json('updated record');}
+        await Order.findOneAndUpdate({_id: req.params.order_id}, {status: req.body.status}, {returnNewDocument: true}, function (err){    
+        if (err) res.send('failed to update');
+        else {res.send('updated record');}
         })
-    
-
-        res.send(order)
     }catch(err){
         console.log(err)
     }
@@ -45,11 +41,11 @@ const updateOrderStatus = async(req,res)=>{
 
 const showSetVanStatus = async (req,res) => {
     try {
-        var conditions = {_id: req.body.id, van_name: req.params.van_name}
-        var update = {latitude: req.body.latitude, longtitude: req.body.longtitude, status: req.body.status}
+        var conditions = {van_ID: req.params.van_ID}
+        var update = {latitude: req.body.latitude, longtitude: req.body.longtitude, isReadyForOrder: req.body.isReadyForOrder}
         user.findOneAndUpdate(conditions, update, function (err){
-        if (err) res.json('failed to update');
-        else {res.json('updated record');}
+        if (err) res.send('failed to update');
+        else {res.send('updated record');}
         })
     }
     catch(err){
@@ -71,8 +67,15 @@ function filterArray(array, filters) {
 
 const getAllOutstandingOrders = async(req, res)=>{
     try{
-        const filters = {status : ['fulfilled', 'unfulfilled'].includes(status.toLowerCase())}
-        res.send(filterArray(await Orders.find(), filters));
+       res.send(await Order.find({van_ID: req.params.van_ID, status :{$in: ['Fulfilled', 'Unfulfilled']}}))
+    //    res.send(await Order.find({van_ID: req.params.van_ID}));
+    }catch(err){
+        console.log(err)
+    }
+}
+const getAllOrders = async(req, res)=>{
+    try{
+       res.send(await Order.find({van_ID: req.params.van_ID}));
     }catch(err){
         console.log(err)
     }
@@ -84,4 +87,5 @@ module.exports = {
     showSetVanStatus,
     updateOrderStatus,
     getAllOutstandingOrders,
+    getAllOrders
 }
