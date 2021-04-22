@@ -3,10 +3,12 @@ const mongoose = require("mongoose")
 // import models
 const Menu = mongoose.model("menu")
 const Order = mongoose.model("orders")
+const User = mongoose.model("users");
 
 //returns detail of a user
 const getOneUser = async (req, res) => {
     try {
+        res.send("Trying");
         return res.send(await User.findOne({user_ID: req.params.user_ID}))
     } catch (err) {
         res.status(400)
