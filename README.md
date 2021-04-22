@@ -27,7 +27,7 @@ Remember that _"this document"_ can use `different formats` to **highlight** imp
 
 | Name | Task | State |
 | :---         |     :---:      |          ---: |
-| Ying Shan Saw, Yue Teng, ZiXuan Liu | Back End     |  Done |
+| Yue Teng, ZiXuan Liu, Ying Shan Saw | Back End     |  Done |
 | Ying Shan Saw, Bo Cheng, WenYao Li   | Front End  |  In Progress |
 | Ying Shan Saw | README Format      |  Done |
 
@@ -95,7 +95,7 @@ connectionURL = 'mongodb+srv://anything30005:F5Nruod8fTvdNTCz@info30005-1.xpxvw.
 |**Vendor**| | :van_ID=VAN11 |
 |Setting Van status(and location + location description)| vendor/:van_ID/status | Post JSON request in Exported Requests file | 
 |Show a list of outstanding orders| Assumes for a particular van.   vendor/:van_ID/orders | N/A. Should not show any records with status: “Completed”/ “Cancelled” (can compare with all-orders)|
-|Mark an order as fulfilled| vendor/:van_ID/orders/:order_ID/change-status | Post JSON request in Exported Requests file| 
+|Mark an order as fulfilled| vendor/:van_ID/orders/:order_ID/change-status | order_ID=6081b276ea8823579899a240 Post JSON request in Exported Requests file| 
 
 
 
