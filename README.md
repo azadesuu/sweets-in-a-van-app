@@ -65,16 +65,17 @@ app.use('/customer', menuRouter)
 ```
 
 ## Image Preview
-<p> Here's a preview of our home page.</p>
+<p> Here's a preview of our home page. Only has get requests</p>
 <p align="center">
   <img src="static/github-images/deliv2-landingpage.png"  width="300" >
 </p>
 
 ## Postman Instructions
-`heroku `
+**Heroku**
+
 URL: https://t16-anything-info30005.herokuapp.com/
 
-`MongoDB `
+**MongoDB**
 
 ID=anything30005
 
@@ -89,7 +90,7 @@ connectionURL = 'mongodb+srv://anything30005:F5Nruod8fTvdNTCz@info30005-1.xpxvw.
 | :---         |     :---      |          :--- |
 |**Customer**| | |
 |Display all menu items| /customer/menu | N/A || 
-|Get a snack’s details| /customer/menu/<snack-name> | <snack-name> must be lowercase and separated by whitespace (%20)|
+|Get a snack’s details| /customer/menu/**snack-name** | **snack-name** must be lowercase and separated by whitespace (%20)|
 |Making an order| /customer/:user_ID/menu/order | :userID=USER11, Post JSON request in Exported Requests file| 
 |**Vendor**| | :van_ID=VAN11 |
 |Setting Van status(and location + location description)| vendor/:van_ID/status | Post JSON request in Exported Requests file | 
