@@ -7,7 +7,7 @@ const Order = mongoose.model("orders")
 //returns detail of a user
 const getOneUser = async (req, res) => {
     try {
-        return res.send(await User.find({user_ID: req.params.user_ID}))
+        return res.send(await User.findOne({user_ID: req.params.user_ID}))
     } catch (err) {
         res.status(400)
         return res.send("Database query failed")
@@ -25,7 +25,7 @@ const getAllItems = async (req, res) => {
     }
 }
 
-const getAllOrders = async (req, res) => {
+const getAllUserOrders = async (req, res) => {
     try {
         return res.send(await Order.find({user_ID: req.params.user_ID}))
     } catch (err) {
@@ -88,7 +88,7 @@ const orderItems = async (req, res) => {
 
 module.exports = {
     getAllItems,
-    getAllOrders,
+    getAllUserOrders,
     displayMenu,
     getItemDetail,
     getOneUser,
