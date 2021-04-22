@@ -30,7 +30,7 @@ const submitAndBack = async(req,res)=>{
     try{
         Vendor.updateMany(vendor,{$set: {latitude:query["latitude"], longtitude:query["longtitude"],isReadyForOrder:query["isReadyForOrder"]}})
         if(req.body !== null){
-            res.render('success',{"Vendor":vendor})
+            res.render('successSetVendor',{"Vendor":vendor})
         }   
     }catch(err){
         console.log(err)
@@ -75,10 +75,15 @@ const markOrderAsReady = async(req,res)=>{
     try{
         const order = await Order.findOne({OrderId:req.params.id}).lean()
         Order.updateOne(order.isFulfilled,req.body.isFulfilled)
-        res.rendor('index')
+        res.rendor('successMarkOrder')
     }catch(err){
         console.log(err)
     }
+}
+
+const showOrder = async(req,res)=>{
+    const order = await Order.findOne({OrderId:req.params.id}).lean()
+    res.rendor('showOrder',{"orders": order})
 }
 
 
@@ -88,5 +93,6 @@ module.exports = {
     showSetVanStatus,
     getOneVendor,
     markOrderAsReady,
-    submitAndBack
+    submitAndBack,
+    showOrder
 }
