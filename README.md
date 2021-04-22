@@ -90,12 +90,12 @@ connectionURL = 'mongodb+srv://anything30005:F5Nruod8fTvdNTCz@info30005-1.xpxvw.
 | :---         |     :---      |          :--- |
 |**Customer**| | |
 |Display all menu items| /customer/menu | N/A || 
-|Get a snack’s details| /customer/menu/**snack-name** | **snack-name** must be lowercase and separated by whitespace (%20)|
-|Making an order| /customer/:user_ID/menu/order | :userID=USER11, Post JSON request in Exported Requests file| 
+|Get a snack’s details| /customer/menu/**:snack-name** | **:snack-name** must be lowercase and separated by whitespace (%20), and must exist in database e.g. long%20black|
+|Making an order| /customer/:user_ID/menu/order | :userID=USER11, Post JSON request in Exported Requests file (JSON has fields: orderitems array and vanID)| 
 |**Vendor**| | :van_ID=VAN11 |
-|Setting Van status(and location + location description)| vendor/:van_ID/status | Post JSON request in Exported Requests file | 
+|Setting Van status(and location + location description)| vendor/:van_ID/status | Post JSON request in Exported Requests file (JSON has fields: longtitude, latitude, location description, and status(isReadyForOrder)| 
 |Show a list of outstanding orders| Assumes for a particular van.   vendor/:van_ID/orders | N/A. Should not show any records with status: “Completed”/ “Cancelled” (can compare with all-orders)|
-|Mark an order as fulfilled| vendor/:van_ID/orders/:order_ID/change-status | order_ID=6081b276ea8823579899a240 Post JSON request in Exported Requests file| 
+|Mark an order as fulfilled| vendor/:van_ID/orders/:order_ID/change-status | order_ID=6081b276ea8823579899a240 Post JSON request in Exported Requests file {JSON has fields: status} | 
 
 
 
