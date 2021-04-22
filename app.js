@@ -3,8 +3,8 @@ const express = require('express')
 const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-// process.env.PORT ||
-const port =  8082
+
+const port =  process.env.PORT ||8080
 
 //connect database
 require('./models');
