@@ -26,13 +26,14 @@ Remember that _"this document"_ can use `different formats` to **highlight** imp
 
 | Name | Task | State |
 | :---         |     :---:      |          ---: |
-| Student Name 1  | Back End     |  Done |
-| Student Name 2    | Front End      |  Testing |
-| Student Name 3    | README Format      |  Amazing! |
+| Yue Teng, Zi Xuan  | Back End     |  Done |
+| Ying Shan, Bo Cheng, Wen Yao   | Front End      |  Testing |
+| Ying Shan    | README Format      |  Amazing! |
 
 ## General info
-This is project ...
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+This project
+Deliverable 2"
+After drawing the UI Mockup, we are testing and planning some routes for the web server, testing small features stated in the requirements.
 
 ## Technologies
 Project is created with:
