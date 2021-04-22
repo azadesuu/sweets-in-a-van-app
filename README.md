@@ -20,8 +20,8 @@ Remember that _"this document"_ can use `different formats` to **highlight** imp
 * [General Info](#general-info)
 * [Technologies](#technologies)
 * [Code Implementation](#code-implementation)
-* [Adding Images](#adding-images)
-* [Postman Requests](#postman-requests)
+* [Adding Images](#image-preview)
+* [Postman Requests](#postman-instructions)
 
 ## Team Members
 
@@ -43,7 +43,7 @@ Project is created with:
 * Ipsum version: 2.33
 * Ament library version: 999
 
-## Snippet of Code
+## Code Implementation
 
 ```JS
 //connect database
@@ -72,22 +72,27 @@ app.use('/customer', menuRouter)
 
 ## Postman Instructions
 `heroku `
-URL: https://t16-anything-info30005.herokuapp.com
+URL: https://t16-anything-info30005.herokuapp.com/
+
 `MongoDB `
+
 ID=anything30005
+
 Password=F5Nruod8fTvdNTCz
-_fullURL_
+
+**Full URL**
+
 connectionURL = 'mongodb+srv://anything30005:F5Nruod8fTvdNTCz@info30005-1.xpxvw.mongodb.net/app-server'
 
 `Postman Summary`
 | Request | URL | Input |
 | :---         |     :---      |          :--- |
 |**Customer**| | |
-|Display all menu items| customer/menu | N/A || 
-|Get a snack’s details| customer/menu/<snack-name> | <snack-name> must be lowercase and separated by whitespace (%20)|
-|Making an order| customer/:user_ID/menu/order | :userID=USER11, Post JSON request in Exported Requests file| 
+|Display all menu items| /customer/menu | N/A || 
+|Get a snack’s details| /customer/menu/<snack-name> | <snack-name> must be lowercase and separated by whitespace (%20)|
+|Making an order| /customer/:user_ID/menu/order | :userID=USER11, Post JSON request in Exported Requests file| 
 |**Vendor**| | :van_ID=VAN11 |
-|Setting Van status(and location)| customer/menu | N/A || 
+|Setting Van status(and location + location description)| vendor/:van_ID/status | Post JSON request in Exported Requests file | 
 |Show a list of outstanding orders| Assumes for a particular van.   vendor/:van_ID/orders | N/A. Should not show any records with status: “Completed”/ “Cancelled” (can compare with all-orders)|
 |Mark an order as fulfilled| vendor/:van_ID/orders/:order_ID/change-status | Post JSON request in Exported Requests file| 
 

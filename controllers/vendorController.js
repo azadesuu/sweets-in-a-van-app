@@ -42,7 +42,8 @@ const updateOrderStatus = async(req,res)=>{
 const showSetVanStatus = async (req,res) => {
     try {
         await Vendor.findOneAndUpdate({van_ID: req.params.van_ID}, 
-            {latitude: req.body.latitude, longtitude: req.body.longtitude, isReadyForOrder: req.body.isReadyForOrder}, function (err){
+            {latitude: req.body.latitude, longtitude: req.body.longtitude, 
+                isReadyForOrder: req.body.isReadyForOrder, locDescription: req.body.locDescription}, function (err){
         if (err) res.send('failed to update');
         else {res.send('updated record');}
         })
