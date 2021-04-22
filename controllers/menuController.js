@@ -55,7 +55,7 @@ const orderItems = async (req, res) => {
             // console.log(calculatedTotalPayment)
         }
         const newOrder = new Order({
-            user_ID : req.body.user_ID,
+            user_ID : req.params.user_ID,
             van_ID : req.body.van_ID,
             orderItems : req.body.orderItems,
             paymentTotal : calculatedTotalPayment

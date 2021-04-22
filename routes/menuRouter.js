@@ -13,7 +13,7 @@ menuRouter.get('/menu', menuController.displayMenu)
 menuRouter.get('/menu/:name', menuController.getItemDetail)
 
 // handle the POST request for a new order
-menuRouter.post('/menu/order', menuController.orderItems)
+menuRouter.post('/menu/:user_ID/order', menuController.orderItems)
 
 // export the router
 module.exports = menuRouter
