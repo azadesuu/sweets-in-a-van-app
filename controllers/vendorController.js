@@ -52,18 +52,6 @@ const showSetVanStatus = async (req,res) => {
     }
 }
 
-function filterArray(array, filters) {
-    const filterKeys = Object.keys(filters);
-    return array.filter(item => {
-      // validates all filter criteria
-      return filterKeys.every(key => {
-        // ignores non-function predicates
-        if (typeof filters[key] !== 'function') return true;
-        return filters[key](item[key]);
-      });
-    });
-}
-
 const getAllOutstandingOrders = async(req, res)=>{
     try{
        res.send(await Order.find({van_ID: req.params.van_ID, status :{$in: ['Fulfilled', 'Unfulfilled']}}))

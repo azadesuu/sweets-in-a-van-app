@@ -10,10 +10,14 @@ const menuController = require('../controllers/menuController.js')
 menuRouter.get('/menu', menuController.displayMenu)
 
 // handle the GET request to get one item
-menuRouter.get('/menu/:name', menuController.getItemDetail)
+menuRouter.get('/menu/:snack_name', menuController.getItemDetail)
 
+menuRouter.get('/:user_ID', menuController.getOneUser)
 // handle the POST request for a new order
-menuRouter.post('/menu/:user_ID/order', menuController.orderItems)
+menuRouter.post('/:user_ID/order', menuController.orderItems)
+
+// handle the GET request for all orders
+menuRouter.post('/:user_ID/all-orders', menuController.getAllOrders)
 
 // export the router
 module.exports = menuRouter

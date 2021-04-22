@@ -4,13 +4,30 @@ const mongoose = require("mongoose")
 const Menu = mongoose.model("menu")
 const Order = mongoose.model("orders")
 
-
+//returns detail of a user
+const getOneUser = async (req, res) => {
+    try {
+        return res.send(await User.find({user_ID: req.params.user_ID}))
+    } catch (err) {
+        res.status(400)
+        return res.send("Database query failed")
+    }
+}
 
 // get all item records
 const getAllItems = async (req, res) => {
     try {
         const menu_items = await Menu.find()
         return res.send(menu_items)
+    } catch (err) {
+        res.status(400)
+        return res.send("Database query failed")
+    }
+}
+
+const getAllOrders = async (req, res) => {
+    try {
+        return res.send(await Order.find({user_ID: req.params.user_ID}))
     } catch (err) {
         res.status(400)
         return res.send("Database query failed")
@@ -32,7 +49,7 @@ const displayMenu = async (req, res) => {
 // get one food - user specifies its name
 const getItemDetail = async (req, res) => {
     // console.log("Entered getItemDetail")
-    item_name = (req.params.name).toLowerCase()
+    item_name = (req.params.snack_name).toLowerCase()
     try {
         const menu_items = await Menu.find({item_name: item_name}, {})
         return res.send(menu_items)
@@ -71,7 +88,9 @@ const orderItems = async (req, res) => {
 
 module.exports = {
     getAllItems,
+    getAllOrders,
     displayMenu,
     getItemDetail,
+    getOneUser,
     orderItems
 }

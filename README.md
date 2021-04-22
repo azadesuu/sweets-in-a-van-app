@@ -21,18 +21,20 @@ Remember that _"this document"_ can use `different formats` to **highlight** imp
 * [Technologies](#technologies)
 * [Code Implementation](#code-implementation)
 * [Adding Images](#adding-images)
+* [Postman Requests](#postman-requests)
 
 ## Team Members
 
 | Name | Task | State |
 | :---         |     :---:      |          ---: |
-| Yue Teng, Zi Xuan  | Back End     |  Done |
-| Ying Shan, Bo Cheng, Wen Yao   | Front End      |  Testing |
-| Ying Shan    | README Format      |  Amazing! |
+| Ying Shan Saw, Yue Teng, ZiXuan Liu | Back End     |  Done |
+| Ying Shan Saw, Bo Cheng, WenYao Li   | Front End  |  In Progress |
+| Ying Shan Saw | README Format      |  Done |
 
 ## General info
-This project
-Deliverable 2"
+Project Requirements: 
+
+Stage: Deliverable 2
 After drawing the UI Mockup, we are testing and planning some routes for the web server, testing small features stated in the requirements.
 
 ## Technologies
@@ -41,57 +43,61 @@ Project is created with:
 * Ipsum version: 2.33
 * Ament library version: 999
 
-## Code Implementation
+## Snippet of Code
 
-You can include a code snippet here.
+```JS
+//connect database
+require('./models');
+//connect router
+const vendorRouter = require('./routes/vendorRouter.js')
+const menuRouter = require('./routes/menuRouter.js')
+var path = require('path')
 
-```HTML
-<!--
-Example code from: https://www.w3schools.com/jsref/met_win_alert.asp
-__>
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, '/static/home.html')) 
+})
 
-<!DOCTYPE html>
-<html>
-<body>
+// vendor routes
+app.use('/vendor', vendorRouter)
+// customer routes
+app.use('/customer', menuRouter)
 
-<p>Click the button to display an alert box.</p>
-
-<button onclick="myFunction()">Try it</button>
-
-<script>
-function myFunction() {
-  alert("Hello! I am an alert box!");
-}
-</script>
-
-</body>
-</html>
 ```
 
-## Adding Images
-
-You can use images/gif hosted online:
-
+## Image Preview
+<p> Here's a preview of our home page.</p>
 <p align="center">
-  <img src="https://github.com/Martin-Reinoso/sandpit-Profile/raw/main/Images_Readme/01.gif"  width="300" >
+  <img src="static/github-images/deliv2-landingpage.png"  width="300" >
 </p>
 
-Or you can add your own images from a folder in your repo with the following code. The example has a folder `Gifs` with an image file `Q1-1.gif`:
-```HTML
-<p align="center">
-  <img src="Gifs/Q1-1.gif"  width="300" >
-</p>
-```
+## Postman Instructions
+`heroku `
+URL: https://t16-anything-info30005.herokuapp.com
+`MongoDB `
+ID=anything30005
+Password=F5Nruod8fTvdNTCz
+_fullURL_
+connectionURL = 'mongodb+srv://anything30005:F5Nruod8fTvdNTCz@info30005-1.xpxvw.mongodb.net/app-server'
 
-To create a gif from a video you can follow this [link](https://ezgif.com/video-to-gif/ezgif-6-55f4b3b086d4.mov).
+`Postman Summary`
+| Request | URL | Input |
+| :---         |     :---      |          :--- |
+|**Customer**| | |
+|Display all menu items| customer/menu | N/A || 
+|Get a snack’s details| customer/menu/<snack-name> | <snack-name> must be lowercase and separated by whitespace (%20)|
+|Making an order| customer/:user_ID/menu/order | :userID=USER11, Post JSON request in Exported Requests file| 
+|**Vendor**| | :van_ID=VAN11 |
+|Setting Van status(and location)| customer/menu | N/A || 
+|Show a list of outstanding orders| Assumes for a particular van.   vendor/:van_ID/orders | N/A. Should not show any records with status: “Completed”/ “Cancelled” (can compare with all-orders)|
+|Mark an order as fulfilled| vendor/:van_ID/orders/:order_ID/change-status | Post JSON request in Exported Requests file| 
 
-You can use emojis :+1: but do not over use it, we are looking for professional work. If you would not add them in your job, do not use them here! :shipit:
+
 
 **Now Get ready to complete all the tasks:**
 
 - [x] Read the Project handouts carefully
 - [x] User Interface (UI)mockup
-- [ ] App server mockup
+- [x] App server mockup
 - [ ] Front-end + back-end (one feature)
 - [ ] Complete system + source code
 - [ ] Report on your work(+ test1 feature)
