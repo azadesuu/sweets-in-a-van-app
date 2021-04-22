@@ -40,7 +40,7 @@ const submitAndBack = async(req,res)=>{
 
 const getAllOrders = async(req, res)=>{
     try{
-        const orders = await Order.find({},{orderId:true, isFulfilled:true}).lean()
+        const orders = await Order.find({},{id:true, isFulfilled:true}).lean()
         res.render('allOutstandingOrders',{"orders":orders})
     }catch(err){
         console.log(err)
@@ -73,7 +73,7 @@ const getOneVendor = async(req,res)=>{
 
 const markOrderAsReady = async(req,res)=>{
     try{
-        const order = await Order.findOne({OrderId:req.params.id}).lean()
+        const order = await Order.findOne({_id:req.params.id}).lean()
         Order.updateOne(order.isFulfilled,req.body.isFulfilled)
         res.rendor('successMarkOrder')
     }catch(err){
@@ -82,7 +82,7 @@ const markOrderAsReady = async(req,res)=>{
 }
 
 const showOrder = async(req,res)=>{
-    const order = await Order.findOne({OrderId:req.params.id}).lean()
+    const order = await Order.findOne({_id:req.params.id}).lean()
     res.rendor('showOrder',{"orders": order})
 }
 
