@@ -40,6 +40,29 @@ const updateOrderStatus = async(req,res)=>{
     }
 }
 
+const markAsFulfilled = async(req,res)=>{
+    try{
+        await Order.findOneAndUpdate({_id: req.params.order_id}, {status: "Fulfilled"}, {returnNewDocument: true}, function (err){    
+        if (err) res.send('failed to update');
+        else {res.send('updated record to fulfilled');}
+        })
+    }catch(err){
+        console.log(err)
+    }
+}
+
+const markAsComplete = async(req,res)=>{
+    try{
+        await Order.findOneAndUpdate({_id: req.params.order_id}, {status: "Complete"}, {returnNewDocument: true}, function (err){    
+        if (err) res.send('failed to update');
+        else {res.send('updated record to complete');}
+        })
+    }catch(err){
+        console.log(err)
+    }
+}
+
+
 // set the status of the van
 const showSetVanStatus = async (req,res) => {
     try {
@@ -79,6 +102,8 @@ module.exports = {
     getOneOrder,
     showSetVanStatus,
     updateOrderStatus,
+    markAsFulfilled,
+    markAsComplete,
     getAllOutstandingOrders,
     getAllOrders
 }
