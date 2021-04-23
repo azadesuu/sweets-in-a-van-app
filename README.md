@@ -33,6 +33,8 @@ Remember that _"this document"_ can use `different formats` to **highlight** imp
 
 ## General info
 Project Requirements: 
+Your team has been contracted to design and build web apps for Snacks in a Van, a new startup company operating 
+in Melbourne. Snacks in a Van runs a fleet of food trucks that work as popup cafes.
 
 Stage: Deliverable 2
 After drawing the UI Mockup, we are testing and planning some routes for the web server, testing small features stated in the requirements.

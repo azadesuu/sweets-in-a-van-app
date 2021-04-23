@@ -26,6 +26,7 @@ const getAllItems = async (req, res) => {
     }
 }
 
+//get all orders related to user
 const getAllUserOrders = async (req, res) => {
     try {
         return res.send(await Order.find({user_ID: req.params.user_ID}))
@@ -60,7 +61,7 @@ const getItemDetail = async (req, res) => {
     }
 }
 
-// get one food - user specifies its name
+// make an order record and put it into the database
 const orderItems = async (req, res) => {
     // console.log("Entered orderItems")
     try {
