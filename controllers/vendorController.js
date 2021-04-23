@@ -40,6 +40,7 @@ const updateOrderStatus = async(req,res)=>{
     }
 }
 
+//marks an order as Fulfilled
 const markAsFulfilled = async(req,res)=>{
     try{
         await Order.findOneAndUpdate({_id: req.params.order_id}, {status: "Fulfilled"}, {returnNewDocument: true}, function (err){    
@@ -51,6 +52,7 @@ const markAsFulfilled = async(req,res)=>{
     }
 }
 
+//marks an order as Complete
 const markAsComplete = async(req,res)=>{
     try{
         await Order.findOneAndUpdate({_id: req.params.order_id}, {status: "Complete"}, {returnNewDocument: true}, function (err){    

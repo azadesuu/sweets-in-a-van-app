@@ -22,9 +22,8 @@ vendorRouter.get('/:van_ID/orders',(req,res)=>vendorController.getAllOutstanding
 // handle the GET request to get one order of a vendor
 vendorRouter.get('/:van_ID/orders/:order_id',(req,res)=>vendorController.getOneOrder(req,res))
 
-// handle the PUT request to update one vendor's order status
+// handle the PUT request to update one vendor's order status (flexible)
 vendorRouter.put('/:van_ID/orders/:order_id/change-status',(req,res)=>vendorController.updateOrderStatus(req,res))
-
 
 // handle the PUT request to update one vendor's order status to fulfilled
 vendorRouter.put('/:van_ID/orders/:order_id/fulfilled',(req,res)=>vendorController.markAsFulfilled(req,res))
