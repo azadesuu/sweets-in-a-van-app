@@ -1,5 +1,5 @@
 const mongoose = require("mongoose")
-
+var mongo = require('mongodb');
 // import models
 const Menu = mongoose.model("menu")
 const Order = mongoose.model("orders")
@@ -40,7 +40,7 @@ const getAllUserOrders = async (req, res) => {
 // menu page
 const displayMenu = async (req, res) => {
     try {
-        const menu_items = await Menu.find({})
+        const menu_items = await Menu.find()
         return res.send(menu_items)
     } catch (err) {
         res.status(400)
@@ -89,12 +89,12 @@ const orderItems = async (req, res) => {
     }
 }
 
-const getOrderDetail = async(res,req)=>{
+const getOrderDetail = async(req,res)=>{
     try{
-        const order = await Order.findOne({order_ID:req.params.order_ID})
-        res.render('orderDetail', order)
+        const order = await Order.findOne({_id: new mongoose.Types.ObjectId(req.params.order_ID)}).lean()
+        res.render('layouts/orderDetail', {order})
     }catch(err){
-        console(err)
+        console.log(err)
     }
 }
 
