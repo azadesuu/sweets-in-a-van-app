@@ -1,0 +1,27 @@
+<body>
+    <div class = "top">
+        <div> < </div>
+        <div>
+            <p>ORDERS</p>
+        </div>
+    </div>
+    <div class = "left">
+        <p>ORDERID</p>
+    </div>
+    <div class = "right">
+        <p>DATE</p>
+    </div>
+    <ul>
+            {{#each orders}}
+            <li>
+                {{!-- using _id for now because there is no id for order --}}
+                <div class = "left">
+                    <a href="/orders/{{this._id}}">{{this._id}}</a>
+                </div>
+                <div class = "right">
+                    {{this.when}}
+                </div>
+            </li>
+            {{/each}}
+    </ul>
+</body>

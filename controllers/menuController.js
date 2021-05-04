@@ -29,7 +29,8 @@ const getAllItems = async (req, res) => {
 //get all orders related to user
 const getAllUserOrders = async (req, res) => {
     try {
-        return res.send(await Order.find({user_ID: req.params.user_ID}))
+        orders = await Order.find({user_ID: req.params.user_ID})
+        return res.render('userOrders')
     } catch (err) {
         res.status(400)
         return res.send("Database query failed")
@@ -88,11 +89,21 @@ const orderItems = async (req, res) => {
     }
 }
 
+const getOrderDetail = async(res,req)=>{
+    try{
+        const order = await Order.findOne({order_ID:req.params.order_ID},{order_ID = true, when = true, paymentTotal = true})
+        res.render('orderDetail', order)
+    }catch(err){
+        console(err)
+    }
+}
+
 module.exports = {
     getAllItems,
     getAllUserOrders,
     displayMenu,
     getItemDetail,
     getOneUser,
-    orderItems
+    orderItems,
+    getOrderDetail
 }

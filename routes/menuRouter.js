@@ -21,6 +21,8 @@ menuRouter.post('/:user_ID/order', menuController.orderItems)
 // handle the GET request for all orders
 menuRouter.get('/:user_ID/all-orders', menuController.getAllUserOrders)
 
+menuRouter.get('/:user_ID/all-orders/:order_ID',menuController.getOrderDetail)
+
 // export the router
 module.exports = menuRouter
 
