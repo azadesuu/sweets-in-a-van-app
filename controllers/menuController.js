@@ -29,8 +29,8 @@ const getAllItems = async (req, res) => {
 //get all orders related to user
 const getAllUserOrders = async (req, res) => {
     try {
-        orders = await Order.find({user_ID: req.params.user_ID})
-        return res.render('userOrders')
+        orders = await Order.find({user_ID: req.params.user_ID}).lean()
+        return res.render('layouts/userOrders', {orders})
     } catch (err) {
         res.status(400)
         return res.send("Database query failed")
@@ -40,7 +40,7 @@ const getAllUserOrders = async (req, res) => {
 // menu page
 const displayMenu = async (req, res) => {
     try {
-        const menu_items = await Menu.find({}, {_id: false, item_name: true, item_price: true, item_photo: true})
+        const menu_items = await Menu.find({})
         return res.send(menu_items)
     } catch (err) {
         res.status(400)
@@ -91,7 +91,7 @@ const orderItems = async (req, res) => {
 
 const getOrderDetail = async(res,req)=>{
     try{
-        const order = await Order.findOne({order_ID:req.params.order_ID},{order_ID = true, when = true, paymentTotal = true})
+        const order = await Order.findOne({order_ID:req.params.order_ID})
         res.render('orderDetail', order)
     }catch(err){
         console(err)
