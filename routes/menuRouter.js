@@ -12,7 +12,6 @@ menuRouter.get('/menu', menuController.displayMenu)
 // handle the GET request to get one item
 menuRouter.get('/menu/:snack_name', menuController.getItemDetail)
 
-
 // handle the GET request to get one user
 menuRouter.get('/:user_ID', menuController.getOneUser)
 
