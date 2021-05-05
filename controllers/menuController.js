@@ -92,10 +92,8 @@ const orderItems = async (req, res) => {
 const getOrderDetail = async(req,res)=>{
     
     try{
-        const order = await Order.findOne( {_id: req.params.order_ID}).lean()
-        console.log(order);
-        // res.render('layouts/orderDetail', {"order": order})
-        res.send(order)
+        const order = await Order.findOne( {_id: new mongoose.Types.ObjectId(req.params.order_ID)}).lean()
+        return res.render('layouts/orderDetail', {order})
     }catch(err){
         console.log(err)
     }
