@@ -50,11 +50,12 @@ const displayMenu = async (req, res) => {
  
 const displayMenu_hbs = async (req, res) => {
     try {
-        const menu_items = await Menu.find()
+        const menu_items = await Menu.find().lean()
         return res.render('layouts/menu', {menu_items})
+        //res.send(menu_items);
     } catch (err) {
         res.status(400)
-        return res.send("Database query failed")
+        res.send("Database query failed")
     }
 }
 

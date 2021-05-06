@@ -1,0 +1,67 @@
+.top {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 90px;
+  width: 100%;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  background: #000;
+  color: #fff;
+  justify-content: space-around;
+}
+.cards {
+  margin: 20px 0;
+}
+.cards > p {
+  font-size: 0.28rem;
+  text-align: center;
+}
+.cards .li-wrap {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #000;
+  padding: 0 20px;
+  height: 120px;
+  align-items: center;
+}
+
+h1 {
+  text-align: center;
+  font-size: var(--text-big);
+  color: var(--color-dark);
+  margin-top: 0;
+}
+
+a {
+  text-decoration: none;  /* switch off underlining of anchors */
+}
+
+header h1 a {
+  color: var(--color-dark);
+}
+
+footer p {
+  margin-bottom: 0;
+}
+
+#ORDERS p { 
+  text-align: center;
+  flex-basis: 60%;
+}
+#Orderlist ul {  
+  padding: 0;
+}
+
+#Orderlist li {  
+  list-style-type: none;          /* switch off bullet-points */    
+  display: flex;
+  flex-direction: row;            /* image and text are side-by-side */
+  justify-content: flex-start;    /* text aligns left */
+  align-items: center;            /* and vertically aligns to center */
+}
+#ORDERID a {   
+  color: var(--color-dark);
+}
+
