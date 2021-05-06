@@ -5,7 +5,8 @@ const exphbs = require('express-handlebars')
 
 app.use(express.json())  // replaces body-parser
 app.use(express.urlencoded({ extended: false }))
-app.use(express.static('public')) // define where static assets live
+var path = require('path')
+app.use(express.static(path.join(__dirname, '/views')));
 
 app.engine('hbs', exphbs({
     extname: "hbs",
@@ -21,10 +22,11 @@ require('./models');
 //connect router
 const vendorRouter = require('./routes/vendorRouter.js')
 const menuRouter = require('./routes/menuRouter.js')
-var path = require('path')
+const publicPath = path.join(__dirname, './views');
+
 
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, '/static/home.html')) 
+    res.sendFile(path.join(publicPath, '/home.html')) 
 })
 
 // vendor routes
@@ -35,6 +37,7 @@ app.use('/customer', menuRouter)
 
 app.listen(port, () => {
 	console.log('Snacks in a van server is listening for requests ...')
+    console.log(publicPath);
 })
 
 // //login authentication and local storage 

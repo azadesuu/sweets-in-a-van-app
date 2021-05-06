@@ -1,6 +1,6 @@
 
-<link rel="stylesheet" href="../css/reset.css">
-<link rel="stylesheet" href="../css/menu.css">
+<link rel="stylesheet" href="/css/reset.css">
+<link rel="stylesheet" href="/css/menu.css">
 <body>
     <div class="top">
         <div> < </div>
@@ -17,10 +17,10 @@
                 {{#each menu_items}}
                 <li class="li-wrap">
                             <p>
-                                {{this.name}}
+                                {{this.item_name}}
                             </p>
-                        <p>{{this.price}}</p>
-                        <img src={{this.photo}} class="browsePage">
+                        <p>{{this.item_price}}</p>
+                        <img src={{this.item_photo}} class="browsePage">
                 </li>
                 {{/each}}
             </ul>
