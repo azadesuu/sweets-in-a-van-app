@@ -11,8 +11,7 @@
                      <p>Order time: {{order.when}}</p>
                      <p>Van Name: {{order.van_ID}}</p>
                 {{!-- need van location in modal --}}
-                     <p>Van Location: </p>
-                     <p>{{order.van_latitude}}, {{order.van_longtitude}}</p>
+                     <p>Van Location: {{order.van_latitude}}, {{order.van_longtitude}}</p>
                 </div>
     </div>
         {{!-- center this  --}}
@@ -21,8 +20,10 @@
             <div >
                 <p>Food Name: </p>
                 <ul>
-                    {{#each order.orderItem}}
-                    {{this.item_name}}
+                    {{#each order.orderItems}}
+                    <p>
+                     {{this.item_name}} | {{this.quantity}} | {{this.price}}
+                     </p>
                     {{/each}}
                </ul>
             </div>
@@ -35,7 +36,7 @@
                 </div>
                 <p>Price</p>
                 <ul>
-                    {{#each order.orderItem}}
+                    {{#each order.orderItems}}
                     {{!-- need add price --}}
                     {{this.price}}
                     {{/each}}
