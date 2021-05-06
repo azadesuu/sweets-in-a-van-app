@@ -5,9 +5,18 @@ const menuRouter = express.Router()
 
 // require the customer controller
 const menuController = require('../controllers/menuController.js')
+const { menu } = require('../models/menu.js')
 
-// handle the GET request to get all menu items
-menuRouter.get('/menu', menuController.displayMenu)
+// // handle the GET request to get all menu items
+// non-hbs
+// menuRouter.get('/menu', menuController.displayMenu)
+
+// handle the GET request to get all menu items from a certain van
+menuRouter.get('/menu', menuController.displayMenu_hbs)
+// handle the GET request to get one user
+menuRouter.get('/login', menuController.login)
+// handle the GET request to get one user
+menuRouter.get('/register', menuController.register)
 
 // handle the GET request to get one item
 menuRouter.get('/menu/:snack_name', menuController.getItemDetail)
@@ -22,6 +31,10 @@ menuRouter.post('/:user_ID/order', menuController.orderItems)
 menuRouter.get('/:user_ID/all-orders', menuController.getAllUserOrders)
 
 menuRouter.get('/:user_ID/all-orders/:order_ID',menuController.getOrderDetail)
+
+// menuRouter.get('/my-orders', menuController.loggedIn_MyOrders);
+// menuRouter.get('/my-orders/:orderID', menuController.loggedIn_OrderDetails);
+
 
 // export the router
 module.exports = menuRouter

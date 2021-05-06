@@ -37,3 +37,50 @@ app.listen(port, () => {
 	console.log('Snacks in a van server is listening for requests ...')
 })
 
+// //login authentication and local storage 
+// //authentication
+// const cots = require('cors')
+// //passport
+// const passport = require('passport')
+// //session
+// const session = require('express-session')
+// //apps and callbacks
+// const flash = require('connect-flash-plus')
+// //json web tokens
+// const jwt = require('jsonwebtoken')
+// const { truncateSync } = require('fs')
+// //env variables
+// const dotenv = require('dotenv').config()
+
+// app.use(cors({
+//     credentials: true.valueOf,
+//     origin: "http://localhost:8080"
+// }));
+
+// app.use(session({secret: process.enc.PASSPORT_KEY,
+//     resave:truncateSync,
+//     saveUnitiaialized: true
+
+// }))
+
+// //middleware required for passport to operate
+// app.use(passport.initialize())
+
+// //middleware to store userobject
+// app.use(passport.session());
+// //use flash to store messages
+// app.use(flash());
+
+// //body of post request using JSON like syntax
+// app.use(express.urlencoded({extended:true}));
+
+// //store info
+// passport.serializeUser(function(user,done){
+//     done(null,user._id);
+// });
+
+// passport.deserializeUser(function(_id,done){
+//     User.findById(_id,function(err,user){
+//         done(err,user);
+//     });
+// });

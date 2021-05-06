@@ -47,6 +47,54 @@ const displayMenu = async (req, res) => {
         return res.send("Database query failed")
     }
 }
+ 
+const displayMenu_hbs = async (req, res) => {
+    try {
+        const menu_items = await Menu.find()
+        return res.render('layouts/menu', {menu_items})
+    } catch (err) {
+        res.status(400)
+        return res.send("Database query failed")
+    }
+}
+
+const register = async (req, res) => {
+    var postData = {
+        username: req.body.username,
+        password: req.body.password,
+    };
+  
+    User.findOne({username: postData.username}, function (err, data) {
+        if (data) {
+            res.send('Username must be different');
+        } else {
+            User.create(postData, function (err, data) {
+                if (err) throw err;
+                console.log('Registration succeeded');
+                res.redirect('/login');  
+            }) 
+        }
+    });
+}
+
+
+const login = async (req, res) => {
+    var postData = {
+        username: req.body.username,
+        password: req.body.password
+    };
+    User.findOne({
+        username: postData.username,
+        password: postData.password
+    }, function (err, data) {
+        if(err) throw err;
+        if(data){
+            res.render('layouts/login', {user});
+        }else{
+            res.send('Login failed')
+        }
+    } )
+}
 
 
 // get one food - user specifies its name
@@ -103,7 +151,10 @@ module.exports = {
     getAllItems,
     getAllUserOrders,
     displayMenu,
+    displayMenu_hbs,
+    login,
     getItemDetail,
+    register,
     getOneUser,
     orderItems,
     getOrderDetail

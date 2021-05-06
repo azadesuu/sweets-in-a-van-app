@@ -1,0 +1,12 @@
+body {
+  font-size: 0.26rem;
+}
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}

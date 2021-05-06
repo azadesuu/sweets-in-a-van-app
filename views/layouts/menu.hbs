@@ -1,6 +1,6 @@
 
-<link rel="stylesheet" href="./css/reset.css">
-<link rel="stylesheet" href="./css/index.css">
+<link rel="stylesheet" href="../css/reset.css">
+<link rel="stylesheet" href="../css/menu.css">
 <body>
     <div class="top">
         <div> < </div>
@@ -14,18 +14,13 @@
         <div class="cards">
             <p>Foods</p>
             <ul>
-                {{#each menu}}
+                {{#each menu_items}}
                 <li class="li-wrap">
-                    
-                        
                             <p>
                                 {{this.name}}
                             </p>
-                    
                         <p>{{this.price}}</p>
-                    
-                        <img class="browsePage" src="https://images.unsplash.com/{{this.photo}}" >
-                    
+                        <img src={{this.photo}} class="browsePage">
                 </li>
                 {{/each}}
             </ul>
