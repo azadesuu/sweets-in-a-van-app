@@ -1,0 +1,39 @@
+
+<link rel="stylesheet" href="./css/reset.css">
+<link rel="stylesheet" href="./css/index.css">
+<body>
+    <div class="top">
+        <div> < </div>
+        <div>
+            <p>MENU</p>
+            <p>Tasty Trailer</p>
+        </div>
+        <div>5min</div>
+    </div>
+    <div class="content">
+        <div class="cards">
+            <p>Foods</p>
+            <ul>
+                {{#each menu}}
+                <li class="li-wrap">
+                    
+                        
+                            <p>
+                                {{this.name}}
+                            </p>
+                    
+                        <p>{{this.price}}</p>
+                    
+                        <img class="browsePage" src="https://images.unsplash.com/{{this.photo}}" >
+                    
+                </li>
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="./js/fontresize.js"></script>
+<script>
+
+</script>
+</body>
