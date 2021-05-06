@@ -8,16 +8,14 @@ const orderItemSchema = new mongoose.Schema({
 })
 
 const orderSchema = new mongoose.Schema({
-    _id: {type: mongoose.Schema.Types.ObjectId, required: true},
-    user_ID : {type: String, required: true, ref: 'User'},
-    van_ID : {type: String, required: true, ref :'Vendor'},
+    user:[{user_ID: String}],
+    van: [{van_ID: String, van_location: String, locDescription: String}],
     orderItems : [orderItemSchema],
-    status : {type: String, default: 'Unfulfilled'},
+    status: {type: String, default: 'Unfulfilled'},
+    paymentSubTotal : {type: Number, required: true},
     paymentTotal : {type: Number, default: 0},
     late_fulfillment : {type: Boolean, default: false},
     when: {type: Date, default: Date.now},
-    van_latitude:{type: Number},
-    van_longtitude:{type: Number}
 },{ collection : 'orders' })
 
 const Order = mongoose.model('orders', orderSchema)

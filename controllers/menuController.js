@@ -72,7 +72,7 @@ const register = async (req, res) => {
             User.create(postData, function (err, data) {
                 if (err) throw err;
                 console.log('Registration succeeded');
-                res.redirect('/login');  
+                res.redirect('/home');  
             }) 
         }
     });
@@ -90,9 +90,9 @@ const login = async (req, res) => {
     }, function (err, data) {
         if(err) throw err;
         if(data){
-            res.render('layouts/login', {user});
+            return res.redirect('home', {user});
         }else{
-            res.send('Login failed')
+            return res.send('Login failed')
         }
     } )
 }
@@ -111,7 +111,7 @@ const getItemDetail = async (req, res) => {
     }
 }
 
-// make an order record and put it into the database
+//make an order record and put it into the database
 const orderItems = async (req, res) => {
     // console.log("Entered orderItems")
     try {
@@ -120,19 +120,68 @@ const orderItems = async (req, res) => {
         for (i=0; i<req.body.orderItems.length;i++) {
             var singlePrice = await (await Menu.findOne({item_name:req.body.orderItems[i].item_name.toLowerCase()},{})).item_price
             // console.log(singlePrice)
-            calculatedTotalPayment = calculatedTotalPayment + req.body.orderItems[i].quantity * singlePrice
+            req.body.orderItems[i].price = req.body.orderItems[i].quantity * singlePrice
+            calculatedTotalPayment = calculatedTotalPayment + req.body.orderItems[i].price
             // console.log(calculatedTotalPayment)
         }
         const newOrder = new Order({
             user_ID : req.params.user_ID,
             van_ID : req.body.van_ID,
             orderItems : req.body.orderItems,
-            paymentTotal : calculatedTotalPayment
+            paymentSubTotal : calculatedTotalPayment
         })
         newOrder.save( (err, result) => {  // callback-style error-handler
             if (err) console.log(err)
             return res.send(result)
         })   
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+
+// make an order record and put it into the database
+const postOrderItems = async (req, res) => {
+    // console.log("Entered orderItems")
+    try {
+        var i;
+        var calculatedTotalPayment = 0
+        var userArray = { user_ID : req.params.user_ID}
+        van = await Vendor.findOne({van_ID: req.body.van_ID}, {van_ID: true, locDescription: true, latitude: true, longtitude:true})
+        var vanArray = {
+            van_ID: van.van_ID,
+            van_location: van.latitude + ", " +van.longtitude, 
+            van_locDescription: van.locDescription 
+        }
+        const newOrder = new Order({
+            user: userArray,
+            van: vanArray,
+            orderItems: req.body.orderItems,
+            paymentSubTotal: calculatedTotalPayment
+        })
+        var order_ID;
+        await newOrder.save( (err, result) => {  // callback-style error-handler
+            if (err) console.log(err);
+            console.log(result)
+            order_ID = result._id;
+        })
+
+        for (i=0; i<req.body.orderItems.length;i++) {
+            var singlePrice = await Menu.findOne({item_name:req.body.orderItems[i].item_name.toLowerCase()},{}).item_price
+            var price = req.body.orderItems[i].quantity * singlePrice
+
+            await Order.findById({_id: order_ID}, function(err,document) {
+                document.orderItems[i] = price
+                document.markModified("orderItems");
+                console.log(price);
+                document.save(function(err) {
+                    return res.json({event:"Updated OrderItem"})
+                })
+            })
+            calculatedTotalPayment = calculatedTotalPayment + req.body.orderItems[i].price
+        }
+        await Order.updateOne({_id : order_ID}, { paymentSubTotal : calculatedTotalPayment});
+          
     } catch (err) {
         console.log(err)
     }
