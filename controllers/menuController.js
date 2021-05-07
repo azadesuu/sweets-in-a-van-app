@@ -46,7 +46,7 @@ const getAllItems = async (req, res) => {
 //get all orders related to user
 const getAllUserOrders = async (req, res) => {
     try {
-        orders = await Order.find({_id: req.body.user_id}).lean()
+        orders = await Order.find({user_id: req.params.user_id}).lean()
         return res.render('customer/userOrders', {orders})
     } catch (err) {
         res.status(400)

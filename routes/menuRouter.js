@@ -57,9 +57,9 @@ menuRouter.post('/logout', function(req, res) {
 
 //
 //menuRouter.get('/:user_ID', menuController.getOneUser)
-menuRouter.get('/my-orders', utilities.isLoggedIn, menuController.getAllUserOrders);
+menuRouter.get('/:user_id/my-orders', utilities.isLoggedIn, menuController.getAllUserOrders);
 
-menuRouter.get('/my-orders/:order_ID', utilities.isLoggedIn, menuController.getOrderDetail);
+menuRouter.get('/:user_id/my-orders/:order_ID', utilities.isLoggedIn, menuController.getOrderDetail);
 
 
 menuRouter.get('/:van_id/order-now', utilities.isLoggedIn, menuController.displayMenu_order);
