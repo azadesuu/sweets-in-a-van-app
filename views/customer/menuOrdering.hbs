@@ -1,6 +1,8 @@
 
 <link rel="stylesheet" href="/css/reset.css">
 <link rel="stylesheet" href="/css/menu.css">
+<link rel="stylesheet" href="/css/index.css">
+
 <body>
     <div class="top">
         <div> < </div>
@@ -16,11 +18,14 @@
             <ul>
                 {{#each menu_items}}
                 <li class="li-wrap">
-                            <p>
-                                {{this.item_name}}
-                            </p>
-                        <p>{{this.item_price}}</p>
-                        <img src={{this.item_photo}} class="browsePage">
+                    <p>
+                        {{this.item_name}}
+                    </p>
+                    <p>${{this.item_price}}</p>
+                    <img src={{this.item_photo}} class="browsePage">
+                    <div class='addToCart-btn'>
+                        <button class='addToCart'>ADD TO CART</button>
+                    </div>
                 </li>
                 {{/each}}
             </ul>

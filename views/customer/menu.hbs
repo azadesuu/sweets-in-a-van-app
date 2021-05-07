@@ -18,9 +18,9 @@
             <ul>
                 {{#each menu_items}}
                 <li class="li-wrap">
-                            <p> {{this.item_name}} </p>
-                        <p>{{this.item_price}}</p>
-                        <img src={{this.item_photo}} class="browsePage">
+                    <p> {{this.item_name}} </p>
+                    <p>${{this.item_price}}</p>
+                    <img src={{this.item_photo}} class="browsePage">
                 </li>
                 {{/each}}
             </ul>

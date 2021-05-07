@@ -61,6 +61,10 @@ menuRouter.get('/my-orders', utilities.isLoggedIn, menuController.getAllUserOrde
 
 menuRouter.get('/my-orders/:order_ID', utilities.isLoggedIn, menuController.getOrderDetail);
 
+
+menuRouter.get('/:van_id/order-now', utilities.isLoggedIn, menuController.getOrderDetail);
+menuRouter.get('/:van_id/order-now/add-to-cart', utilities.isLoggedIn, menuController.getOrderDetail);
+
 // export the router
 module.exports = menuRouter
 
