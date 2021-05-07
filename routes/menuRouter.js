@@ -26,7 +26,7 @@ menuRouter.get("/login", (req, res) => {
 // POST login form -- authenticate user
 // http:localhost:5000/customer/login
 menuRouter.post('/login', passport.authenticate('local-login', {
-    successRedirect : '/', // redirect to the homepage
+    successRedirect : '/customer/homepage', // redirect to the homepage
     failureRedirect : '/customer/login', // redirect back to the login page if there is an error
     failureFlash : true // allow flash messages
 }));
@@ -41,7 +41,7 @@ menuRouter.get("/register", (req, res) => {
 // POST - user submits the signup form -- signup a new user
 // http:localhost:5000/customer/register
 menuRouter.post('/register', passport.authenticate('local-signup', {
-    successRedirect : '/', // redirect to the homepage
+    successRedirect : '/customer/homepage', // redirect to the homepage
     failureRedirect : '/customer/register', // redirect to signup page
     failureFlash : true // allow flash messages
 }));
@@ -51,7 +51,7 @@ menuRouter.post('/logout', function(req, res) {
     // save the favourites
     req.logout();
     req.flash('');
-    res.redirect('/customer/');
+    res.redirect('/customer/homepage');
 });
 //authentication END
 
