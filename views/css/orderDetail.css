@@ -138,3 +138,22 @@
   background-color:#efac09;
   color:#fff
 }
+
+table, th, td {
+  border: 1px solid black;
+}
+
+.table {
+  font-family: "Roboto", "Courier New", monospace;
+}
+
+.th {
+  font-weight:bold
+}
+
+#buttons { 
+  position: fixed; 
+  width:50%; 
+  background-color: #f2f2f2; 
+  opacity: 1;
+}
