@@ -6,8 +6,9 @@ const Order = mongoose.model("orders")
 const User = mongoose.model("users");
 
 const displayHome = async(req,res) => {
+    var user_firstname = req.user.first_name;
     console.log(req.user);
-    return res.render('customer/customer-home', {"user" : req.user, "loggedin": req.isAuthenticated()});
+    return res.render('customer/customer-home', {"user_first_name" : user_firstname, "loggedin": req.isAuthenticated()});
 }
 
  const displayMenu_hbs = async(req,res) => {
