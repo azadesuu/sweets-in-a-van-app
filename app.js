@@ -73,7 +73,7 @@ app.use(express.static(path.join(__dirname, '/views')));
 
 app.engine('hbs', exphbs({
     extname: "hbs",
-    defaultLayout: "",
+    defaultLayout: "main",
     layoutsDir: "",
 }))
 app.set('view engine', 'hbs')
@@ -89,7 +89,8 @@ const publicPath = path.join(__dirname, './views');
 
 
 app.get("/", (req, res) => {
-    res.sendFile(path.join(publicPath, '/home.html')) 
+    // res.sendFile(path.join(publicPath, '/home.html'))
+    res.render('index') 
 })
 
 // vendor routes
