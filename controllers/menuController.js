@@ -75,6 +75,17 @@ const getOrderDetail = async(req,res)=>{
     }
 }
 
+const showCart = async(req,res)=>{
+    try{
+        console.log(req.user)
+        const user = await User.findOne({user_ID:req.user })
+        console.log(user)
+        console.log(req.params.user_ID)
+        return res.render('customer/cart',{"user":user})
+    }catch(err){
+        console.log(err)
+    }
+}
 
 
 module.exports = {
@@ -85,5 +96,6 @@ module.exports = {
     displayMenu_order,
     getItemDetail,
     getOneUser,
-    getOrderDetail
+    getOrderDetail,
+    showCart
 }
