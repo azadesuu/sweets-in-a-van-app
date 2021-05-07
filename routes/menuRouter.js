@@ -11,19 +11,22 @@ const { menu } = require('../models/menu.js')
 // non-hbs
 // menuRouter.get('/menu', menuController.displayMenu)
 //homepage
-//menuRouter.get('/home', menuController.displayHome)
+menuRouter.post('/', function (req, res) {
+    return res.render('layouts/customer/customer-home');
+});
+
 // handle the GET request to get all menu items from a certain van
 menuRouter.get('/menu', menuController.displayMenu_hbs)
 // handle the login 
 menuRouter.get('/login', function (req, res) {
-    return res.render('login');
+    return res.render('layouts/customer/login');
 });
 menuRouter.post('/login', menuController.login)
 
 
 // handle the register
 menuRouter.get('/register', function (req, res) {
-    res.render('register');
+    res.render('layouts/customer/register');
 });
 menuRouter.post('/register', menuController.register)
 
@@ -34,7 +37,7 @@ menuRouter.get('/menu/:snack_name', menuController.getItemDetail)
 menuRouter.get('/:user_ID', menuController.getOneUser)
 
 // handle the POST request for a new order
-menuRouter.post('/:user_ID/order', menuController.postOrderItems);
+menuRouter.post('/:user_ID/order', menuController.orderItems);
 
 // handle the GET request for all orders
 menuRouter.get('/:user_ID/all-orders', menuController.getAllUserOrders)

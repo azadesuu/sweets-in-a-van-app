@@ -37,7 +37,6 @@ app.use('/customer', menuRouter)
 
 app.listen(port, () => {
 	console.log('Snacks in a van server is listening for requests ...')
-    console.log(publicPath);
 })
 
 // //login authentication and local storage 
