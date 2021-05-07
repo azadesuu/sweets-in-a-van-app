@@ -53,11 +53,11 @@
   align-items: center;
 }
 .cards .li-wrap  p {
-  font-size: 80px;
+  font-size: 5.9vw;
 }
 .cards .li-wrap  p:nth-child(1) {
   margin-bottom: 18px;
-  font-size: 60px;
+  font-size: 5.9vw;
 }
 
 .cards .li-wrap  {
