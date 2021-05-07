@@ -23,14 +23,21 @@
                     </p>
                     <p>${{this.item_price}}</p>
                     <img src={{this.item_photo}} class="browsePage">
-                    <div class='addToCart-btn'>
-                        <button class='addToCart'>ADD TO CART</button>
-                    </div>
+                    <button class='min-btn'>-</button>
+                    <button class='addToCart'>ADD TO CART</button> 
+                    <button class='plus-btn'>+</button>
                 </li>
                 {{/each}}
             </ul>
         </div>
+        
     </div>
+       
+    <div class="carts2 view-cart">
+        <a href="/customer/VAN11/order-now/cart" class="click">View Shopping Cart items: <span>0</span>
+        </a>    
+    </div>
+    
 <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="./js/fontresize.js"></script>
 <script>

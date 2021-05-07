@@ -16,6 +16,12 @@ const displayHome = async(req,res) => {
     return res.render('customer/menu', {menu_items, "loggedin": req.isAuthenticated()});
  }
 
+ 
+ const displayMenu_order = async(req,res) => {
+    menu_items = await Menu.find().lean();
+    return res.render('customer/menuOrdering', {menu_items, "loggedin": req.isAuthenticated()});
+ }
+
 //returns detail of a user
 const getOneUser = async (req, res) => {
     try {
@@ -61,7 +67,6 @@ const getItemDetail = async (req, res) => {
 }
 
 const getOrderDetail = async(req,res)=>{
-    
     try{
         const order = await Order.findOne( {_id: new mongoose.Types.ObjectId(req.params.order_ID)}).lean()
         return res.render('customer/orderDetail', {order})
@@ -71,11 +76,13 @@ const getOrderDetail = async(req,res)=>{
 }
 
 
+
 module.exports = {
     getAllItems,
     getAllUserOrders,
     displayHome,
     displayMenu_hbs,
+    displayMenu_order,
     getItemDetail,
     getOneUser,
     getOrderDetail

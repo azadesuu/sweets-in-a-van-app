@@ -62,9 +62,12 @@ menuRouter.get('/my-orders', utilities.isLoggedIn, menuController.getAllUserOrde
 menuRouter.get('/my-orders/:order_ID', utilities.isLoggedIn, menuController.getOrderDetail);
 
 
-menuRouter.get('/:van_id/order-now', utilities.isLoggedIn, menuController.getOrderDetail);
-menuRouter.get('/:van_id/order-now/add-to-cart', utilities.isLoggedIn, menuController.getOrderDetail);
+menuRouter.get('/:van_id/order-now', utilities.isLoggedIn, menuController.displayMenu_order);
+menuRouter.get('/:van_id/order-now/cart', utilities.isLoggedIn, function(req,res){
+    res.render('customer/cart');
+});
 
-// export the router
+
+// export the router    
 module.exports = menuRouter
 
