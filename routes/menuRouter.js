@@ -44,8 +44,8 @@ menuRouter.get('/:user_ID/all-orders', menuController.getAllUserOrders)
 
 menuRouter.get('/:user_ID/all-orders/:order_ID',menuController.getOrderDetail)
 
-// menuRouter.get('/my-orders', menuController.loggedIn_MyOrders);
-// menuRouter.get('/my-orders/:orderID', menuController.loggedIn_OrderDetails);
+menuRouter.get('/my-orders', menuController.loggedIn_MyOrders);
+menuRouter.get('/my-orders/:orderID', menuController.loggedIn_OrderDetails);
 
 
 // export the router
