@@ -11,12 +11,12 @@ const menuController = require('../controllers/menuController.js')
 //authentication
 
 //homepage
-menuRouter.get("/home-2", utilities.isLoggedIn, (req, res) => {
+menuRouter.get("/homepage", (req, res) => {
     return res.render('customer/customer-home', {req, "loggedin": req.isAuthenticated()});
  })
 
 // handle the GET request to get all menu items from a certain van
-menuRouter.get('/menu', menuController.displayMenu_hbs, {"loggedin": req.isAuthenticated()})
+menuRouter.get('/menu', menuController.displayMenu_hbs)
 
 
 menuRouter.get("/login", (req, res) => {

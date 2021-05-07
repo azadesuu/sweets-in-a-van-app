@@ -2,12 +2,12 @@
 <p>Customer Homepage (Temporary)</p>
 
 <script>
-        function logout(){
-            localStorage.clear();
-            // submit a hidden form with the food ids. You could use fetch to submit the data to API as well.
-            document.getElementById("logoutform").submit();
-        }        
-    </script>
+     function logout(){
+        localStorage.clear();
+        // submit a hidden form with the food ids. You could use fetch to submit the data to API as well.
+        document.getElementById("logoutform").submit();
+    }        
+</script>
 
 {{#if loggedin}}
     <p>Welcome, {{req.user.first_name}}!</p>
@@ -20,6 +20,6 @@
         <input type="hidden"/>
     </form>
 {{else}}
-    <p><a href="/login">Click here to login</a></p>
-    <p><a href="/register">Click here to register</a></p>
+    <p><a href="/customer/login">Click here to login</a></p>
+    <p><a href="/customer/register">Click here to register</a></p>
 {{/if}}
