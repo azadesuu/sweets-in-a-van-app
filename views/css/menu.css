@@ -2,7 +2,7 @@
   position: fixed;
   left: 0;
   top: 0;
-  height: 90px;
+  height: 120px;
   width: 100%;
   z-index: 1;
   display: flex;
@@ -12,35 +12,36 @@
   justify-content: space-around;
 }
 .top div:nth-child(1) {
-  margin-left: 20px;
-  font-size: 0.38rem;
+  margin-left: 2px;
+  font-size: 40px;
   font-weight: 800;
   cursor: pointer;
 }
 .top div:nth-child(2) {
   width: 80%;
   text-align: center;
-  font-size: 0.24rem;
+  font-size: 40px;
   font-weight: 800;
 }
 .top div:nth-child(2) p:nth-child(1) {
-  font-weight: 400;
+  font-weight: 200;
 }
 .top div:nth-child(2) p:nth-child(2) {
-  margin-top: 10px;
+  margin-bottom: 10px;
 }
 .top div:nth-child(3) {
   align-self: flex-end;
-  margin-bottom: 10px;
+  margin-bottom: 13px;
+  font-size:40px;
 }
 .content {
-  margin-top: 100px;
+  margin:20px 0;
 }
 .cards {
   margin: 20px 0;
 }
 .cards > p {
-  font-size: 0.28rem;
+  font-size: 98px;
   text-align: center;
 }
 .cards .li-wrap {
@@ -51,22 +52,23 @@
   height: 120px;
   align-items: center;
 }
-.cards .li-wrap .left p {
-  font-size: 0.28rem;
+.cards .li-wrap  p {
+  font-size: 80px;
 }
-.cards .li-wrap .left p:nth-child(1) {
-  margin-bottom: 26px;
-  font-size: 0.28rem;
+.cards .li-wrap  p:nth-child(1) {
+  margin-bottom: 18px;
+  font-size: 60px;
 }
-.cards .li-wrap .left p:nth-child(2) {
-  font-weight: 600;
-}
-.cards .li-wrap .right {
-  width: 0.8rem;
-  height: 0.8rem;
+
+.cards .li-wrap  {
+  width: 90%;
+  height: auto;
   margin-bottom: 10px;
 }
-.cards .li-wrap .right img {
-  width: 100%;
-  height: auto;
+.cards .li-wrap img {
+  display:block;
+  margin-bottom:20px;
+  margin-left:auto;
+  width: 30%;
+  height:70%;
 }
