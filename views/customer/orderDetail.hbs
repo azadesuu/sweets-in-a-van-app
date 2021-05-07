@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="/css/orderDetail.css">
 <body>
     <div class = "top">
-        <div text-align='left'><a href="/customer/my-orders">< </a></div>
+        <div text-align='left'><a href="/customer/USER11/my-orders">< </a></div>
         {{!-- <div> </div> --}}
         <div>
             <p>ORDER #{{order._id}}</p>
@@ -18,51 +18,22 @@
     </div>
         {{!-- center this  --}}
     <div class='card'>
-            
-            <div >
-                <p>Food Name: </p>
-                <ul>
-                    {{#each order.orderItems}}
-                    <p>
-                     {{this.item_name}} | {{this.quantity}} | {{this.price}}
-                     </p>
-                    {{/each}}
-               </ul>
-            </div>
-        {{!-- center this --}}
-            <div>
-                <div>
-            {{!-- the status img --}}
-             {{!、-- <img src="" alt=""></img> --}}
-                <p>{{order.status}}</p>
-                </div>
-                <p>Price</p>
-                <ul>
-                    {{#each order.orderItems}}
-                    {{!-- need add price --}}
-                    {{this.price}}
-                    {{/each}}
-                </ul>
-            </div>
-            <div>
-                <p>Quantity</p>
-                <ul>
-                    {{#each order.orderItem}}
-                    {{this.quantity}}
-                    {{/each}}
-                </ul>
-            </div>
-        
+            <tbody>
+                <tr><th>Food Name</th> <th> Quantity</th></tr>
+                {{#each order.orderItems}}
+                <tr> <td>{{this.item_name}}</td> <td>{{this.quantity}}</td> </tr>
+                {{/each}}
+            </tbody>
     </div>
 
       
 
     <div class="summary">
         <div>
-                <p>Payment Summary:</p>
-                <p>Subtotal:</p>
+                <p font-weight= 'bold'>Payment Summary:</p>
+                <p>Subtotal: {{order.paymentTotal}}</p>
                 <p>Late Fulfillment discount: </p>
-                <p>Total:{{order.paymentTotal}}</p>
+                <p>Total:</p>
         </div>
     </div>
 
