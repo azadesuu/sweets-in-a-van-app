@@ -1,0 +1,32 @@
+
+<link rel="stylesheet" href="/css/reset.css">
+<link rel="stylesheet" href="/css/menu.css">
+<body>
+    <div class="top">
+        <div> < </div>
+        <div>
+            <p>MENU</p>
+            <p>Tasty Trailer</p>
+        </div>
+        <div>5min</div>
+    </div>
+    <div class="content">
+        <div class="cards">
+            <p>Foods</p>
+            <ul>
+                {{#each menu_items}}
+                <li class="li-wrap">
+                            <p> {{this.item_name}} </p>
+                        <p>{{this.item_price}}</p>
+                        <img src={{this.item_photo}} class="browsePage">
+                </li>
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="./js/fontresize.js"></script>
+<script>
+
+</script>
+</body>

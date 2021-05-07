@@ -1,0 +1,25 @@
+
+<p>Customer Homepage (Temporary)</p>
+
+<script>
+        function logout(){
+            localStorage.clear();
+            // submit a hidden form with the food ids. You could use fetch to submit the data to API as well.
+            document.getElementById("logoutform").submit();
+        }        
+    </script>
+
+{{#if loggedin}}
+    <p>Welcome, {{req.user.first_name}}!</p>
+    <ul>
+        <li> <a href="/VAN11/order-now">Click here to make an order with VAN11</a></li>
+        <li> <a href="/my-orders">Click here to view orders</a></li>
+        <li> <a onclick="logout()">Click here to logout</a></li>
+    </ul>
+    <form method="post" action="/customer/logout" id="logoutform">
+        <input type="hidden"/>
+    </form>
+{{else}}
+    <p><a href="/login">Click here to login</a></p>
+    <p><a href="/register">Click here to register</a></p>
+{{/if}}

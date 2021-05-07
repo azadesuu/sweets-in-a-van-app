@@ -1,52 +1,65 @@
 const express = require('express')
-
+const utilities = require("./utility");
 // add our router 
 const menuRouter = express.Router()
+const passport = require('passport');
+require('../config/passport')(passport);
 
 // require the customer controller
 const menuController = require('../controllers/menuController.js')
-const { menu } = require('../models/menu.js')
 
-// // handle the GET request to get all menu items
-// non-hbs
-// menuRouter.get('/menu', menuController.displayMenu)
+//authentication
+
 //homepage
-menuRouter.post('/', function (req, res) {
-    return res.render('layouts/customer/customer-home');
-});
+menuRouter.get("/home-2", utilities.isLoggedIn, (req, res) => {
+    return res.render('customer/customer-home', {req, "loggedin": req.isAuthenticated()});
+ })
 
 // handle the GET request to get all menu items from a certain van
-menuRouter.get('/menu', menuController.displayMenu_hbs)
-// handle the login 
-menuRouter.get('/login', function (req, res) {
-    return res.render('layouts/customer/login');
+menuRouter.get('/menu', menuController.displayMenu_hbs, {"loggedin": req.isAuthenticated()})
+
+
+menuRouter.get("/login", (req, res) => {
+    res.render('customer/login');
 });
-menuRouter.post('/login', menuController.login)
+
+// POST login form -- authenticate user
+// http:localhost:5000/customer/login
+menuRouter.post('/login', passport.authenticate('local-login', {
+    successRedirect : '/', // redirect to the homepage
+    failureRedirect : '/customer/login', // redirect back to the login page if there is an error
+    failureFlash : true // allow flash messages
+}));
 
 
-// handle the register
-menuRouter.get('/register', function (req, res) {
-    res.render('layouts/customer/register');
+// GET - show the signup form to the user
+// http:localhost:5000/customer/register
+menuRouter.get("/register", (req, res) => {
+    return res.render('customer/register');
 });
-menuRouter.post('/register', menuController.register)
 
-// handle the GET request to get one item
-menuRouter.get('/menu/:snack_name', menuController.getItemDetail)
+// POST - user submits the signup form -- signup a new user
+// http:localhost:5000/customer/register
+menuRouter.post('/register', passport.authenticate('local-signup', {
+    successRedirect : '/', // redirect to the homepage
+    failureRedirect : '/customer/register', // redirect to signup page
+    failureFlash : true // allow flash messages
+}));
 
-// handle the GET request to get one user
-menuRouter.get('/:user_ID', menuController.getOneUser)
+// LOGOUT
+menuRouter.post('/logout', function(req, res) {
+    // save the favourites
+    req.logout();
+    req.flash('');
+    res.redirect('/customer/');
+});
+//authentication END
 
-// handle the POST request for a new order
-menuRouter.post('/:user_ID/order', menuController.orderItems);
+//
+//menuRouter.get('/:user_ID', menuController.getOneUser)
+menuRouter.get('/my-orders', utilities.isLoggedIn, menuController.getAllUserOrders);
 
-// handle the GET request for all orders
-menuRouter.get('/:user_ID/all-orders', menuController.getAllUserOrders)
-
-menuRouter.get('/:user_ID/all-orders/:order_ID',menuController.getOrderDetail)
-
-menuRouter.get('/my-orders', menuController.loggedIn_MyOrders);
-menuRouter.get('/my-orders/:orderID', menuController.loggedIn_OrderDetails);
-
+menuRouter.get('/my-orders/:order_ID', utilities.isLoggedIn, menuController.getOrderDetail);
 
 // export the router
 module.exports = menuRouter
