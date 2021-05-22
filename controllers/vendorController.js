@@ -5,6 +5,16 @@ const Order = mongoose.model("orders")
 const Vendor = mongoose.model("vendors")
 
 
+// middleware to ensure vendor is open
+async function checkIsOpen(req, res, next){
+    const vendor = await Vendor.findOne( {van_ID: req.params.van_ID} );
+    console.log(vendor)
+    if (vendor.isOpen)
+        return next();
+    // if not open, redirect to location form
+    res.render('vendor/setLocation');
+}
+
 // get details of a vendor
 const getOneVendor = async(req,res)=>{
     try{
@@ -12,7 +22,6 @@ const getOneVendor = async(req,res)=>{
         vendor = await Vendor.findOne( {van_ID: req.params.van_ID} )
         if (vendor== null) res.send("Queried vendor not found");
         else res.send(vendor);
-
     }catch(err){
         console.log(err)
     }
@@ -22,7 +31,7 @@ const getOneVendor = async(req,res)=>{
 const getOneOrder = async(req,res)=>{
     try{
         order = await Order.findOne( {van_ID: req.params.van_ID, _id: req.params.order_id})
-        res.send(order)
+        res.render('vendor/orderDetail',{order})
     }catch(err){
         console.log(err)
     }
@@ -33,7 +42,7 @@ const updateOrderStatus = async(req,res)=>{
     try{
         await Order.findOneAndUpdate({_id: req.params.order_id}, {status: req.body.status}, {returnNewDocument: true}, function (err){    
         if (err) res.send('failed to update');
-        else {res.send('updated record');}
+        else {res.render('vendor/orders');}
         })
     }catch(err){
         console.log(err)
@@ -45,7 +54,7 @@ const markAsFulfilled = async(req,res)=>{
     try{
         await Order.findOneAndUpdate({_id: req.params.order_id}, {status: "Fulfilled"}, {returnNewDocument: true}, function (err){    
         if (err) res.send('failed to update');
-        else {res.send('updated record to fulfilled');}
+        else {res.render('vendor/orders');}
         })
     }catch(err){
         console.log(err)
@@ -57,22 +66,34 @@ const markAsComplete = async(req,res)=>{
     try{
         await Order.findOneAndUpdate({_id: req.params.order_id}, {status: "Complete"}, {returnNewDocument: true}, function (err){    
         if (err) res.send('failed to update');
-        else {res.send('updated record to complete');}
+        else {res.render('vendor/orders');}        
         })
     }catch(err){
         console.log(err)
     }
 }
 
-
 // set the status of the van
 const showSetVanStatus = async (req,res) => {
     try {
-        await Vendor.findOneAndUpdate({van_ID: req.params.van_ID}, 
+        const vendor = await Vendor.findOne( {van_ID: req.params.van_ID} )
+        res.render("vendor/setLocation", {vendor});
+    }
+    catch(err){
+        console.log(err)
+    }
+}
+
+
+// set the status of the van
+const SetVanStatus = async (req,res) => {
+    try {
+        console.log("setting location");
+        const vendor = await Vendor.findOneAndUpdate({van_ID: req.params.van_ID}, 
             {latitude: req.body.latitude, longtitude: req.body.longtitude, 
                 isReadyForOrder: req.body.isReadyForOrder, locDescription: req.body.locDescription}, function (err){
         if (err) res.send('failed to update');
-        else {res.send('updated record');}
+        else {res.render("vendor/", {vendor});}
         })
     }
     catch(err){
@@ -83,7 +104,11 @@ const showSetVanStatus = async (req,res) => {
 //get all outstanding orders of a vendor (unfulfilled/fulfilled)
 const getAllOutstandingOrders = async(req, res)=>{
     try{
-       res.send(await Order.find({van_ID: req.params.van_ID, status :{$in: ['Fulfilled', 'Unfulfilled']}}))
+       const orders = await Order.find({van_ID: req.params.van_ID, status :{$in: ['Unfulfilled']}})
+       orders.sort(function(a,b){
+           return parseInt(a.when) - parseInt(b.when);
+       })
+       res.render('vendor/orders',{"orders": orders})
     //    res.send(await Order.find({van_ID: req.params.van_ID}));
     }catch(err){
         console.log(err)
@@ -103,9 +128,11 @@ module.exports = {
     getOneVendor,
     getOneOrder,
     showSetVanStatus,
+    SetVanStatus,
     updateOrderStatus,
     markAsFulfilled,
     markAsComplete,
     getAllOutstandingOrders,
-    getAllOrders
+    getAllOrders,
+    checkIsOpen
 }

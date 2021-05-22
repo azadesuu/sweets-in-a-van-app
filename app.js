@@ -34,7 +34,8 @@ const dotenv = require('dotenv').config()
 
 
 // configure passport authenticator
-require('./config/passport')(passport);
+require('./config/userPassport')(passport);
+require('./config/vendorPassport')(passport);
 
 const app = express()
 

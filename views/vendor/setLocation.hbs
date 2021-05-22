@@ -1,18 +1,18 @@
-<link rel="stylesheet" href="/css/reset.css">
-<link rel="stylesheet" href="/css/login.css">
+{{!-- <link rel="stylesheet" href="/css/reset.css">
+<link rel="stylesheet" href="/css/login.css"> --}}
 <body>
     <div class="top">
         <div text-align='left'><a href="/vendor/homepage">< </a></div>
-        <div>Log in</div>
+        <div>set location</div>
     </div>
     <div class="login-card">
         <div class="login-content">
-            <form class="login-form" action="/vendor/setLocation" method="post">
+            <form class="login-form" action="/vendor/{{vendor.van_ID}}/setLocation" method="put">
                     <div>
                         <label for="" >
-                            <p>Van Name:</p>
+                            <p>Location:</p>
                             <p>
-                                <input id='van name' name="van name" value="" placeholder="Enter your park location">
+                                <input id='location' name="location" value="" placeholder="Enter your park location">
                             </p>
                         </label>
                     </div>

@@ -3,7 +3,7 @@ const utilities = require("./utility");
 // add our router 
 const menuRouter = express.Router()
 const passport = require('passport');
-require('../config/passport')(passport);
+require('../config/userPassport')(passport);
 
 // require the customer controller
 const menuController = require('../controllers/menuController.js')
@@ -13,11 +13,10 @@ const menuController = require('../controllers/menuController.js')
 //homepage
 menuRouter.get("/homepage", (req, res) => {
     return res.render('customer/customer-home', {req, "loggedin": req.isAuthenticated()});
- })
+})
 
 // handle the GET request to get all menu items from a certain van
 menuRouter.get('/menu', menuController.displayMenu_hbs)
-
 
 menuRouter.get("/login", (req, res) => {
     res.render('customer/login');
@@ -57,12 +56,12 @@ menuRouter.post('/logout', function(req, res) {
 
 //
 //menuRouter.get('/:user_ID', menuController.getOneUser)
-menuRouter.get('/:user_id/my-orders', utilities.isLoggedIn, menuController.getAllUserOrders);
+menuRouter.get('/:user_id/my-orders', utilities.customerIsLoggedIn, menuController.getAllUserOrders);
 
-menuRouter.get('/:user_id/my-orders/:order_ID', utilities.isLoggedIn, menuController.getOrderDetail);
+menuRouter.get('/:user_id/my-orders/:order_ID', utilities.customerIsLoggedIn, menuController.getOrderDetail);
 
-menuRouter.get('/:van_id/order-now', utilities.isLoggedIn, menuController.displayMenu_order);
-menuRouter.get('/:van_id/order-now/cart', utilities.isLoggedIn, menuController.showCart);
+menuRouter.get('/:van_id/order-now', utilities.customerIsLoggedIn, menuController.displayMenu_order);
+menuRouter.get('/:van_id/order-now/cart', utilities.customerIsLoggedIn, menuController.showCart);
 
 
 // export the router    

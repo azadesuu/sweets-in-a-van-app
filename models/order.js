@@ -10,11 +10,13 @@ const orderItemSchema = new mongoose.Schema({
 const orderSchema = new mongoose.Schema({
     user_ID : {type: String, required: true, ref: 'User'},
     van_ID : {type: String, required: true, ref :'Vendor'},
+    order_ID:{type: String, required: true},
     orderItems : [orderItemSchema],
     status : {type: String, default: 'Unfulfilled'},
     paymentTotal : {type: Number, default: 0},
     late_fulfillment : {type: Boolean, default: false},
-    when: {type: Date, default: Date.now}
+    when: {type: Date, default: Date.now},
+    timeRemainingForDiscount:{type:Number}
 },{ collection : 'orders' })
 
 const Order = mongoose.model('orders', orderSchema)

@@ -1,7 +1,7 @@
 <link rel="stylesheet" href='/css/userOrders.css'
 <body>
     <div class = "top">
-        <div text-align='left'><a href="/vendor/homepage">< </a></div>
+        <div text-align='left'><a href="/vendor/">< </a></div>
         <div>
             <p>ORDERS</p>
         </div>
@@ -17,10 +17,9 @@
     <ul>
             {{#each orders}}
             <li class='li-wrap'>
-                
                 {{!-- using _id for now because there is no id for order --}}
                 <div class = "left">
-                    <a href="orders/{{this._id}}">ORDER #{{this._id}}</a>
+                    <a href="orders/{{this.order_ID}}">ORDER #{{this.order_ID}}</a>
                 </div>
                 <div class = "right">
                     {{this.when}}
