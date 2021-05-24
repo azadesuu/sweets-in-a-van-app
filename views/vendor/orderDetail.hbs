@@ -1,20 +1,26 @@
-<link rel="stylesheet" href="/css/reset.css">
-<link rel="stylesheet" href="/css/orderDetail.css">
+{{!-- <link rel="stylesheet" href="/css/reset.css">
+<link rel="stylesheet" href="/css/orderDetail.css"> --}}
 <body>
     <div class = "top">
-        <div text-align='left'><a href="/vendor/{{vendor.name}}/orders">< </a></div>
+        <div text-align='left'><a href="/vendor/{{vendor.van_ID}}/orders">< </a></div>
         {{!-- <div> </div> --}}
         <div>
-            <p>ORDER #{{order._id}}</p>
+            <p>ORDER #{{order.order_ID}}</p>
         </div>
     </div>
     <div class='cards'>
                 <div>
-                     <p>Order time: {{order.when}}</p>
-                     <p>Van Name: {{order.van_ID}}</p>
+                     {{!-- <p>Order time: {{order.when}}</p> --}}
+                     {{!-- <p>Van Name: {{order.van_ID}}</p> --}}
                 {{!-- need van location in modal --}}
-                     <p>Van Location: {{order.van_latitude}}, {{order.van_longtitude}}</p>
-                     <p>time remain before discount: {{order.timeRemainingForDiscount}}</p>
+                    {{!-- <p>order ID: {{order.order_ID}}</p> --}}
+                    <p>customer given name: {{order.customerGivenName}}</p>
+                    {{!-- <p>Van Location: {{order.van_latitude}}, {{order.van_longtitude}}</p> --}}
+                    <p>time remain before discount:</p>
+                    <div id ="clockdiv">
+                        minutes: <span class = "minutes"></span>
+                        seconds: <span class = "seconds"></span>
+                    </div>
                 </div>
     </div>
     <div class='card'>
@@ -30,15 +36,19 @@
         </div>
     </div>
 
-
-
     <div >
-        <div id='buttons'>
-            <p>mark this order fulfilled</p>
-        </div>
-        <div  id='buttons'>
+        <form action="/vendor/{{vendor.van_ID}}/orders/{{order.order_ID}}/fulfilled" method="POST">
+        <p class="submit-btn">
+            <button type='submit'>mark this order fulfilled</button>
+        </p>
+        </form>
+        {{!-- <form action="/vendor/{{vendor.van_ID}}/orders/{{order.order_ID}}/complete" method="POST">
+        <input type = "checkbox">
             <p>mark this order has been picked up</p>
-        </div>
-        
+        </input>
+        <p class="submit-btn">
+            <button type='submit'>submit</button>
+        </p>
+        </form> --}}
     </div>
 </body>

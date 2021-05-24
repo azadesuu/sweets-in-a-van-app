@@ -30,8 +30,10 @@ const getOneVendor = async(req,res)=>{
 //get details of an order (of the van)
 const getOneOrder = async(req,res)=>{
     try{
-        order = await Order.findOne( {van_ID: req.params.van_ID, _id: req.params.order_id})
-        res.render('vendor/orderDetail',{order})
+        console.log(req.params)
+        order = await Order.findOne( {van_ID: req.params.van_ID, order_ID: req.params.order_ID}).lean()
+        vendor = await Vendor.findOne( {van_ID: req.params.van_ID} ).lean()
+        res.render('vendor/orderDetail',{"order":order, "vendor":vendor})
     }catch(err){
         console.log(err)
     }
@@ -52,9 +54,10 @@ const updateOrderStatus = async(req,res)=>{
 //marks an order as Fulfilled
 const markAsFulfilled = async(req,res)=>{
     try{
-        await Order.findOneAndUpdate({_id: req.params.order_id}, {status: "Fulfilled"}, {returnNewDocument: true}, function (err){    
+        console.log(req.params)
+        await Order.findOneAndUpdate({order_ID: req.params.order_ID}, {status: "Fulfilled"}, {returnNewDocument: true}, function (err){    
         if (err) res.send('failed to update');
-        else {res.render('vendor/orders');}
+        else {res.render('vendor/vendor-home');}
         })
     }catch(err){
         console.log(err)
@@ -64,9 +67,10 @@ const markAsFulfilled = async(req,res)=>{
 //marks an order as Complete
 const markAsComplete = async(req,res)=>{
     try{
-        await Order.findOneAndUpdate({_id: req.params.order_id}, {status: "Complete"}, {returnNewDocument: true}, function (err){    
+        console.log(req.params.order_ID)
+        await Order.findOneAndUpdate({order_ID: req.params.order_ID}, {status: "Complete"}, {returnNewDocument: true}, function (err){    
         if (err) res.send('failed to update');
-        else {res.render('vendor/orders');}        
+        else {res.render('vendor/vendor-home');}        
         })
     }catch(err){
         console.log(err)
@@ -76,7 +80,7 @@ const markAsComplete = async(req,res)=>{
 // set the status of the van
 const showSetVanStatus = async (req,res) => {
     try {
-        const vendor = await Vendor.findOne( {van_ID: req.params.van_ID} )
+        const vendor = await Vendor.findOne( {van_ID: req.params.van_ID} ).lean()
         res.render("vendor/setLocation", {vendor});
     }
     catch(err){
@@ -88,15 +92,25 @@ const showSetVanStatus = async (req,res) => {
 // set the status of the van
 const SetVanStatus = async (req,res) => {
     try {
+        console.log(req.params)
+        console.log(req.body)
         console.log("setting location");
         const vendor = await Vendor.findOneAndUpdate({van_ID: req.params.van_ID}, 
             {latitude: req.body.latitude, longtitude: req.body.longtitude, 
-                isReadyForOrder: req.body.isReadyForOrder, locDescription: req.body.locDescription}, function (err){
-        if (err) res.send('failed to update');
-        else {res.render("vendor/", {vendor});}
-        })
+                isReadyForOrder: true, locDescription: req.body.locDescription}).lean()
+        res.render('vendor/vendor-home', {vendor})
+    }catch(err){
+        console.log(err)
     }
-    catch(err){
+}
+
+const markLeavingLocation = async (req,res) => {
+    try {
+        const vendor = await Vendor.findOneAndUpdate({van_ID: req.params.van_ID}, 
+            {latitude: req.body.latitude, longtitude: req.body.longtitude, 
+                isReadyForOrder: req.body.isReadyForOrder, locDescription: req.body.locDescription}).lean()
+        res.render('vendor/vendor-home', {vendor})
+    }catch(err){
         console.log(err)
     }
 }
@@ -104,7 +118,7 @@ const SetVanStatus = async (req,res) => {
 //get all outstanding orders of a vendor (unfulfilled/fulfilled)
 const getAllOutstandingOrders = async(req, res)=>{
     try{
-       const orders = await Order.find({van_ID: req.params.van_ID, status :{$in: ['Unfulfilled']}})
+       const orders = await Order.find({van_ID: req.params.van_ID, status :{$in: ['Unfulfilled']}}).lean()
        orders.sort(function(a,b){
            return parseInt(a.when) - parseInt(b.when);
        })
@@ -118,7 +132,8 @@ const getAllOutstandingOrders = async(req, res)=>{
 //get all orders of a vendor
 const getAllOrders = async(req, res)=>{
     try{
-       res.send(await Order.find({van_ID: req.params.van_ID}));
+        orders = await Order.find({van_ID: req.params.van_ID}).lean();
+        res.render('vendor/orders',{"orders": orders})
     }catch(err){
         console.log(err)
     }
@@ -134,5 +149,6 @@ module.exports = {
     markAsComplete,
     getAllOutstandingOrders,
     getAllOrders,
-    checkIsOpen
+    checkIsOpen,
+    markLeavingLocation
 }

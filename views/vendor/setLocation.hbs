@@ -2,17 +2,23 @@
 <link rel="stylesheet" href="/css/login.css"> --}}
 <body>
     <div class="top">
-        <div text-align='left'><a href="/vendor/homepage">< </a></div>
+        <div text-align='left'><a href="/vendor/">< </a></div>
         <div>set location</div>
     </div>
     <div class="login-card">
         <div class="login-content">
-            <form class="login-form" action="/vendor/{{vendor.van_ID}}/setLocation" method="put">
+            <form class="login-form" action="/vendor/{{vendor.van_ID}}/setLocation" method="post">
                     <div>
-                        <label for="" >
+                        <label for="">
                             <p>Location:</p>
                             <p>
-                                <input id='location' name="location" value="" placeholder="Enter your park location">
+                                <input id='locDescription' name="locDescription" value="" placeholder="Enter your park location">
+                            </p>
+                            <p>
+                                <input id='latitude' name="latitude" value="" placeholder="Enter your latitude">
+                            </p>
+                            <p>
+                                <input id='longtitude' name="longtitude" value="" placeholder="Enter your longtitude">
                             </p>
                         </label>
                     </div>

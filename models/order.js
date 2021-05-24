@@ -1,5 +1,4 @@
 const mongoose = require("mongoose")
-// const menu = require("./menu.js")
 
 const orderItemSchema = new mongoose.Schema({
     item_name : {type: String},
@@ -16,8 +15,11 @@ const orderSchema = new mongoose.Schema({
     paymentTotal : {type: Number, default: 0},
     late_fulfillment : {type: Boolean, default: false},
     when: {type: Date, default: Date.now},
-    timeRemainingForDiscount:{type:Number}
+    timeRemainingForDiscount:{type:Number, default: 900},
+    customerGivenName:{type:String,default: ""}
 },{ collection : 'orders' })
+
+
 
 const Order = mongoose.model('orders', orderSchema)
 const OrderItem = mongoose.model('order_items', orderItemSchema)

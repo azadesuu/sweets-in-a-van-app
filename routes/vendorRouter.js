@@ -10,7 +10,6 @@ const Vendor = mongoose.model("vendors")
 
 
 const vendorController = require('../controllers/vendorController.js');
-
 vendorRouter.get("/login", (req, res) => {
     res.render('vendor/login');
 });
@@ -27,7 +26,8 @@ vendorRouter.post('/login', passport.authenticate('local-login-vendor', {
 vendorRouter.get("/",async(req,res)=>{
     console.log(req.session)
     const vendor = await Vendor.findOne( {vanname: req.session.vanname}).lean()
-    // console.log(vendor)
+    console.log(vendor)
+    console.log(req.isAuthenticated())
     return res.render('vendor/vendor-home',{"vendor":vendor,"loggedin":req.isAuthenticated()})
 })
 
@@ -37,7 +37,7 @@ vendorRouter.get('/:van_ID',utilities.vendorIsLoggedIn,vendorController.getOneVe
 vendorRouter.get('/:van_ID/setLocation', vendorController.showSetVanStatus)
 
 // handle the PUT request to update one vendor's status
-vendorRouter.put('/:van_ID/setLocation', vendorController.SetVanStatus)
+vendorRouter.post('/:van_ID/setLocation', vendorController.SetVanStatus)
 
 // handle the GET request to get all of a vendor's orders
 vendorRouter.get('/:van_ID/all-orders',utilities.vendorIsLoggedIn, vendorController.checkIsOpen,vendorController.getAllOrders)
@@ -46,15 +46,15 @@ vendorRouter.get('/:van_ID/all-orders',utilities.vendorIsLoggedIn, vendorControl
 vendorRouter.get('/:van_ID/orders',utilities.vendorIsLoggedIn, vendorController.checkIsOpen,vendorController.getAllOutstandingOrders)
 
 // handle the GET request to get one order of a vendor
-vendorRouter.get('/:van_ID/orders/:order_id',utilities.vendorIsLoggedIn, vendorController.checkIsOpen,vendorController.getOneOrder)
+vendorRouter.get('/:van_ID/orders/:order_ID',utilities.vendorIsLoggedIn, vendorController.checkIsOpen,vendorController.getOneOrder)
 
-// handle the PUT request to update one vendor's order status (flexible)
-vendorRouter.put('/:van_ID/orders/:order_id/change-status',utilities.vendorIsLoggedIn, vendorController.checkIsOpen,vendorController.updateOrderStatus)
+// // handle the PUT request to update one vendor's order status (flexible)
+// vendorRouter.put('/:van_ID/orders/:order_ID/change-status',utilities.vendorIsLoggedIn, vendorController.checkIsOpen,vendorController.updateOrderStatus)
 
 // handle the PUT request to update one vendor's order status to fulfilled
-vendorRouter.put('/:van_ID/orders/:order_id/fulfilled',utilities.vendorIsLoggedIn, vendorController.checkIsOpen,vendorController.markAsFulfilled)
+vendorRouter.post('/:van_ID/orders/:order_ID/fulfilled',utilities.vendorIsLoggedIn,vendorController.markAsFulfilled)
 
 // handle the PUT request to update one vendor's order status to complete
-vendorRouter.put('/:van_ID/orders/:order_id/complete',utilities.vendorIsLoggedIn, vendorController.checkIsOpen,vendorController.markAsComplete)
+vendorRouter.post('/:van_ID/orders/:order_ID/complete',utilities.vendorIsLoggedIn,vendorController.markAsComplete)
 
 module.exports = vendorRouter

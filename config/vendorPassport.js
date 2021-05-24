@@ -65,8 +65,8 @@ module.exports = function(passport) {
                         req.session.vanname = vanname; // for demonstration of using express-session
                         // done() is used by the strategy to set the authentication status with
                         // details of the vendor who was authenticated
-                        // console.log("this vendor is authenticated")
-                        // console.log(vendor)
+                        console.log("this vendor is authenticated")
+                        console.log(vendor)
                         return done(null, vendor, req.flash('loginMessage', 'Login successful'));
                     }
                 });
