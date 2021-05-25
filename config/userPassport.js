@@ -14,7 +14,6 @@ const JwtStrategy = passportJWT.Strategy;
 const ExtractJwt = passportJWT.ExtractJwt;
 
 module.exports = function(passport) {
-    console.log("alo");
     // these two functions are used by passport to store information
     // in and retrieve data from sessions. We are using user's object id
     passport.serializeUser(function(user, done) {
@@ -51,14 +50,14 @@ module.exports = function(passport) {
                         return done(null, false, req.flash('loginMessage', 'No user found.'));
 
                     if (!user.validPassword(password)){
-                        console.log(req.body)
+                        // console.log(req.body)
                         // false in done() indicates to the strategy that authentication has
                         // failed
                         return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.'));
                     }
                     // otherwise, we put the user's email in the session
                     else {
-                        console.log(req.body)
+                        // console.log(req.body)
                         // in app.js, we have indicated that we will be using sessions
                         // the server uses the included modules to create and manage
                         // sessions. each client gets assigned a unique identifier and the
@@ -68,7 +67,7 @@ module.exports = function(passport) {
                         
                         // done() is used by the strategy to set the authentication status with
                         // details of the user who was authenticated
-                        console.log(user)
+                        // console.log(user)
                         return done(null, user, req.flash('loginMessage', 'Login successful'));
                     }
                 });

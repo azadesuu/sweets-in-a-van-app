@@ -22,6 +22,63 @@ const displayHome = async(req,res) => {
     return res.render('customer/menuOrdering', {menu_items, "loggedin": req.isAuthenticated()});
  }
 
+
+
+
+
+const myProfile = async (req, res) => {
+    var name = await User.findOne({email: req.session.email}, {_id:false, first_name: true, last_name: true});
+    return res.render('customer/myProfile', {"email":req.session.email, "first_name":name.first_name, "last_name":name.last_name});
+}
+
+const myProfileEdit = async (req, res) => {
+    console.log(req.body);
+    User.updateOne(
+        {"email" : req.session.email},
+        {"$set" : { 
+            "last_name" : req.body.last_name
+            }
+        }
+    );
+    return res.render('customer/home');
+}
+
+const myOrder = async (req, res) => {
+    return res.render('customer/myProfile');
+}
+
+const myOrderDetail = async (req, res) => {
+    return res.render('customer/myProfile');
+}
+
+const myOrderRate = async (req, res) => {
+    return res.render('customer/myProfile');
+}
+
+const getVan = async (req, res) => {
+    return res.render('customer/myProfile');
+}
+
+const getVanDetail = async (req, res) => {
+    return res.render('customer/myProfile');
+}
+
+const getVanMenu = async (req, res) => {
+    return res.render('customer/myProfile');
+}
+
+const orderInVanMenu = async (req, res) => {
+    return res.render('customer/myProfile');
+}
+
+const getVanCart = async (req, res) => {
+    return res.render('customer/myProfile');
+}
+
+const payInVan = async (req, res) => {
+    return res.render('customer/myProfile');
+}
+
 //returns detail of a user
 const getOneUser = async (req, res) => {
     try {
@@ -97,5 +154,7 @@ module.exports = {
     getItemDetail,
     getOneUser,
     getOrderDetail,
-    showCart
+    showCart,
+    myProfile,
+    myProfileEdit
 }

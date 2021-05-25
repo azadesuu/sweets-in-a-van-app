@@ -11,12 +11,12 @@ const menuController = require('../controllers/menuController.js')
 //authentication
 
 //homepage
-menuRouter.get("/homepage", (req, res) => {
-    return res.render('customer/customer-home', {req, "loggedin": req.isAuthenticated()});
+menuRouter.get("/home", (req, res) => {
+    return res.render('customer/home', {req, "loggedin": req.isAuthenticated()});
 })
 
-// handle the GET request to get all menu items from a certain van
-menuRouter.get('/menu', menuController.displayMenu_hbs)
+// // handle the GET request to get all menu items from a certain van
+// menuRouter.get('/menu', menuController.displayMenu_hbs)
 
 menuRouter.get("/login", (req, res) => {
     res.render('customer/login');
@@ -25,7 +25,7 @@ menuRouter.get("/login", (req, res) => {
 // POST login form -- authenticate user
 // http:localhost:5000/customer/login
 menuRouter.post('/login', passport.authenticate('local-login', {
-    successRedirect : '/customer/homepage', // redirect to the homepage
+    successRedirect : '/customer/home', // redirect to the homepage
     failureRedirect : '/customer/login', // redirect back to the login page if there is an error
     failureFlash : true // allow flash messages
 }));
@@ -40,7 +40,7 @@ menuRouter.get("/register", (req, res) => {
 // POST - user submits the signup form -- signup a new user
 // http:localhost:5000/customer/register
 menuRouter.post('/register', passport.authenticate('local-signup', {
-    successRedirect : '/customer/homepage', // redirect to the homepage
+    successRedirect : '/customer/home', // redirect to the homepage
     failureRedirect : '/customer/register', // redirect to signup page
     failureFlash : true // allow flash messages
 }));
@@ -50,18 +50,33 @@ menuRouter.post('/logout', function(req, res) {
     // save the favourites
     req.logout();
     req.flash('');
-    res.redirect('/customer/homepage');
+    res.redirect('/customer/home');
 });
 //authentication END
 
 //
 //menuRouter.get('/:user_ID', menuController.getOneUser)
-menuRouter.get('/:user_id/my-orders', utilities.customerIsLoggedIn, menuController.getAllUserOrders);
 
-menuRouter.get('/:user_id/my-orders/:order_ID', utilities.customerIsLoggedIn, menuController.getOrderDetail);
+menuRouter.get('/my-profile', menuController.myProfile);
+menuRouter.get('/my-profile/edit', (req, res) => {
+    return res.render('customer/myProfileEdit');
+});
+menuRouter.post('/my-profile/edit', menuController.myProfileEdit);
+menuRouter.get('/my-orders');
+menuRouter.get('/my-orders/:order_ID');
+menuRouter.get('/my-orders/:order_ID/rate');
+menuRouter.get('/:van_id');
+menuRouter.get('/:van_id/menu');
+menuRouter.get('/:van_id/menu/order');
+menuRouter.get('/:van_id/menu/order/cart');
+menuRouter.get('/:van_id/menu/order/payment');
 
-menuRouter.get('/:van_id/order-now', utilities.customerIsLoggedIn, menuController.displayMenu_order);
-menuRouter.get('/:van_id/order-now/cart', utilities.customerIsLoggedIn, menuController.showCart);
+// menuRouter.get('/:user_id/my-orders', utilities.customerIsLoggedIn, menuController.getAllUserOrders);
+
+// menuRouter.get('/:user_id/my-orders/:order_ID', utilities.customerIsLoggedIn, menuController.getOrderDetail);
+
+// menuRouter.get('/:van_id/order-now', utilities.customerIsLoggedIn, menuController.displayMenu_order);
+// menuRouter.get('/:van_id/order-now/cart', utilities.customerIsLoggedIn, menuController.showCart);
 
 
 // export the router    
