@@ -11,9 +11,7 @@ const menuController = require('../controllers/menuController.js')
 //authentication
 
 //homepage
-menuRouter.get("/home", (req, res) => {
-    return res.render('customer/home', {req, "loggedin": req.isAuthenticated()});
-})
+menuRouter.get("/home", menuController.homePage);
 
 // // handle the GET request to get all menu items from a certain van
 // menuRouter.get('/menu', menuController.displayMenu_hbs)
@@ -46,7 +44,7 @@ menuRouter.post('/register', passport.authenticate('local-signup', {
 }));
 
 // LOGOUT
-menuRouter.post('/logout', function(req, res) {
+menuRouter.get('/logout', function(req, res) {
     // save the favourites
     req.logout();
     req.flash('');

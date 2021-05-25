@@ -20,8 +20,12 @@
 
 <div class="vans">
     <ul>
-        <li class="van-item">
-            <p>A van</p>
+        <li class="vans" >
+            {{#each van}}
+                <li class="li-wrap">
+                    <a href="/customer/{{this.van_ID}}">{{this.van_ID}}</a>
+                </li>
+            {{/each}}
         </li>
     </ul>
 </div>
