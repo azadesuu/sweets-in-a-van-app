@@ -62,8 +62,8 @@ menuRouter.get('/my-profile/edit', (req, res) => {
     return res.render('customer/myProfileEdit');
 });
 menuRouter.post('/my-profile/edit', menuController.myProfileEdit);
-menuRouter.get('/my-orders');
-menuRouter.get('/my-orders/:order_ID');
+menuRouter.get('/my-orders', menuController.getAllUserOrders);
+menuRouter.get('/my-orders/:order_ID', menuController.getOrderDetail);
 menuRouter.get('/my-orders/:order_ID/rate');
 menuRouter.get('/:van_id');
 menuRouter.get('/:van_id/menu');

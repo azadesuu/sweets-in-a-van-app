@@ -43,14 +43,6 @@ const myProfileEdit = async (req, res) => {
     return res.render('customer/home');
 }
 
-const myOrder = async (req, res) => {
-    return res.render('customer/myProfile');
-}
-
-const myOrderDetail = async (req, res) => {
-    return res.render('customer/myProfile');
-}
-
 const myOrderRate = async (req, res) => {
     return res.render('customer/myProfile');
 }
@@ -103,7 +95,8 @@ const getAllItems = async (req, res) => {
 //get all orders related to user
 const getAllUserOrders = async (req, res) => {
     try {
-        orders = await Order.find({user_ID: req.params.user_id}).lean()
+        user = await User.findOne({email: req.session.email}, {}).lean()
+        orders = await Order.find({user_ID: user.user_ID}, {}).lean()
         return res.render('customer/userOrders', {orders})
     } catch (err) {
         res.status(400)

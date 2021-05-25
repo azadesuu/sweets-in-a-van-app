@@ -1,7 +1,7 @@
 <link rel="stylesheet" href='/css/userOrders.css'
 <body>
     <div class = "top">
-        <div text-align='left'><a href="/customer/homepage">< </a></div>
+        <div text-align='left'><a href="/customer/home">< </a></div>
         <div>
             <p>ORDERS</p>
         </div>
@@ -20,7 +20,7 @@
                 
                 {{!-- using _id for now because there is no id for order --}}
                 <div class = "left">
-                    <a href="my-orders/{{this._id}}">ORDER #{{this._id}}</a>
+                    <a href="my-orders/{{this._id}}">ORDER#{{this._id}}</a>
                 </div>
                 <div class = "right">
                     {{this.when}}
