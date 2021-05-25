@@ -118,11 +118,12 @@ const markLeavingLocation = async (req,res) => {
 //get all outstanding orders of a vendor (unfulfilled/fulfilled)
 const getAllOutstandingOrders = async(req, res)=>{
     try{
-       const orders = await Order.find({van_ID: req.params.van_ID, status :{$in: ['Unfulfilled']}}).lean()
-       orders.sort(function(a,b){
+        const vendor = await Vendor.findOne( {van_ID: req.params.van_ID} )
+        const orders = await Order.find({van_ID: req.params.van_ID, status :{$in: ['Unfulfilled']}}).lean()
+        orders.sort(function(a,b){
            return parseInt(a.when) - parseInt(b.when);
-       })
-       res.render('vendor/orders',{"orders": orders})
+        })
+       res.render('vendor/orders',{"orders": orders,"vendor":vendor})
     //    res.send(await Order.find({van_ID: req.params.van_ID}));
     }catch(err){
         console.log(err)
@@ -132,11 +133,40 @@ const getAllOutstandingOrders = async(req, res)=>{
 //get all orders of a vendor
 const getAllOrders = async(req, res)=>{
     try{
+        const vendor = await Vendor.findOne( {van_ID: req.params.van_ID} ).lean()
         orders = await Order.find({van_ID: req.params.van_ID}).lean();
-        res.render('vendor/orders',{"orders": orders})
+        res.render('vendor/orders',{"orders": orders, "vendor":vendor})
     }catch(err){
         console.log(err)
     }
+}
+
+const searchOrder = async (req, res) => { // search database for foods
+
+	// if we get this far, there are no validation errors, so proceed to do the search ...
+    console.log(req.body)
+	var query = {}
+    const vendor = await Vendor.findOne( {van_ID: req.params.van_ID} ).lean()
+    query["van_ID"] = vendor.van_ID
+	if (req.body.Order_ID !== '') {
+		query["order_ID"] = req.body.order_ID
+	}
+    if (req.body.fulfilled){
+        query["status"] = "fulfilled"
+        if(req.body.complete){
+            query["status"] = "complete" 
+        }
+    }
+	// the query has been constructed - now execute against the database
+
+	try {
+		const orders = await Order.find(query).lean()
+        console.log(query)
+        console.log(orders)
+		res.render('vendor/orders', {"orders": orders, "vendor": vendor})	
+	} catch (err) {
+		console.log(err)
+	}
 }
 
 module.exports = {
@@ -150,5 +180,6 @@ module.exports = {
     getAllOutstandingOrders,
     getAllOrders,
     checkIsOpen,
-    markLeavingLocation
+    markLeavingLocation,
+    searchOrder
 }
