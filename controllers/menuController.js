@@ -4,12 +4,34 @@ var mongo = require('mongodb');
 const Menu = mongoose.model("menu")
 const Order = mongoose.model("orders")
 const User = mongoose.model("users");
+const Vendor = mongoose.model("vendors");
 
-const displayHome = async(req,res) => {
-    var user_firstname = req.user.first_name;
-    console.log(req.user);
-    return res.render('customer/customer-home', {"user_first_name" : user_firstname, "loggedin": req.isAuthenticated()});
+const bcrypt = require('bcrypt-nodejs');
+
+const homePage = async(req, res) => {
+    if (req.session.email) {
+        var user = await User.findOne({email: req.session.email}, {}).lean();
+    } else {
+        var user = new User();
+        user.latitude = 0;
+        user.longtitude = 0;
+    }
+    var vans = await Vendor.find({}, {}).lean();
+    var i = 0;
+    var index = 0;
+    for (i=0;i<vans.length;i++) {
+        if (vans[i].latitude === null) {
+            vans.splice(i, 1)
+        }
+    }
+    console.log(user);
+    vans.sort(function(a,b) {
+        return ((a.latitude-user.latitude)**2+(a.longtitude-user.longtitude)**2)-((b.latitude-user.latitude)**2+(b.longtitude-user.longtitude)**2)
+    })
+    vans = vans.slice(0,5);
+    return res.render('customer/home', {req, "loggedin": req.isAuthenticated(), van: vans});
 }
+
 
  const displayMenu_hbs = async(req,res) => {
     menu_items = await Menu.find().lean();
@@ -32,11 +54,12 @@ const myProfile = async (req, res) => {
 }
 
 const myProfileEdit = async (req, res) => {
-    console.log(req.body);
-    User.updateOne(
+    await User.updateOne(
         {"email" : req.session.email},
         {"$set" : { 
-            "last_name" : req.body.last_name
+            "first_name" : req.body.first_name,
+            "last_name" : req.body.last_name,
+            "password" : bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
             }
         }
     );
@@ -141,7 +164,7 @@ const showCart = async(req,res)=>{
 module.exports = {
     getAllItems,
     getAllUserOrders,
-    displayHome,
+    homePage,
     displayMenu_hbs,
     displayMenu_order,
     getItemDetail,

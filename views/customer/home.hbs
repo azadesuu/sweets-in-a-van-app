@@ -20,8 +20,12 @@
 
 <div class="vans">
     <ul>
-        <li class="van-item">
-            <p>A van</p>
+        <li class="vans" >
+            {{#each van}}
+                <li class="li-wrap">
+                    <p> {{this.van_ID}} </p>
+                </li>
+            {{/each}}
         </li>
     </ul>
 </div>

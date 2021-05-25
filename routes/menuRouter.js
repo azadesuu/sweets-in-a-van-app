@@ -11,9 +11,7 @@ const menuController = require('../controllers/menuController.js')
 //authentication
 
 //homepage
-menuRouter.get("/home", (req, res) => {
-    return res.render('customer/home', {req, "loggedin": req.isAuthenticated()});
-})
+menuRouter.get("/home", menuController.homePage);
 
 // // handle the GET request to get all menu items from a certain van
 // menuRouter.get('/menu', menuController.displayMenu_hbs)
