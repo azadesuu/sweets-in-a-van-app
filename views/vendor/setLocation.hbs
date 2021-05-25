@@ -5,9 +5,9 @@
         <div text-align='left'><a href="/vendor/">< </a></div>
         <div>set location</div>
     </div>
-    <div class="login-card">
-        <div class="login-content">
-            <form class="login-form" action="/vendor/{{vendor.van_ID}}/setLocation" method="post">
+    <div class="setLoc-card">
+        <div class="setLoc-content">
+            <form class="Loc" action="/vendor/{{vendor.van_ID}}/setLocation" method="post">
                     <div>
                         <label for="">
                             <p>Location:</p>
@@ -25,6 +25,25 @@
                     <p class="submit-btn">
                         <button type='submit'>ready for business</button>
                     </p>
+            </form>
+            <form class="leave-form" action="/vendor/{{vendor.van_ID}}/setLocation/leave" method="post">
+                <p class="submit-btn">
+                    <div>
+                        <label for="">
+                            <p>leaving Location:</p>
+                            <p>
+                                <input id='locDescription' name="locDescription" value="" placeholder="Enter your park location">
+                            </p>
+                            <p>
+                                <input id='latitude' name="latitude" value="" placeholder="Enter your latitude">
+                            </p>
+                            <p>
+                                <input id='longtitude' name="longtitude" value="" placeholder="Enter your longtitude">
+                            </p>
+                        </label>
+                    </div>
+                        <button type='submit'>leave for business</button>
+                </p>
             </form>
         </div>
     </div>

@@ -39,6 +39,8 @@ vendorRouter.get('/:van_ID/setLocation', vendorController.showSetVanStatus)
 // handle the PUT request to update one vendor's status
 vendorRouter.post('/:van_ID/setLocation', vendorController.SetVanStatus)
 
+vendorRouter.post('/:van_ID/setLocation/leave', utilities.vendorIsLoggedIn,vendorController.markLeavingLocation)
+
 // handle the GET request to get all of a vendor's orders
 vendorRouter.get('/:van_ID/all-orders',utilities.vendorIsLoggedIn, vendorController.checkIsOpen,vendorController.getAllOrders)
 

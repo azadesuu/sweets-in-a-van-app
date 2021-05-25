@@ -108,7 +108,7 @@ const markLeavingLocation = async (req,res) => {
     try {
         const vendor = await Vendor.findOneAndUpdate({van_ID: req.params.van_ID}, 
             {latitude: req.body.latitude, longtitude: req.body.longtitude, 
-                isReadyForOrder: req.body.isReadyForOrder, locDescription: req.body.locDescription}).lean()
+                isReadyForOrder: false, locDescription: req.body.locDescription}).lean()
         res.render('vendor/vendor-home', {vendor})
     }catch(err){
         console.log(err)
