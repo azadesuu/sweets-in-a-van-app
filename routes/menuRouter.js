@@ -44,7 +44,7 @@ menuRouter.post('/register', passport.authenticate('local-signup', {
 }));
 
 // LOGOUT
-menuRouter.post('/logout', function(req, res) {
+menuRouter.get('/logout', function(req, res) {
     // save the favourites
     req.logout();
     req.flash('');
