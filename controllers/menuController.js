@@ -8,13 +8,15 @@ const Vendor = mongoose.model("vendors");
 
 const bcrypt = require('bcrypt-nodejs');
 
-const homePage = async(req, res) => {
+const postHomePage = async(req, res) => {
     if (req.session.email) {
         var user = await User.findOne({email: req.session.email}, {}).lean();
     } else {
         var user = new User();
-        user.latitude = 0;
-        user.longtitude = 0;
+        user.latitude = req.body.latitude;
+        user.longtitude = req.body.longtitude;
+        // user.latitude = 0;
+        // user.longtitude = 0;
     }
     var vans = await Vendor.find({}, {}).lean();
     var i = 0;
@@ -82,11 +84,11 @@ const getVanMenu = async (req, res) => {
 
 const orderInVanMenu = async (req, res) => {
     menu_items = await Menu.find().lean();
-    return res.render('customer/menuOrdering', {menu_items, "loggedin": req.isAuthenticated()});
+    return res.render('customer/menuOrdering', {van_id: req.params.van_id, menu_items, "loggedin": req.isAuthenticated()});
 }
 
 const getVanCart = async (req, res) => {
-    return res.render('customer/myProfile');
+    return res.render('customer/cart');
 }
 
 const payInVan = async (req, res) => {
@@ -163,7 +165,7 @@ const showCart = async(req,res)=>{
 module.exports = {
     getAllItems,
     getAllUserOrders,
-    homePage,
+    postHomePage,
     displayMenu_hbs,
     displayMenu_order,
     getItemDetail,
@@ -174,5 +176,6 @@ module.exports = {
     myProfileEdit,
     getVanDetail,
     getVanMenu,
-    orderInVanMenu
+    orderInVanMenu,
+    getVanCart
 }

@@ -2,11 +2,16 @@
 <p>Welcome to T16-Anything's landing page!</p>
 <p>This page only has links for GET requests</p>
 <h2>Customer</h2>
-<ul>
-<li><a href="/customer/menu">View menu</a></li>
-<li><a href="customer/menu/cappuccino">View a snack (Cappuccino)</a></li>
-<li><a href="customer/606b5d6f084dab212860f7f2">View Customer Details</a></li>
-</ul>
+
+<form class="login-form" action="/customer/home" method="post">
+    <input id='latitude' name="latitude" value="" hidden>
+    <input id='longitude' name="longitude" value="" hidden>
+    <button type="button" onclick="geoFindMe()">Share my location</button>
+    <button type="submit">Go to customer app</button>
+
+</form>
+{{!-- <button type="button" onclick="geoFindMe()">Share my location</button> --}}
+
 
 <h2>Vendor</h2>
 <ul>
@@ -17,3 +22,18 @@
 
 <h3>Authors:</h3>
 <p>Ying Shan, Yue Teng, Zixuan Liu, Bo Cheng, WenYao Li</p>
+
+<script>
+    function geoFindMe() {
+        function success(position) {
+            document.getElementById("latitude").value = position.coords.latitude; 
+            document.getElementById("longitude").value = position.coords.longitude; 
+        }
+
+        function error() {
+            status.textContent = 'Unable to retrieve your location';
+        }
+
+        navigator.geolocation.getCurrentPosition(success, error);
+    }
+</script>

@@ -11,7 +11,7 @@ const menuController = require('../controllers/menuController.js')
 //authentication
 
 //homepage
-menuRouter.get("/home", menuController.homePage);
+menuRouter.post("/home", menuController.postHomePage);
 
 // // handle the GET request to get all menu items from a certain van
 // menuRouter.get('/menu', menuController.displayMenu_hbs)
@@ -66,7 +66,7 @@ menuRouter.get('/my-orders/:order_ID/rate');
 menuRouter.get('/:van_id', menuController.getVanDetail);
 menuRouter.get('/:van_id/menu', menuController.getVanMenu);
 menuRouter.get('/:van_id/menu/order', menuController.orderInVanMenu);
-menuRouter.get('/:van_id/menu/order/cart');
+menuRouter.get('/:van_id/menu/order/cart', menuController.getVanCart);
 menuRouter.get('/:van_id/menu/order/payment');
 
 // menuRouter.get('/:user_id/my-orders', utilities.customerIsLoggedIn, menuController.getAllUserOrders);
