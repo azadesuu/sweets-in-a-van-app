@@ -15,12 +15,8 @@
                 {{!-- need van location in modal --}}
                     {{!-- <p>order ID: {{order.order_ID}}</p> --}}
                     <p>customer given name: {{order.customerGivenName}}</p>
-                    {{!-- <p>Van Location: {{order.van_latitude}}, {{order.van_longtitude}}</p> --}}
-                    <p>time remain before discount:</p>
-                    <div id ="clockdiv">
-                        minutes: <span class = "minutes"></span>
-                        seconds: <span class = "seconds"></span>
-                    </div>
+                    {{!-- <p>Van Location: {{order.van_latitude}}, {{order.van_lontitude}}</p> --}}
+                    <p >time remain before discount: <span id = "time">15:00</span></p>
                 </div>
     </div>
     <div class='card'>
@@ -49,3 +45,31 @@
         </form>
     </div>
 </body>
+
+<script>
+    {{!-- const mongoose = require("mongoose")
+    const Order = mongoose.model("orders") --}}
+
+    function startTimer(duration, display) {
+        var timer = duration, minutes, seconds;
+        setInterval(function () {
+            minutes = parseInt(timer / 60, 10);
+            seconds = parseInt(timer % 60, 10);
+
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            display.textContent = minutes + ":" + seconds;
+
+            if (--timer < 0) {
+                timer = duration;
+            }
+        }, 1000);
+    }
+
+    window.onload = function () {
+        var time = 900,
+            display = document.querySelector('#time');
+        startTimer(time, display);
+    };
+</script>
