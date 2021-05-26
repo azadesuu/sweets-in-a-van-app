@@ -81,7 +81,8 @@ const getVanMenu = async (req, res) => {
 }
 
 const orderInVanMenu = async (req, res) => {
-    return res.render('customer/myProfile');
+    menu_items = await Menu.find().lean();
+    return res.render('customer/menuOrdering', {menu_items, "loggedin": req.isAuthenticated()});
 }
 
 const getVanCart = async (req, res) => {
@@ -172,5 +173,6 @@ module.exports = {
     myProfile,
     myProfileEdit,
     getVanDetail,
-    getVanMenu
+    getVanMenu,
+    orderInVanMenu
 }

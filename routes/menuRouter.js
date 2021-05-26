@@ -65,7 +65,7 @@ menuRouter.get('/my-orders/:order_ID', menuController.getOrderDetail);
 menuRouter.get('/my-orders/:order_ID/rate');
 menuRouter.get('/:van_id', menuController.getVanDetail);
 menuRouter.get('/:van_id/menu', menuController.getVanMenu);
-menuRouter.get('/:van_id/menu/order');
+menuRouter.get('/:van_id/menu/order', menuController.orderInVanMenu);
 menuRouter.get('/:van_id/menu/order/cart');
 menuRouter.get('/:van_id/menu/order/payment');
 
