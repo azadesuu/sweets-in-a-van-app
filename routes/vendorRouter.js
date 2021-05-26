@@ -31,6 +31,13 @@ vendorRouter.get("/",async(req,res)=>{
     return res.render('vendor/vendor-home',{"vendor":vendor,"loggedin":req.isAuthenticated()})
 })
 
+vendorRouter.post('/logout', function(req, res) {
+    // save the favourites
+    req.logout();
+    req.flash('');
+    res.redirect('/');
+});
+
 // handle the GET request to get one vendor
 vendorRouter.get('/:van_ID',utilities.vendorIsLoggedIn,vendorController.getOneVendor)
 

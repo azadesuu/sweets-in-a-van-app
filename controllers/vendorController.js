@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 
-//import models 
+//import models
 const Order = mongoose.model("orders")
 const Vendor = mongoose.model("vendors")
 
@@ -42,7 +42,7 @@ const getOneOrder = async(req,res)=>{
 // update the status of the order
 const updateOrderStatus = async(req,res)=>{
     try{
-        await Order.findOneAndUpdate({_id: req.params.order_id}, {status: req.body.status}, {returnNewDocument: true}, function (err){    
+        await Order.findOneAndUpdate({_id: req.params.order_id}, {status: req.body.status}, {returnNewDocument: true}, function (err){
         if (err) res.send('failed to update');
         else {res.render('vendor/orders');}
         })
@@ -55,7 +55,7 @@ const updateOrderStatus = async(req,res)=>{
 const markAsFulfilled = async(req,res)=>{
     try{
         console.log(req.params)
-        await Order.findOneAndUpdate({order_ID: req.params.order_ID}, {status: "Fulfilled"}, {returnNewDocument: true}, function (err){    
+        await Order.findOneAndUpdate({order_ID: req.params.order_ID}, {status: "Fulfilled"}, {returnNewDocument: true}, function (err){
         if (err) res.send('failed to update');
         else {res.render('vendor/vendor-home');}
         })
@@ -68,9 +68,9 @@ const markAsFulfilled = async(req,res)=>{
 const markAsComplete = async(req,res)=>{
     try{
         console.log(req.params.order_ID)
-        await Order.findOneAndUpdate({order_ID: req.params.order_ID}, {status: "Complete"}, {returnNewDocument: true}, function (err){    
+        await Order.findOneAndUpdate({order_ID: req.params.order_ID}, {status: "Complete"}, {returnNewDocument: true}, function (err){
         if (err) res.send('failed to update');
-        else {res.render('vendor/vendor-home');}        
+        else {res.render('vendor/vendor-home');}
         })
     }catch(err){
         console.log(err)
@@ -95,8 +95,8 @@ const SetVanStatus = async (req,res) => {
         console.log(req.params)
         console.log(req.body)
         console.log("setting location");
-        const vendor = await Vendor.findOneAndUpdate({van_ID: req.params.van_ID}, 
-            {latitude: req.body.latitude, longtitude: req.body.longtitude, 
+        const vendor = await Vendor.findOneAndUpdate({van_ID: req.params.van_ID},
+            {latitude: req.body.latitude, longtitude: req.body.longtitude,
                 isReadyForOrder: true, locDescription: req.body.locDescription}).lean()
         res.render('vendor/vendor-home', {vendor})
     }catch(err){
@@ -106,8 +106,8 @@ const SetVanStatus = async (req,res) => {
 
 const markLeavingLocation = async (req,res) => {
     try {
-        const vendor = await Vendor.findOneAndUpdate({van_ID: req.params.van_ID}, 
-            {latitude: req.body.latitude, longtitude: req.body.longtitude, 
+        const vendor = await Vendor.findOneAndUpdate({van_ID: req.params.van_ID},
+            {latitude: req.body.latitude, longtitude: req.body.longtitude,
                 isReadyForOrder: false, locDescription: req.body.locDescription}).lean()
         res.render('vendor/vendor-home', {vendor})
     }catch(err){
@@ -154,7 +154,7 @@ const searchOrder = async (req, res) => { // search database for foods
     if (req.body.fulfilled){
         query["status"] = "fulfilled"
         if(req.body.complete){
-            query["status"] = "complete" 
+            query["status"] = "complete"
         }
     }
 	// the query has been constructed - now execute against the database
@@ -163,7 +163,7 @@ const searchOrder = async (req, res) => { // search database for foods
 		const orders = await Order.find(query).lean()
         console.log(query)
         console.log(orders)
-		res.render('vendor/orders', {"orders": orders, "vendor": vendor})	
+		res.render('vendor/orders', {"orders": orders, "vendor": vendor})
 	} catch (err) {
 		console.log(err)
 	}
