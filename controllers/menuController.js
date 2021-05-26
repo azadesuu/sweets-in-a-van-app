@@ -24,7 +24,6 @@ const homePage = async(req, res) => {
             vans.splice(i, 1)
         }
     }
-    console.log(user);
     vans.sort(function(a,b) {
         return ((a.latitude-user.latitude)**2+(a.longtitude-user.longtitude)**2)-((b.latitude-user.latitude)**2+(b.longtitude-user.longtitude)**2)
     })
@@ -70,16 +69,15 @@ const myOrderRate = async (req, res) => {
     return res.render('customer/myProfile');
 }
 
-const getVan = async (req, res) => {
-    return res.render('customer/myProfile');
-}
-
 const getVanDetail = async (req, res) => {
-    return res.render('customer/myProfile');
+    var van = await Vendor.findOne({van_ID : req.params.van_id}, {}).lean();
+    return res.render('customer/van', {van});
 }
 
 const getVanMenu = async (req, res) => {
-    return res.render('customer/myProfile');
+    var van = await Vendor.findOne({van_ID : req.params.van_id}, {}).lean();
+    menu_items = await Menu.find().lean();
+    return res.render('customer/menu', {van, menu_items, "loggedin": req.isAuthenticated()});
 }
 
 const orderInVanMenu = async (req, res) => {
@@ -172,5 +170,7 @@ module.exports = {
     getOrderDetail,
     showCart,
     myProfile,
-    myProfileEdit
+    myProfileEdit,
+    getVanDetail,
+    getVanMenu
 }

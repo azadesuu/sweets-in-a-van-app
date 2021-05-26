@@ -7,7 +7,7 @@
 <script src="../js/fontresize.js"></script>
 <body>
     <div class="top">
-        <div text-align='left'><a href="/customer/homepage">< </a></div>
+        <div text-align='left'><a href="/customer/home">< </a></div>
         <div>
             <p>MENU</p>
             <p>Tasty Trailer</p>
@@ -31,7 +31,7 @@
         </div>
     </div>
 
-{{#if loggedin}} <a href="/customer/VAN11/order-now" class = "round">START ORDER</a> {{/if}}
+{{#if loggedin}} <a href="/customer/{{van.van_ID}}/menu/order" class = "round">START ORDER</a> {{/if}}
 
 <script>
 
