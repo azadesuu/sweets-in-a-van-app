@@ -96,7 +96,7 @@ const SetVanStatus = async (req,res) => {
         console.log(req.body)
         console.log("setting location");
         const vendor = await Vendor.findOneAndUpdate({van_ID: req.params.van_ID},
-            {latitude: req.body.latitude, longtitude: req.body.longtitude,
+            {latitude: req.body.latitude, longitude: req.body.longitude,
                 isReadyForOrder: true, locDescription: req.body.locDescription}).lean()
         res.render('vendor/vendor-home', {vendor})
     }catch(err){
@@ -107,7 +107,7 @@ const SetVanStatus = async (req,res) => {
 const markLeavingLocation = async (req,res) => {
     try {
         const vendor = await Vendor.findOneAndUpdate({van_ID: req.params.van_ID},
-            {latitude: req.body.latitude, longtitude: req.body.longtitude,
+            {latitude: req.body.latitude, longitude: req.body.longitude,
                 isReadyForOrder: false, locDescription: req.body.locDescription}).lean()
         res.render('vendor/vendor-home', {vendor})
     }catch(err){
