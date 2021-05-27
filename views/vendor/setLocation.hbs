@@ -14,12 +14,9 @@
                             <p>
                                 <input id='locDescription' name="locDescription" value="" placeholder="Enter your park location">
                             </p>
-                            <p>
-                                <input id='latitude' name="latitude" value="" placeholder="Enter your latitude">
-                            </p>
-                            <p>
-                                <input id='longtitude' name="longtitude" value="" placeholder="Enter your longtitude">
-                            </p>
+                            <input id = "latitude" name = "latitude" hidden>
+                            <input id = "longitude" name = "longitude" hidden>
+                            <button type = "button" onclick="getLocation()">get location</button>
                         </label>
                     </div>
                     <p class="submit-btn">
@@ -34,12 +31,9 @@
                             <p>
                                 <input id='locDescription' name="locDescription" value="" placeholder="Enter your park location">
                             </p>
-                            <p>
-                                <input id='latitude' name="latitude" value="" placeholder="Enter your latitude">
-                            </p>
-                            <p>
-                                <input id='longtitude' name="longtitude" value="" placeholder="Enter your longtitude">
-                            </p>
+                            <input id = "latitude" name = "latitude" hidden>
+                            <input id = "longitude" name = "longitude" hidden>
+                            <button type = "button" onclick="getLocation()">get location</button>
                         </label>
                     </div>
                         <button type='submit'>leave for business</button>
@@ -49,7 +43,19 @@
     </div>
 <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="../js/fontresize.js"></script>
-<script>
-
-</script>
 </body>
+
+<script>
+    function getLocation(){
+        function success(position) {
+            document.getElementById("latitude").value = position.coords.latitude;
+            document.getElementById("longitude").value = position.coords.longitude;
+        }
+
+        function error(){
+            status.textContent = 'Unable to retrieve your location';
+        }
+
+        navigator.geolocation.getCurrentPosition(success, error);
+    }
+</script>
