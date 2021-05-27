@@ -7,20 +7,17 @@ const LocalStrategy = require('passport-local').Strategy;
 // our vendor model
 const { Vendor } = require('../models/vendor');
 
-// the following is required IF you wanted to use passport-jwt
-// JSON Web Tokens
-const passportJWT = require("passport-jwt");
-const JwtStrategy = passportJWT.Strategy;
-const ExtractJwt = passportJWT.ExtractJwt;
-
 module.exports = function(passport) {
     // these two functions are used by passport to store information
     // in and retrieve data from sessions. We are using vendor's object id
     passport.serializeUser(function(vendor, done) {
+        console.log(vendor._id)
+        console.log("im in vendor")
         done(null, vendor._id);
     });
 
     passport.deserializeUser(function(_id, done) {
+        console.log(_id)
         Vendor.findById(_id, function(err, vendor) {
             done(err, vendor);
         });
@@ -49,8 +46,8 @@ module.exports = function(passport) {
                     if (!vendor)
                         return done(null, false, req.flash('loginMessage', 'No vendor found.'));
                     if (vendor.van_last_name != van_last_name){
-                        console.log(van_last_name)
-                        console.log(vendor.van_last_name)
+                        // console.log(van_last_name)
+                        // console.log(vendor.van_last_name)
                         // false in done() indicates to the strategy that authentication has
                         // failed
                         return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.'));
@@ -63,11 +60,12 @@ module.exports = function(passport) {
                         // server uses that identifier to identify different clients
                         // all this is handled by the session middleware that we are using
                         // req.session.van_last_name = van_last_name;
+                        // req.session.van_ID = van_ID;
                         req.session.van_first_name = van_first_name; // for demonstration of using express-session
                         // done() is used by the strategy to set the authentication status with
                         // details of the vendor who was authenticated
-                        console.log("this vendor is authenticated")
-                        console.log(vendor)
+                        // console.log("this vendor is authenticated")
+                        // console.log(vendor)
                         return done(null, vendor, req.flash('loginMessage', 'Login successful'));
                     }
                 });
