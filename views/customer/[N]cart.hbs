@@ -16,14 +16,10 @@
     </div>
 
     <div class="products-container">
-        <div class='products' id = "product">
-            <ul>
-                {{#each chosed_items}}
-                <p> {{chosed_items.item_name}}</p>
-                <p> {{chosed_items.quantity}}</p>
-                {{/each}}
-            </ul>
-        </div>
+        <ul class = "products" id = "products">
+            {{!-- <p>!</p>
+            <p id={{this.item_ID}} onload = "doShowItem({{this}})"></p> --}}
+        </ul>
     </div>
 {{!--    
     <div class="carts2 ">
@@ -36,6 +32,12 @@
 {{!-- <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="./js/fontresize.js"></script> --}}
 <script>
-
+    function doShowItem(item) {
+        console.log("dsi");
+        for (var i=0; i<sessionStorage.length.i++) {
+            //localStorage.getItem(localStorage.key(i));
+            document.getElementById(item.item_ID).innerHTML = item.item_ID; 
+        }
+    }
 </script>
 </body>
