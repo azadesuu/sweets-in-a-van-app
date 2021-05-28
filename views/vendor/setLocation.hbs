@@ -7,22 +7,7 @@
     </div>
     <div class="setLoc-card">
         <div class="setLoc-content">
-            <form class="Loc" action="/vendor/{{vendor.van_ID}}/setLocation" method="post">
-                    <div>
-                        <label for="">
-                            <p>Location:</p>
-                            <p>
-                                <input id='locDescription' name="locDescription" value="" placeholder="Enter your park location">
-                            </p>
-                            <input id = "latitude" name = "latitude" hidden>
-                            <input id = "longitude" name = "longitude" hidden>
-                            <button type = "button" onclick="getLocation()">get location</button>
-                        </label>
-                    </div>
-                    <p class="submit-btn">
-                        <button type='submit'>ready for business</button>
-                    </p>
-            </form>
+            {{#if isOpen}}
             <form class="leave-form" action="/vendor/{{vendor.van_ID}}/setLocation/leave" method="post">
                 <p class="submit-btn">
                     <div>
@@ -39,6 +24,24 @@
                         <button type='submit'>leave for business</button>
                 </p>
             </form>
+            {{else}}
+            <form class="Loc" action="/vendor/{{vendor.van_ID}}/setLocation" method="post">
+                    <div>
+                        <label for="">
+                            <p>Location:</p>
+                            <p>
+                                <input id='locDescription' name="locDescription" value="" placeholder="Enter your park location">
+                            </p>
+                            <input id = "latitude" name = "latitude" hidden>
+                            <input id = "longitude" name = "longitude" hidden>
+                            <button type = "button" onclick="getLocation()">get location</button>
+                        </label>
+                    </div>
+                    <p class="submit-btn">
+                        <button type='submit'>ready for business</button>
+                    </p>
+            </form>
+            {{/if}}
         </div>
     </div>
 <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

@@ -41,23 +41,23 @@ vendorRouter.post('/logout', function(req, res) {
 // handle the GET request to get one vendor
 vendorRouter.get('/:van_ID',utilities.vendorIsLoggedIn,vendorController.getOneVendor)
 
-vendorRouter.get('/:van_ID/setLocation', vendorController.showSetVanStatus)
+vendorRouter.get('/:van_ID/setLocation',utilities.vendorIsLoggedIn, vendorController.showSetVanStatus)
 
 // handle the PUT request to update one vendor's status
-vendorRouter.post('/:van_ID/setLocation', vendorController.SetVanStatus)
+vendorRouter.post('/:van_ID/setLocation',utilities.vendorIsLoggedIn, vendorController.SetVanStatus)
 
 vendorRouter.post('/:van_ID/setLocation/leave', utilities.vendorIsLoggedIn,vendorController.markLeavingLocation)
 
 vendorRouter.post('/:van_ID/orders/search', utilities.vendorIsLoggedIn,vendorController.searchOrder)
 
 // handle the GET request to get all of a vendor's orders
-vendorRouter.get('/:van_ID/all-orders',utilities.vendorIsLoggedIn, vendorController.checkIsOpen,vendorController.getAllOrders)
+vendorRouter.get('/:van_ID/all-orders',utilities.vendorIsLoggedIn,vendorController.getAllOrders)
 
 // handle the GET request to get all of a vendor's outstanding orders
 vendorRouter.get('/:van_ID/orders',utilities.vendorIsLoggedIn, vendorController.checkIsOpen,vendorController.getAllOutstandingOrders)
 
 // handle the GET request to get one order of a vendor
-vendorRouter.get('/:van_ID/orders/:order_ID',utilities.vendorIsLoggedIn, vendorController.checkIsOpen,vendorController.getOneOrder)
+vendorRouter.get('/:van_ID/orders/:order_ID',utilities.vendorIsLoggedIn,vendorController.getOneOrder)
 
 // // handle the PUT request to update one vendor's order status (flexible)
 // vendorRouter.put('/:van_ID/orders/:order_ID/change-status',utilities.vendorIsLoggedIn, vendorController.checkIsOpen,vendorController.updateOrderStatus)

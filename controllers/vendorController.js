@@ -55,9 +55,10 @@ const updateOrderStatus = async(req,res)=>{
 const markAsFulfilled = async(req,res)=>{
     try{
         console.log(req.params)
+        const orders = await Order.find({van_ID: req.params.van_ID, status :{$in: ['Unfulfilled']}}).lean()
         await Order.findOneAndUpdate({order_ID: req.params.order_ID}, {status: "Fulfilled"}, {returnNewDocument: true}, function (err){
         if (err) res.send('failed to update');
-        else {res.render('vendor/vendor-home');}
+        else {res.render('vendor/orders',{"orders":orders});}
         })
     }catch(err){
         console.log(err)
@@ -68,9 +69,10 @@ const markAsFulfilled = async(req,res)=>{
 const markAsComplete = async(req,res)=>{
     try{
         console.log(req.params.order_ID)
+        const orders = await Order.find({van_ID: req.params.van_ID, status :{$in: ['Unfulfilled']}}).lean()
         await Order.findOneAndUpdate({order_ID: req.params.order_ID}, {status: "Complete"}, {returnNewDocument: true}, function (err){
         if (err) res.send('failed to update');
-        else {res.render('vendor/vendor-home');}
+        else {res.render('vendor/orders',{"orders":orders});}
         })
     }catch(err){
         console.log(err)
@@ -81,7 +83,9 @@ const markAsComplete = async(req,res)=>{
 const showSetVanStatus = async (req,res) => {
     try {
         const vendor = await Vendor.findOne( {van_ID: req.params.van_ID} ).lean()
-        res.render("vendor/setLocation", {vendor});
+        console.log(vendor)
+        console.log(vendor.isOpen)
+        res.render("vendor/setLocation", {vendor,"isOpen": vendor.isOpen});
     }
     catch(err){
         console.log(err)
@@ -97,8 +101,8 @@ const SetVanStatus = async (req,res) => {
         console.log("setting location");
         const vendor = await Vendor.findOneAndUpdate({van_ID: req.params.van_ID},
             {latitude: req.body.latitude, longitude: req.body.longitude,
-                isReadyForOrder: true, locDescription: req.body.locDescription}).lean()
-        res.render('vendor/vendor-home', {vendor})
+                isOpen: true, locDescription: req.body.locDescription}).lean()
+        res.redirect('/vendor')
     }catch(err){
         console.log(err)
     }
@@ -108,8 +112,8 @@ const markLeavingLocation = async (req,res) => {
     try {
         const vendor = await Vendor.findOneAndUpdate({van_ID: req.params.van_ID},
             {latitude: req.body.latitude, longitude: req.body.longitude,
-                isReadyForOrder: false, locDescription: req.body.locDescription}).lean()
-        res.render('vendor/vendor-home', {vendor})
+                isOpen: false, locDescription: req.body.locDescription}).lean()
+        res.redirect('/vendor')
     }catch(err){
         console.log(err)
     }
