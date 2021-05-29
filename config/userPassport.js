@@ -23,7 +23,6 @@ module.exports = function(passport) {
     });
 
     passport.deserializeUser(function(user, done) {
-        console.log(user);
         if(user.user_ID){
             User.findById(user._id, function(err, user) {
                 done(err, user);
@@ -76,10 +75,10 @@ module.exports = function(passport) {
                         // server uses that identifier to identify different clients
                         // all this is handled by the session middleware that we are using
                         req.session.email = email; // for demonstration of using express-session
-                        console.log(req.session)
+                        // console.log(req.session)
                         // done() is used by the strategy to set the authentication status with
                         // details of the user who was authenticated
-                        console.log(user)
+                        // console.log(user)
                         return done(null, user, req.flash('loginMessage', 'Login successful'));
                     }
                 });
@@ -112,7 +111,7 @@ module.exports = function(passport) {
                     else {
                         // otherwise
                         // create a new user
-                        console.log("Create a new user")
+                        // console.log("Create a new user")
                         var newUser = new User();
                         newUser.user_ID = nanoid();
                         newUser.email = email;
@@ -133,7 +132,7 @@ module.exports = function(passport) {
                         // put the user's email in the session so that it can now be used for all
                         // communications between the client (browser) and the FoodBuddy app
                         req.session.email=email;
-                        console.log("Finished creation");
+                        // console.log("Finished creation");
                     }
                 });
             });

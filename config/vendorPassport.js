@@ -11,13 +11,13 @@ module.exports = function(passport) {
     // these two functions are used by passport to store information
     // in and retrieve data from sessions. We are using vendor's object id
     passport.serializeUser(function(vendor, done) {
-        console.log(vendor._id)
-        console.log("im in vendor")
+        // console.log(vendor._id)
+        // console.log("im in vendor")
         done(null, vendor._id);
     });
 
     passport.deserializeUser(function(_id, done) {
-        console.log(_id)
+        // console.log(_id)
         Vendor.findById(_id, function(err, vendor) {
             done(err, vendor);
         });
