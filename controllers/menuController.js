@@ -7,9 +7,10 @@ const User = mongoose.model("users");
 const Vendor = mongoose.model("vendors");
 const OrderItem = require("../models/order");
 const bcrypt = require('bcrypt-nodejs');
+const { nanoid } = require('nanoid'); // for hashing id
 
 const getHomePage = async(req, res) => {
-    console.log("gethome");
+    // console.log("gethome");
     if (req.session.email) {
         var user = await User.findOne({email: req.session.email}, {}).lean();
     } else {
@@ -34,7 +35,7 @@ const getHomePage = async(req, res) => {
 
 
 const postHomePage = async(req, res) => {
-    console.log("posthome");
+    // console.log("posthome");
     if (req.body.latitude !== null) {
         if (req.session.email) {
             await User.updateOne(
@@ -78,17 +79,6 @@ const postHomePage = async(req, res) => {
 }
 
 
-//  const displayMenu_hbs = async(req,res) => {
-//     menu_items = await Menu.find().lean();
-//     return res.render('customer/menu', {menu_items, "loggedin": req.isAuthenticated()});
-//  }
-
- 
-//  const displayMenu_order = async(req,res) => {
-//     menu_items = await Menu.find().lean();
-//     return res.render('customer/menuOrdering', {menu_items, "loggedin": req.isAuthenticated()});
-//  }
-
 
 
 
@@ -111,10 +101,6 @@ const myProfileEdit = async (req, res) => {
     return res.render('customer/home');
 }
 
-const myOrderRate = async (req, res) => {
-    return res.render('customer/myProfile');
-}
-
 const getVanDetail = async (req, res) => {
     var van = await Vendor.findOne({van_ID : req.params.van_id}, {}).lean();
     return res.render('customer/van', {van});
@@ -133,10 +119,11 @@ const orderInVanMenu = async (req, res) => {
 
 const payInVan = async (req, res) => {
     var cart = JSON.parse(req.body.cart);
-    console.log(cart);
+    // console.log(cart);
     var newOrders = [];
+    var totalPay = 0;
     for (var i = 0;i<cart.length;i++) {
-        console.log(i)
+        // console.log(i)
         var hasItem = false
         var index = 0;
         var next = await Menu.findOne({item_ID : cart[i]}, {}).lean();
@@ -144,40 +131,47 @@ const payInVan = async (req, res) => {
             // console.log(cart[i]);
             // this_name = await Menu.findOne({item_ID : cart[i]}, {}).lean().item_name;
             // console.log(this_name);
-            console.log(newOrders[j].item_name);
-            console.log(next.item_name);
+            // console.log(newOrders[j].item_name);
+            // console.log(next.item_name);
             if (newOrders[j].item_name === next.item_name) {
                 // newOrders[j].quantity += 1;
                 // newOrders[j].price += await Menu.findOne({item_ID : cart[i]}, {}).lean().item_price;
                 hasItem = true;
                 index = j;
                 break;
-            } else {
-                // console.log("Should create")
-                // newOrderItem = {
-                //     item_name : await Menu.findOne({item_ID : cart[i]}, {}).lean().item_name,
-                //     quantity : 1,
-                //     price : await Menu.findOne({item_ID : cart[i]}, {}).lean().item_price
-                // }
-                // console.log(newOrderItem);
-                // newOrders.push(newOrderItem);
-            }
+            } 
         }
         if (hasItem) {
             newOrders[index].quantity += 1;
+            totalPay += next.item_price;
         } else {
             item = await Menu.findOne({item_ID : cart[i]}, {});
-            console.log(item.item_name)
+            // console.log(item.item_name)
             newOrderItem = {
                 item_name : item.item_name,
                 quantity : 1,
                 price : item.item_price
             }
+            totalPay += item.item_price;
             // console.log(newOrderItem);
             newOrders.push(newOrderItem);
         }
     }
-    console.log(newOrders);
+    // console.log(newOrders);
+    var newOrder = new Order();
+    var orderingCustomer = await User.findOne({email: req.session.email}, {})
+    newOrder.user_ID = orderingCustomer.user_ID
+    // console.log(newOrder.user_ID);
+    newOrder.van_ID = req.params.van_id;
+    // console.log(newOrder.van_ID);
+    newOrder.order_ID = nanoid();
+    // console.log(newOrder.order_ID);
+    newOrder.orderItems = newOrders;
+    // console.log(newOrder.orderItems);
+    newOrder.customerGivenName = orderingCustomer.first_name;
+    // console.log(newOrder.customerGivenName);
+    newOrder.paymentTotal = totalPay;
+    newOrder.save();
     return res.render('customer/payment');
 }
 

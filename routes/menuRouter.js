@@ -64,7 +64,6 @@ menuRouter.get('/my-profile/edit', (req, res) => {
 menuRouter.post('/my-profile/edit', menuController.myProfileEdit);
 menuRouter.get('/my-orders', menuController.getAllUserOrders);
 menuRouter.get('/my-orders/:order_ID', menuController.getOrderDetail);
-menuRouter.get('/my-orders/:order_ID/rate');
 menuRouter.get('/:van_id', menuController.getVanDetail);
 menuRouter.get('/:van_id/menu', menuController.getVanMenu);
 menuRouter.get('/:van_id/menu/order', menuController.orderInVanMenu);

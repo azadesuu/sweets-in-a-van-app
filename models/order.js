@@ -15,7 +15,6 @@ const orderSchema = new mongoose.Schema({
     paymentTotal : {type: Number, default: 0},
     late_fulfillment : {type: Boolean, default: false},
     when: {type: Date, default: Date.now},
-    timeRemainingForDiscount:{type:Number, default: 900},
     customerGivenName:{type:String,default: ""}
 },{ collection : 'orders' })
 
