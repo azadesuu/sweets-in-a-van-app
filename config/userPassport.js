@@ -1,4 +1,5 @@
 require('dotenv').config()    // for JWT password key
+const { nanoid } = require('nanoid'); // for hashing user id
 
 // used to create our local strategy for authenticating
 // using username and password
@@ -22,17 +23,20 @@ module.exports = function(passport) {
     });
 
     passport.deserializeUser(function(_id, done) {
-        console.log(_id)
-        console.log(" in user deser")
-        if(User.findById(_id).query){
-            User.findById(_id, function(err, user) {
-                done(err, user);
-            });
-        }else{
-            Vendor.findById(_id,function(err, user) {
-                done(err, user);
-            })
-        }
+        // console.log(_id)
+        // console.log(" in user deser")
+        // if(User.findById(_id).query){
+        //     User.findById(_id, function(err, user) {
+        //         done(err, user);
+        //     });
+        // }else{
+        //     Vendor.findById(_id,function(err, user) {
+        //         done(err, user);
+        //     })
+        // }
+        User.findById(_id, function(err, user) {
+            done(err, user);
+        });
     });
 
 
@@ -109,11 +113,15 @@ module.exports = function(passport) {
                     else {
                         // otherwise
                         // create a new user
+                        console.log("Create a new user")
                         var newUser = new User();
+                        newUser.user_ID = nanoid();
                         newUser.email = email;
                         newUser.password = newUser.generateHash(password);
                         newUser.first_name = req.body.first_name;
                         newUser.last_name = req.body.last_name;
+                        newUser.latitude = 0;
+                        newUser.longitude = 0;
 
                         // and save the user
                         newUser.save(function(err) {
@@ -126,6 +134,7 @@ module.exports = function(passport) {
                         // put the user's email in the session so that it can now be used for all
                         // communications between the client (browser) and the FoodBuddy app
                         req.session.email=email;
+                        console.log("Finished creation");
                     }
                 });
             });

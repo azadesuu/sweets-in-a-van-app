@@ -1,10 +1,11 @@
 const mongoose = require("mongoose")
 const userSchema = new mongoose.Schema({
+    user_ID: {type: String, required: true},
     first_name: {type: String, required: true},
     last_name: {type: String, required: true},
     email: {type: String, required: true},
     password: {type: String, required: true},
-    longtitude: {type: Number, default:0},
+    longitude: {type: Number, default:0},
     latitude: {type: Number, default:0},
     createAt: {
         type: Date,

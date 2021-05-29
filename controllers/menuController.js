@@ -9,11 +9,13 @@ const OrderItem = require("../models/order");
 const bcrypt = require('bcrypt-nodejs');
 
 const getHomePage = async(req, res) => {
+    console.log("gethome");
     if (req.session.email) {
         var user = await User.findOne({email: req.session.email}, {}).lean();
     } else {
+        var user = new User();
         user.latitude = 0;
-        user.longtitude = 0;
+        user.longitude = 0;
     }
     var vans = await Vendor.find({}, {}).lean();
     var i = 0;
@@ -24,7 +26,7 @@ const getHomePage = async(req, res) => {
         }
     }
     vans.sort(function(a,b) {
-        return ((a.latitude-user.latitude)**2+(a.longtitude-user.longtitude)**2)-((b.latitude-user.latitude)**2+(b.longtitude-user.longtitude)**2)
+        return ((a.latitude-user.latitude)**2+(a.longitude-user.longitude)**2)-((b.latitude-user.latitude)**2+(b.longitude-user.longitude)**2)
     })
     vans = vans.slice(0,5);
     return res.render('customer/home', {req, "loggedin": req.isAuthenticated(), van: vans});
@@ -32,28 +34,44 @@ const getHomePage = async(req, res) => {
 
 
 const postHomePage = async(req, res) => {
-    if (req.session.email) {
-        var user = await User.findOne({email: req.session.email}, {}).lean();
-    } else {
-        var user = new User();
-        if (req.body.latitude !== null) {
-            user.latitude = req.body.latitude;
-            user.longtitude = req.body.longtitude;
+    console.log("posthome");
+    if (req.body.latitude !== null) {
+        if (req.session.email) {
+            await User.updateOne(
+                {"email" : req.session.email},
+                {"$set" : { 
+                    "latitude" : parseFloat(req.body.latitude),
+                    "longitude" : parseFloat(req.body.longitude)
+                    }
+                }
+            );
+            console.log("After updating")
+            var user = await User.findOne({email: req.session.email}, {}).lean();
+            console.log(user.latitude);
+            console.log(user.longitude);
         } else {
+            var user = new User();
+            user.latitude = parseFloat(req.body.latitude);
+            user.longitude = parseFloat(req.body.longitude);
+        }
+    } else {
+        if (req.session.email) {
+            var user = await User.findOne({email: req.session.email}, {}).lean();
+        } else {
+            var user = new User();
             user.latitude = 0;
-            user.longtitude = 0;
+            user.longitude = 0;
         }
     }
     var vans = await Vendor.find({}, {}).lean();
     var i = 0;
-    var index = 0;
     for (i=0;i<vans.length;i++) {
         if (vans[i].latitude === null) {
             vans.splice(i, 1)
         }
     }
     vans.sort(function(a,b) {
-        return ((a.latitude-user.latitude)**2+(a.longtitude-user.longtitude)**2)-((b.latitude-user.latitude)**2+(b.longtitude-user.longtitude)**2)
+        return ((a.latitude-user.latitude)**2+(a.longitude-user.longitude)**2)-((b.latitude-user.latitude)**2+(b.longitude-user.longitude)**2)
     })
     vans = vans.slice(0,5);
     return res.render('customer/home', {req, "loggedin": req.isAuthenticated(), van: vans});

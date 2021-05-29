@@ -11,7 +11,7 @@ const menuController = require('../controllers/menuController.js')
 //authentication
 
 //homepage
-menuRouter.get("/home", menuController.postHomePage);
+menuRouter.get("/home", menuController.getHomePage);
 menuRouter.post("/home", menuController.postHomePage);
 
 

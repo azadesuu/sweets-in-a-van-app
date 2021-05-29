@@ -16,6 +16,14 @@
     </div>  
 {{/if}}
 
+<button type="button" onclick="shareLoc()">Share my location</button>
+<form method="post" action="/customer/home" id="locationform">
+    <input type="hidden" name="latitude" id="latitude" value=""/>
+    <input type="hidden" name="longitude" id="longitude" value=""/>
+    <button type="submit">Update</button>
+</form>
+
+
 <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
 
 <div class="vans">
@@ -37,5 +45,18 @@ function openNav() {
 
 function closeNav() {
   document.getElementById("mySidenav").style.width = "0";
+}
+
+async function shareLoc() {
+    function success(position) {
+        document.getElementById("latitude").value = position.coords.latitude; 
+        document.getElementById("longitude").value = position.coords.longitude; 
+    }
+
+    function error() {
+        status.textContent = 'Unable to retrieve your location';
+    }
+
+    await navigator.geolocation.getCurrentPosition(success, error);
 }
 </script>
