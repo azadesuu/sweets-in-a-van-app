@@ -7,12 +7,12 @@ const Vendor = mongoose.model("vendors")
 
 // middleware to ensure vendor is open
 async function checkIsOpen(req, res, next){
-    const vendor = await Vendor.findOne( {van_ID: req.params.van_ID} );
+    const vendor = await Vendor.findOne( {van_ID: req.params.van_ID} ).lean();
     console.log(vendor)
     if (vendor.isOpen)
         return next();
     // if not open, redirect to location form
-    res.render('vendor/setLocation');
+    res.render('vendor/setLocation',{"vendor":vendor});
 }
 
 // get details of a vendor
