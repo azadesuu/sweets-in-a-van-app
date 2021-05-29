@@ -24,10 +24,10 @@ vendorRouter.post('/login', passport.authenticate('local-login-vendor', {
 
 
 vendorRouter.get("/",async(req,res)=>{
-    console.log(req.session)
+    // console.log(req.session)
     const vendor = await Vendor.findOne( {vanname: req.session.vanname}).lean()
-    console.log(vendor)
-    console.log(req.isAuthenticated())
+    // console.log(vendor)
+    // console.log(req.isAuthenticated())
     return res.render('vendor/vendor-home',{"vendor":vendor,"loggedin":req.isAuthenticated()})
 })
 

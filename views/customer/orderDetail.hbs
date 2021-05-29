@@ -1,7 +1,7 @@
 <div class = "top">
     <div text-align='left'><a href="/customer/my-orders">< </a></div>
     <div>
-        <p>ORDER #{{order._id}}</p>
+        <p>ORDER #{{order.order_ID}}</p>
     </div>
 </div>
 
@@ -20,10 +20,32 @@
     {{/each}}
 </table>
 
-{{!-- <div>
+<div>
     <p>Payment Summary</p>
-    <p>Subtotal: ${{subtotal}}</p>
     <p>Late Fulfillment Discount: {{discount}}</p>
-    <p>Total: ${{total}}</p>
-</div> --}}
+    <p>Total: ${{order.paymentTotal}}</p>
+</div>
+
+{{#if complete}}
+    <div>
+        <a href="/customer/my-orders"> BACK</a>
+    </div>
+{{else}}
+    <div>
+        {{!-- <a href="/customer/my-orders"> BACK</a> --}}
+        <form method="post" action="/customer/my-orders/cancel" id="cancelform">
+            <input type="hidden" name="cancelID" id="cancelID" value={{order.order_ID}} />
+            <button type='submit'>CANCEL</button>
+        </form>
+        <form method="post" action="/customer/my-orders/change" id="changeform">
+            <input type="hidden" name="changeID" id="changeID" value={{order.order_ID}} />
+            <button type='submit'>CHANGE</button>
+        </form>
+    </div>
+{{/if}}
+
+<script>
+
+
+</script>
 

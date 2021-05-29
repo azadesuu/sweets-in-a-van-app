@@ -201,6 +201,15 @@ const getAllUserOrders = async (req, res) => {
     try {
         user = await User.findOne({email: req.session.email}, {}).lean()
         orders = await Order.find({user_ID: user.user_ID}, {}).lean()
+        // console.log(orders);
+        for (var i=0;i<orders.length;i++) {
+            // console.log(i);
+            // console.log(orders[i].status);
+            if (orders[i].status === "Cancelled") {
+                orders.splice(i, 1);
+                i--;
+            }
+        }
         return res.render('customer/userOrders', {orders})
     } catch (err) {
         res.status(400)
@@ -222,7 +231,7 @@ const getItemDetail = async (req, res) => {
 
 const getOrderDetail = async(req,res)=>{
     try{
-        const order = await Order.findOne( {_id: new mongoose.Types.ObjectId(req.params.order_ID)}).lean()
+        const order = await Order.findOne( {order_ID: req.params.order_ID}).lean()
         const van = await Vendor.findOne( {van_ID: order.van_ID}).lean()
         return res.render('customer/orderDetail', {order, van})
     }catch(err){
@@ -230,6 +239,66 @@ const getOrderDetail = async(req,res)=>{
     }
 }
 
+const cancelOrder = async(req, res)=> {
+    // console.log(req.body.cancelID);
+    await Order.updateOne(
+        {"order_ID" : req.body.cancelID},
+        {"$set" : { 
+            "status" : "Cancelled"
+            }
+        }
+    );
+    return res.redirect('customer/my-orders');
+}
+const changeOrder = async(req, res)=> {
+    menu_items = await Menu.find().lean();
+    const order = await Order.findOne( {order_ID: req.body.changeID}).lean();
+    return res.render('customer/orderChange', {menu_items, order});
+}
+
+const updateOrder = async(req, res)=> {
+    var cart = JSON.parse(req.body.cart);
+    // console.log(cart);
+    var newOrders = [];
+    var totalPay = 0;
+    for (var i = 0;i<cart.length;i++) {
+        // console.log(i)
+        var hasItem = false
+        var index = 0;
+        var next = await Menu.findOne({item_ID : cart[i]}, {}).lean();
+        for (var j=0;j<newOrders.length;j++) {
+            if (newOrders[j].item_name === next.item_name) {
+                hasItem = true;
+                index = j;
+                break;
+            } 
+        }
+        if (hasItem) {
+            newOrders[index].quantity += 1;
+            totalPay += next.item_price;
+        } else {
+            item = await Menu.findOne({item_ID : cart[i]}, {});
+            newOrderItem = {
+                item_name : item.item_name,
+                quantity : 1,
+                price : item.item_price
+            }
+            totalPay += item.item_price;
+            newOrders.push(newOrderItem);
+        }
+    }
+    console.log(req.body.updateID)
+    
+    await Order.updateOne(
+        {"order_ID" : req.body.updateID},
+        {"$set" : { 
+            "orderItems" : newOrders,
+            "paymentTotal" : totalPay
+            }
+        }
+    );
+    return res.redirect('/customer/home');
+}
 
 
 module.exports = {
@@ -245,5 +314,8 @@ module.exports = {
     getVanDetail,
     getVanMenu,
     orderInVanMenu,
-    payInVan
+    payInVan,
+    cancelOrder,
+    changeOrder,
+    updateOrder
 }

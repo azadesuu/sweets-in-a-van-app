@@ -1,0 +1,55 @@
+<div class = "top">
+    <div text-align='left'><a href="/customer/my-orders">< </a></div>
+    <div>
+        <p>ORDER #{{order.order_ID}}</p>
+    </div>
+</div>
+
+<div class="content">
+    <div class="cards">
+        <p>Foods</p>
+        <ul>
+            {{#each menu_items}}
+            <li class="li-wrap">
+                <p>
+                    {{this.item_name}}
+                </p>
+                <p>${{this.item_price}}</p>
+                <img src={{this.item_photo}} class="browsePage">
+                <input type="number" id={{this.item_ID}} value="" placeholder = "0"/>
+                <button type='button' onclick="saveToCart({{this.item_ID}})">Add to cart</button>
+            </li>
+            {{/each}}
+        </ul>
+    </div>  
+</div>
+
+<form class="cart-form" action="/customer/my-orders/update" method="post">
+    <input type = "hidden" id="cart" name="cart" value=""/>
+    <input type = "hidden" id="updateID" name="updateID" value={{order.order_ID}} />
+    <button type="submit" onclick="saveOrder()">Make Order</button>
+</form>
+
+<script >
+    function saveToCart(id) {
+        var quantity = parseInt(id.value)
+        if (localStorage.getItem("cart") === null) {
+            var cart = [];
+            for (var i=0;i<quantity;i++) { 
+                cart.push(id.id);
+            }
+            localStorage.setItem("cart", JSON.stringify(cart));
+        } else {
+            var currentCart = JSON.parse(localStorage.getItem("cart"));
+            for (var i=0;i<quantity;i++) {
+                currentCart.push(id.id);
+            }
+            localStorage.setItem("cart", JSON.stringify(currentCart));
+        }
+    }
+
+    function saveOrder() {
+        document.getElementById("cart").value = JSON.parse(JSON.stringify(localStorage.getItem("cart")));
+        localStorage.clear();
+    }
+</script>
