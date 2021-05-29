@@ -19,7 +19,11 @@ menuRouter.post("/home", menuController.postHomePage);
 // menuRouter.get('/menu', menuController.displayMenu_hbs)
 
 menuRouter.get("/login", (req, res) => {
-    res.render('customer/login');
+    if (req.isAuthenticated()) {
+        res.redirect('/customer/home');
+    } else {
+        res.render('customer/login');
+    }
 });
 
 // POST login form -- authenticate user
@@ -34,7 +38,11 @@ menuRouter.post('/login', passport.authenticate('local-login', {
 // GET - show the signup form to the user
 // http:localhost:5000/customer/register
 menuRouter.get("/register", (req, res) => {
-    return res.render('customer/register');
+    if (req.isAuthenticated()) {
+        res.redirect('/customer/home');
+    } else {
+        return res.render('customer/register');
+    }
 });
 
 // POST - user submits the signup form -- signup a new user
