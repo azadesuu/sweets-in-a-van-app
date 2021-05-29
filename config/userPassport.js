@@ -19,24 +19,23 @@ module.exports = function(passport) {
     // these two functions are used by passport to store information
     // in and retrieve data from sessions. We are using user's object id
     passport.serializeUser(function(user, done) {
-        done(null, user._id);
+        done(null, user);
     });
 
-    passport.deserializeUser(function(_id, done) {
-        // console.log(_id)
-        // console.log(" in user deser")
-        // if(User.findById(_id).query){
-        //     User.findById(_id, function(err, user) {
-        //         done(err, user);
-        //     });
-        // }else{
-        //     Vendor.findById(_id,function(err, user) {
-        //         done(err, user);
-        //     })
-        // }
-        User.findById(_id, function(err, user) {
-            done(err, user);
-        });
+    passport.deserializeUser(function(user, done) {
+        console.log(user);
+        if(user.user_ID){
+            User.findById(user._id, function(err, user) {
+                done(err, user);
+            });
+        }else{
+            Vendor.findById(user._id,function(err, user) {
+                done(err, user);
+            })
+        }
+        // User.findById(_id, function(err, user) {
+        //     done(err, user);
+        // });
     });
 
 

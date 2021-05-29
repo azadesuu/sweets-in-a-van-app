@@ -223,23 +223,13 @@ const getItemDetail = async (req, res) => {
 const getOrderDetail = async(req,res)=>{
     try{
         const order = await Order.findOne( {_id: new mongoose.Types.ObjectId(req.params.order_ID)}).lean()
-        return res.render('customer/orderDetail', {order})
+        const van = await Vendor.findOne( {van_ID: order.van_ID}).lean()
+        return res.render('customer/orderDetail', {order, van})
     }catch(err){
         console.log(err)
     }
 }
 
-// const showCart = async(req,res)=>{
-//     try{
-//         console.log(req.user)
-//         const user = await User.findOne({user_ID:req.user })
-//         console.log(user)
-//         console.log(req.params.user_ID)
-//         return res.render('customer/cart',{"user":user})
-//     }catch(err){
-//         console.log(err)
-//     }
-// }
 
 
 module.exports = {
