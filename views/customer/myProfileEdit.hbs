@@ -1,26 +1,14 @@
+<link rel="stylesheet" href="/css/login.css">
+<div class="content-card">
+    <h2 style="text-align: center;">Update Profile Details</h2>
+    <form class="login-form" action="/customer/my-profile/edit" method="POST">
+        <label for="password">New Password:</label>
+        <input type="text" id='password' name="password" value="" placeholder="Enter your new password">
+        <label for="first_name">New First Name:</label>
+        <input type="text" name="first_name" id='first_name' value="" placeholder="Enter your new First Name">
+        <label for="last_name">New Last Name:</label>
+        <input type="text" name="last_name" id='last_name' value="" placeholder="Enter your new Last Name">
 
-
-<div class="top">
-    <div text-align='left'><a href="/customer/my-profile">< </a></div>
+        <input class='normal-button' type="submit" value="Update Profile Details">
+    </form>
 </div>
-
-
-<form class = "edit-form" action = "/customer/my-profile/edit" method = "post">
-    <div>
-        <p>Password:</p>
-        <p>
-            <input name="password" id="password">
-        </p>
-        <p>First name:</p>
-        <p>
-            <input name="first_name" id="first_name">
-        </p>
-        <p>Last name:</p>
-        <p>
-            <input name="last_name" id="last_name">
-        </p>
-    </div>
-    <p>
-        <button type='submit'>Save</button>
-    </p>
-</form>

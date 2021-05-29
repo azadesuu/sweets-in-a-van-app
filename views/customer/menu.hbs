@@ -1,39 +1,22 @@
-
-<link rel="stylesheet" href="/css/reset.css">
 <link rel="stylesheet" href="/css/menu.css">
-<link rel="stylesheet" href="/css/index.css">
-
-<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="../js/fontresize.js"></script>
-<body>
-    <div class="top">
-        <div text-align='left'><a href="/customer/home">< </a></div>
-        <div>
-            <p>MENU</p>
-            <p>Tasty Trailer</p>
+<div class='content-card'>
+    <h2 style="text-align: center;">MENU</h2>
+    <h3 style="text-align: center;">{{this.van_id}}</h3>
+    <div class='menu-content'>
+        {{#each menu_items}}
+        <div class="item-card">
+            <p class='item-name'>{{this.item_name}}</p>
+            <p class='item-price'>$ {{this.item_price}}</p>
+            <img src={{this.item_photo}} class="browsePage">
         </div>
-        <div>
-            <p>5min</p>
-        </div>
+        {{/each}}
     </div>
-    <div class="content">
-        <div class="cards">
-            <p>Foods</p>
-            <ul>
-                {{#each menu_items}}
-                <li class="li-wrap">
-                    <p> {{this.item_name}} </p>
-                    <p>${{this.item_price}}</p>
-                    <img src={{this.item_photo}} class="browsePage">
-                </li>
-                {{/each}}
-            </ul>
-        </div>
-    </div>
+</div>
 
-{{#if loggedin}} <a href="/customer/{{van.van_ID}}/menu/order" class = "round">START ORDER</a> {{/if}}
-
-<script>
-
-</script>
-</body>
+<div class='floating-button'> 
+{{#if loggedin}} 
+<a class='normal-button' href="/customer/{{van.van_ID}}/menu/order">START ORDER</a>
+{{else}}
+<a class='normal-button' style='background-color:#474747ce' href="/customer/login">SIGN IN TO ORDER</a>
+{{/if}}
+</div>

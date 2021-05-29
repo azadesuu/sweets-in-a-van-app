@@ -1,74 +1,57 @@
-.top {
-  position: fixed;
-  left: 0;
-  top: 0;
-  height: 120px;
-  width: 100%;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  background: #000;
-  color: #fff;
-  justify-content: space-around;
-}
-.top div:nth-child(1) {
-  margin-left: 2px;
-  font-size: 40px;
-  font-weight: 800;
-  cursor: pointer;
-}
-.top div:nth-child(2) {
-  width: 80%;
-  text-align: center;
-  font-size: 40px;
-  font-weight: 800;
-}
-.top div:nth-child(2) p:nth-child(1) {
-  font-weight: 200;
-}
-.top div:nth-child(2) p:nth-child(2) {
-  margin-bottom: 10px;
-}
-.top div:nth-child(3) {
-  align-self: flex-end;
-  margin-bottom: 13px;
-  font-size:40px;
-}
-.content {
-  margin:20px 0;
-}
-.cards {
-  margin: 20px 0;
-}
-.cards > p {
-  font-size: 98px;
-  text-align: center;
-}
-.cards .li-wrap {
-  display: flex;
-  justify-content: space-between;
-  border-bottom: 1px solid #000;
-  padding: 0 20px;
-  height: 120px;
-  align-items: center;
-}
-.cards .li-wrap  p {
-  font-size: 5.9vw;
-}
-.cards .li-wrap  p:nth-child(1) {
-  margin-bottom: 18px;
-  font-size: 5.9vw;
+@import url("main.css");
+
+.item-card{
+    padding: 20px 30px;
+    height:auto;
+    overflow:hidden;
+    box-shadow: 0px 5px 5pt -5pt #8a8a8a;
 }
 
-.cards .li-wrap  {
-  width: 90%;
-  height: auto;
-  margin-bottom: 10px;
+.menu-content{
+    position: relative;
+    justify-content: center;
+    margin: 0 auto;
+    width:500px;
+    height: 100%;
 }
-.cards .li-wrap img {
-  display:block;
-  margin-bottom:20px;
-  margin-left:auto;
-  width: 30%;
-  height:70%;
+.item-name, .item-price{
+    margin: 0px 50px 10px 0px;
+    font-size: 20px;
+    text-transform:capitalize;
+    float: left;
+    padding: 5px;
 }
+
+.item-price{
+    background-color: #D18E2A;
+    border-radius: 4px;
+    color:white;
+    
+}
+
+img {
+    border-radius: 10%;
+    object-fit: cover;
+    width: 120px;
+    height: 120px;
+    float: right;
+}
+
+.floating-button{
+    position:fixed; bottom:0; width:100%; margin: 100px auto; text-align:center;
+}
+
+@media screen and (max-width: 900px){
+    .menu-content {
+        width:100%;
+    }
+    .floating-button{
+        width:100%; 
+        margin: 150px auto;
+    }
+    input[type="number"]{
+        font-size: 18px;
+    }
+}
+
+  

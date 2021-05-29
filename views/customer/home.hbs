@@ -1,52 +1,28 @@
 <link rel="stylesheet" href="/css/home.css">
 
+<div class='content-card'>
+    <h2 style="text-align: center;">Click a van to Order!</h2>
+    <h3 style="text-align: center;">Please share your location first, and click update to get the vans near you!</h2>
 
 
-{{#if loggedin}}
-    <div id="mySidenav" class="sidenav">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <a href="/customer/my-profile">My Profile</a>
-    <a href="/customer/my-orders">My Order</a>
-    <a href="/customer/logout">Logout</a>
-    </div>  
-{{else}}
-    <div id="mySidenav" class="sidenav">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <a href="/customer/login">Log in</a>
-    </div>  
-{{/if}}
+    <form method="post" action="/customer/home" id="locationform" style='text-align:center'>
+        <input type="hidden" name="latitude" id="latitude" value=""/>
+        <input type="hidden" name="longitude" id="longitude" value=""/>
 
-<button type="button" onclick="shareLoc()">Share my location</button>
-<form method="post" action="/customer/home" id="locationform">
-    <input type="hidden" name="latitude" id="latitude" value=""/>
-    <input type="hidden" name="longitude" id="longitude" value=""/>
-    <button type="submit">Update</button>
-</form>
+    <button type="button" onclick="shareLoc()">Share My Location</button><input type="submit" value='Update'></button>
+    </form>
 
-
-<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
-
-<div class="vans">
-    <ul>
-        <li class="vans" >
-            {{#each van}}
-                <li class="li-wrap">
-                    <a href="/customer/{{this.van_ID}}">{{this.van_ID}}</a>
-                </li>
-            {{/each}}
-        </li>
-    </ul>
+    <table>
+        <th>Van ID</th>
+        {{#each van}}
+            <tr class="li-wrap">
+                <td><a style='text-decoration:none' href="/customer/{{this.van_ID}}">{{this.van_ID}}</a></td>
+            </tr>
+        {{/each}}
+    </table>
 </div>
 
 <script>
-function openNav() {
-  document.getElementById("mySidenav").style.width = "250px";
-}
-
-function closeNav() {
-  document.getElementById("mySidenav").style.width = "0";
-}
-
 async function shareLoc() {
     function success(position) {
         document.getElementById("latitude").value = position.coords.latitude; 

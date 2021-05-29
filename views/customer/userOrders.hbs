@@ -1,37 +1,17 @@
-<link rel="stylesheet" href='/css/userOrders.css'
-<body>
-    <div class = "top">
-        <div text-align='left'><a href="/customer/home">< </a></div>
-        <div>
-            <p>ORDERS</p>
+<link rel="stylesheet" href='/css/userOrders.css'>
+<div class='content-card'>
+    <h2 style='text-align:center'>MY ORDERS</h2>
+    <table>
+        <tr><th style='text-align:left'>ORDER ID</th><th style='text-align:right; width:auto'>DATE</th></tr>
+        {{#each orders}}
+        <div class='details-card'>
+            <td class = "orderID"> <a href="my-orders/{{this.order_ID}}">ORDER#{{this.order_ID}}</a></td>
+            <td class = "date">{{this.when}} </td>
         </div>
-    </div>
-    <div class= "card">
-        <div >
-            <p>ORDERID</p>
-        </div>
-        <div >
-            <p>DATE</p>
-        </div>
-    </div>
-    <ul>
-            {{#each orders}}
-            <li class='li-wrap'>
-                
-                {{!-- using _id for now because there is no id for order --}}
-                <div class = "left">
-                    <a href="my-orders/{{this.order_ID}}">ORDER#{{this.order_ID}}</a>
-                </div>
-                <div class = "right">
-                    {{this.when}}
-                </div>
-            </li>
-            {{/each}}            
-    </ul>
-    <div>
-        <p class="bottip">
-            <a href="/customer/home"> ORDER!</a>
-        </p>
- 
-    </div>
-</body>
+        {{/each}}   
+    </table>
+</div>
+<div class='button-container'>
+    <a class="bottip" href="/customer/home" style='text-decoration: none'>ORDER NOW</a>
+</div>
+

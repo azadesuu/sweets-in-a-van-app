@@ -4,11 +4,45 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Snacks in a van</title>
+    <title>Snacks in a Van</title>
+    <style>
+    </style>
+    <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
-    <main>
-        {{{body}}}
-    </main>
+    <div class='content-card'>
+        <header>
+            <div style="padding-top: 5px;">
+                <div class='container' onclick="openNav()"><a>&#9776;</a></div> 
+                <div class='container'><p style="text-align: center;">SNACKS IN A VAN</p><div>
+            </div>
+        </header>
+        <main>
+            {{#if loggedin}}
+            <div id="mySidenav" class="sidenav">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <a href="/customer/my-profile">My Profile</a>
+            <a href="/customer/my-orders">My Order</a>
+            <a href="/customer/logout">Logout</a>
+            </div>  
+            {{else}}
+            <div id="mySidenav" class="sidenav">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <a href="/customer/login">Log in</a>
+            </div>  
+            {{/if}}
+            {{{body}}}
+        </main>
+    </div>
 </body>
 </html>
+
+<script>
+    function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+    }
+
+    function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+    }
+</script>

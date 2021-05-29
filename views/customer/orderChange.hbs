@@ -1,28 +1,25 @@
-<div class = "top">
-    <div text-align='left'><a href="/customer/my-orders">< </a></div>
-    <div>
-        <p>ORDER #{{order.order_ID}}</p>
+<link rel="stylesheet" href="/css/menu.css">
+<style>
+   div button.normal-button{
+       background-color: gray;
+   }
+</style>
+<div class='content-card'>
+    <h2 style="text-align: center;">ORDER #{{order_ID}}</h2>
+    <h3 style="text-align: center;">{{this.van_id}}</h3>
+    <div class='menu-content'>
+        {{#each menu_items}}
+            <div class="item-card">
+                <p class='item-name'>{{this.item_name}}</p>
+                <p class='item-price'>$ {{this.item_price}}</p>
+                <img src={{this.item_photo}} class="browsePage">
+            <input type="number" min="0" oninput="this.value =this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null" id={{this.item_ID}} value="" placeholder = "0"/>
+            <button class='normal-button' style= 'padding:5px;' type='button' onclick="saveToCart({{this.item_ID}})">ADD TO CART</button>
+            </div>
+        {{/each}}
     </div>
 </div>
-
-<div class="content">
-    <div class="cards">
-        <p>Foods</p>
-        <ul>
-            {{#each menu_items}}
-            <li class="li-wrap">
-                <p>
-                    {{this.item_name}}
-                </p>
-                <p>${{this.item_price}}</p>
-                <img src={{this.item_photo}} class="browsePage">
-                <input type="number" id={{this.item_ID}} value="" placeholder = "0"/>
-                <button type='button' onclick="saveToCart({{this.item_ID}})">Add to cart</button>
-            </li>
-            {{/each}}
-        </ul>
-    </div>  
-</div>
+       
 
 <form class="cart-form" action="/customer/my-orders/update" method="post">
     <input type = "hidden" id="cart" name="cart" value=""/>

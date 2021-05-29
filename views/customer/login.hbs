@@ -1,48 +1,14 @@
-<link rel="stylesheet" href="/css/reset.css">
 <link rel="stylesheet" href="/css/login.css">
-<body>
-    <div class="top">
-        <div text-align='left'><a href="/customer/home">< </a></div>
-        <div>Log in</div>
-    </div>
-    <div class="login-card">
-        <div class="login-content">
-            <form class="login-form" action="/customer/login" method="post">
-                    <div>
-                        <label for="" >
-                            <p>Email address:</p>
-                            <p>
-                                <input id='email' name="email" value="" placeholder="Enter your email address">
 
-                            </p>
-                        </label>
-                    </div>
-                    <div>
-                        <label for="" >
-                            <p>Password:</p>
-                            <p>
-                                <input type="password" name="password" id='password' value=""
-                                 placeholder="please enter your password">
-                            </p>
-                        </label>
-                    </div>
-                    <p class="login-btn">
-                        <button type='submit'>Log in</button>
-                    </p>
-                    <p class="reset-btn">
-                        <a href="">Forgot password?</a>
-                    </p>
-                    <p text-align='centre'>
-                        <a href="register">Don't have an account?</a>
-                    </p>
-            </form>
-            
-        </div>
+<div class="content-card">
+    <h2 style="text-align: center;">Log In</h2>
+    <form class="login-form" action="/customer/login" method="POST">
+        <label for="email" >Email address:</label>
+        <input type="text" id='email' name="email" value="" placeholder="Enter your email address">
+        <label for="password">Password:</label>
+        <input type="text" name="password" id='password' value="" placeholder="Please enter your password">
         
-    </div>
-<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="../js/fontresize.js"></script>
-<script>
-
-</script>
-</body>
+        <input class='normal-button' type="submit" value="Log in">
+        <a class='other-button' href="register">Don't have an account?</a>
+    </form>
+</div>
