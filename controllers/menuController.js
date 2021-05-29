@@ -236,7 +236,11 @@ const getOrderDetail = async(req,res)=>{
         var timeCreated = order.when;
         timeCreated = timeCreated.getTime() / 1000;
         var timeRemaining = 900 - (Date.now()/1000 - timeCreated);
-        return res.render('customer/orderDetail', {order, van, timeRemaining})
+        var hasTimeLeft = false;
+        if (timeRemaining > 0) {
+            hasTimeLeft = true;
+        }
+        return res.render('customer/orderDetail', {order, van, timeRemaining, hasTimeLeft})
     }catch(err){
         console.log(err)
     }

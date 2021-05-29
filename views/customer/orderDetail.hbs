@@ -35,13 +35,21 @@
         {{!-- <a href="/customer/my-orders"> BACK</a> --}}
         <form method="post" action="/customer/my-orders/cancel" id="cancelform">
             <input type="hidden" name="cancelID" id="cancelID" value={{order.order_ID}} />
+            {{#if hasTimeLeft}}
             <button type='submit'>CANCEL</button>
             <div id = "timeCancel">15:00</div>
+            {{else}}
+            <p>CANCEL</p>
+            {{/if}}
         </form>
         <form method="post" action="/customer/my-orders/change" id="changeform">
             <input type="hidden" name="changeID" id="changeID" value={{order.order_ID}} />
+            {{#if hasTimeLeft}}
             <button type='submit'>CHANGE</button>
             <div id = "timeChange">15:00</div>
+            {{else}}
+            <p>CHANGE</p>
+            {{/if}}
         </form>
         <input type="hidden" name="timeRemaining" id="timeRemaining" value={{timeRemaining}} />
     </div>
