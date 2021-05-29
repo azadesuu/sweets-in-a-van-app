@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 const vendorSchema = new mongoose.Schema({
-    isOpen:{type: Boolean, default: true},
+    isOpen:{type: Boolean, default: false},
     latitude:{type: Number, default: 0},
     longitude:{type: Number, default:0},
     van_first_name: {type: String, required: true},
@@ -8,7 +8,6 @@ const vendorSchema = new mongoose.Schema({
     password: {type: String, required: true},
     van_ID:{type: String, required: true, unique:true},
     locDescription : {type:String, default: ""},
-    leavingLocation :{type:String, default: ""}
 },{collection: 'vendors'})
 
 const bcrypt = require('bcrypt-nodejs')
