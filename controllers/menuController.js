@@ -30,7 +30,7 @@ const getHomePage = async(req, res) => {
         return ((a.latitude-user.latitude)**2+(a.longitude-user.longitude)**2)-((b.latitude-user.latitude)**2+(b.longitude-user.longitude)**2)
     })
     vans = vans.slice(0,5);
-    return res.render('customer/home', {req, "loggedin": req.isAuthenticated(), van: vans});
+    return res.render('customer/home', {req, "loggedin": req.isAuthenticated(), van: vans, layout:'customer_main'});
 }
 
 
@@ -75,7 +75,7 @@ const postHomePage = async(req, res) => {
         return ((a.latitude-user.latitude)**2+(a.longitude-user.longitude)**2)-((b.latitude-user.latitude)**2+(b.longitude-user.longitude)**2)
     })
     vans = vans.slice(0,5);
-    return res.render('customer/home', {req, "loggedin": req.isAuthenticated(), van: vans});
+    return res.render('customer/home', {req, "loggedin": req.isAuthenticated(), van: vans, layout:'customer_main'});
 }
 
 
