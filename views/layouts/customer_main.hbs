@@ -21,15 +21,14 @@
             {{#if loggedin}}
             <div id="mySidenav" class="sidenav">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-            <a href="/vendor/home">Home</a>
-            <a href="/vendor/unfulfilled-orders">Unfulfilled Orders</a>
-            <a href="/vendor/all-orders">All Orders</a>
-            <a href="/vendor/logout">Logout</a>
+            <a href="/customer/my-profile">My Profile</a>
+            <a href="/customer/my-orders">My Order</a>
+            <a href="/customer/logout">Logout</a>
             </div>  
             {{else}}
             <div id="mySidenav" class="sidenav">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-            <a href="/vendor/home">Log in</a>
+            <a href="/customer/login">Log in</a>
             </div>  
             {{/if}}
             {{{body}}}
