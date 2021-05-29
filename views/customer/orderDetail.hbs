@@ -36,16 +36,42 @@
         <form method="post" action="/customer/my-orders/cancel" id="cancelform">
             <input type="hidden" name="cancelID" id="cancelID" value={{order.order_ID}} />
             <button type='submit'>CANCEL</button>
+            <div id = "timeCancel">15:00</div>
         </form>
         <form method="post" action="/customer/my-orders/change" id="changeform">
             <input type="hidden" name="changeID" id="changeID" value={{order.order_ID}} />
             <button type='submit'>CHANGE</button>
+            <div id = "timeChange">15:00</div>
         </form>
+        <input type="hidden" name="timeRemaining" id="timeRemaining" value={{timeRemaining}} />
     </div>
 {{/if}}
 
 <script>
+    function startTimer(duration, display) {
+        var timer = duration, minutes, seconds;
+        setInterval(function () {
+            minutes = parseInt(timer / 60, 10);
+            seconds = parseInt(timer % 60, 10);
 
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            display.textContent = minutes + ":" + seconds;
+
+            if (--timer < 0) {
+                timer = duration;
+            }
+        }, 1000);
+    }
+
+    window.onload = function () {
+        var time = document.getElementById("timeRemaining").value;
+        var displayCancel = document.querySelector('#timeCancel');
+        var displayChange = document.querySelector('#timeChange');
+        startTimer(time, displayCancel);
+        startTimer(time, displayChange);
+    };
 
 </script>
 

@@ -233,7 +233,10 @@ const getOrderDetail = async(req,res)=>{
     try{
         const order = await Order.findOne( {order_ID: req.params.order_ID}).lean()
         const van = await Vendor.findOne( {van_ID: order.van_ID}).lean()
-        return res.render('customer/orderDetail', {order, van})
+        var timeCreated = order.when;
+        timeCreated = timeCreated.getTime() / 1000;
+        var timeRemaining = 900 - (Date.now()/1000 - timeCreated);
+        return res.render('customer/orderDetail', {order, van, timeRemaining})
     }catch(err){
         console.log(err)
     }
@@ -248,7 +251,7 @@ const cancelOrder = async(req, res)=> {
             }
         }
     );
-    return res.redirect('customer/my-orders');
+    return res.redirect('/customer/my-orders');
 }
 const changeOrder = async(req, res)=> {
     menu_items = await Menu.find().lean();
