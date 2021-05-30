@@ -12,17 +12,18 @@
 <body>
     <div class='content-card'>
         <header>
-            <div style="padding-top: 5px;">
-                <div class='container' onclick="openNav()"><a>&#9776;</a></div> 
-                <div class='container'><p style="text-align: center;">SNACKS IN A VAN</p><div>
+            <div style'width: 100%; background-color: #555; overflow: auto;'>
+                <div class='container' onclick="openNav()" style='float:left'><a>&#9776;</a></div> 
+                <div class='container'><a href='/customer/home'><img class='icon' src='/css/images/icon.png'></a><div>
             </div>
         </header>
         <main>
             {{#if loggedin}}
             <div id="mySidenav" class="sidenav">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <a href="/customer/home">Home</a>
             <a href="/customer/my-profile">My Profile</a>
-            <a href="/customer/my-orders">My Order</a>
+            <a href="/customer/my-orders">My Orders</a>
             <a href="/customer/logout">Logout</a>
             </div>  
             {{else}}

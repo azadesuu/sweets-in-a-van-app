@@ -2,7 +2,7 @@
 
 <div class='content-card'>
     <h2 style="text-align: center;">Click a van to Order!</h2>
-    <h3 style="text-align: center;">Please share your location first, and click update to get the vans near you!</h2>
+    <h3 style="text-align: center;">Please [Share your location] first, and click [Update] to get the vans near you!</h2>
 
 
     <form method="post" action="/customer/home" id="locationform" style='text-align:center'>
@@ -11,7 +11,7 @@
 
     <button type="button" onclick="shareLoc()">Share My Location</button><input type="submit" value='Update'></button>
     </form>
-
+    <spacer>&nbsp;</spacer>
     <table>
         <th>Van ID</th>
         {{#each van}}

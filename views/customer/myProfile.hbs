@@ -1,11 +1,13 @@
+<link rel="stylesheet" href="/css/profile.css">
 
-<div>
-    <p>Email Address:</p>
-    <p>{{email}}</p>
-    <p>First name:</p>
-    <p>{{first_name}}</p>
-    <p>Last name:</p>
-    <p>{{last_name}}</p>    
+<div class='content-card'>
+    <spacer>&nbsp;</spacer>
+    <div class="card">
+        <div><p style='font-weight:bold;'>Email Address:</p> <p>{{email}}</p></div>
+        <div><p style='font-weight:bold;'>First name:</p> <p>{{first_name}}</p></div>
+        <div><p style='font-weight:bold;'>Last name:</p> <p>{{last_name}}</p></div>
+        <div class='button'><a class='normal-button' href="/customer/my-profile/edit">Edit</a></div>
+    </div>
+    <spacer>&nbsp;</spacer>
 </div>
 
-<a href="/customer/my-profile/edit">Edit</a>

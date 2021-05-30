@@ -6,6 +6,14 @@
   border-radius: 15px;
 }
 
+.order-card{
+  padding:30px;
+}
+p.title{
+  font-size:x-large;
+  font-weight: bold;
+
+}
 .detail-card div{
   display:inline-block;
 }
@@ -78,3 +86,4 @@ td{
     width:100%;
   }
 }
+

@@ -1,0 +1,22 @@
+@import url("main.css");
+
+.card {
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 200px;
+    margin: auto;
+    text-align: left;
+    padding: 0px 50px;
+  }
+  
+  .button {
+    justify-content: center;
+    text-align:center;
+    margin:auto;
+    width:100%;
+    padding:20px 0;
+  }
+  
+  p{
+      display:inline-block;
+  }

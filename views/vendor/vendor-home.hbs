@@ -10,7 +10,7 @@
 </script>
 
 {{#if loggedin}}
-    <p>Welcome! {{vendor.van_ID}}</p>
+    <p>Welcome, {{vendor.van_first_name}} {{vendor.van_last_name}}!</p>
     <ul>
         <li> <a href="/vendor/{{vendor.van_ID}}/orders">Click here to view unfulfilled orders</a></li>
         <li> <a href="/vendor/{{vendor.van_ID}}/all-orders">Click here to view all orders</a></li>

@@ -1,4 +1,6 @@
-body,main {font-family: Arial, Helvetica, sans-serif;}
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+* {font-family:  'Roboto', Arial, Helvetica, sans-serif;}
 body{
   background: url("https://images.unsplash.com/photo-1570642916604-58882c9e078b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=775&q=80");
   background-size: auto;
@@ -6,12 +8,13 @@ body{
 
 .content-card {
   position: relative;
-  height: 100vh; width: 900px;
+  height:fit-content; width: 900px;
   justify-content: center;
   padding: 0px;
-  margin: 0 auto;
+  margin: auto;
   border-radius: 5px;
   background-color: #f2f2f2;
+  overflow-wrap: normal;
 }
 
 .content-card header{
@@ -23,21 +26,21 @@ form{
 }
 
 header{
+  padding: 3px;
   text-decoration:none;
   font-size: 24px;
-  height:65px;
   width:100%;
-  margin: 0 auto;
-  overflow: hidden;
+  margin: 5px auto;
+  height: fit-content;
   background-color: #fff; 
   position: relative; 
   top: 0; left:0;
-  box-shadow: 0px 5px 4pt #8a8a8a;
+  box-shadow: 0px 5pt 5pt -5pt #000000;
 }
 
 header div div:nth-child(1){
   cursor:pointer;
-  font-size: 35px;
+  font-size: 40px;
 }
 header div div:nth-child(1) a{
   padding-left: 10px;
@@ -49,6 +52,21 @@ header div div:nth-child(2){
 
 .container{
   display:inline-block;
+}
+
+.icon{
+  border-radius: 10%;
+    object-fit: cover;
+    width: auto;
+    height: 70px;
+}
+
+.icon:hover{
+  width: auto;
+  height: 90px;
+}
+.spacer{
+  height:20px;
 }
 
 
@@ -131,11 +149,7 @@ header div div:nth-child(2){
   header{
     height:70px;
   }
-  header div:nth-child(2){
-    font-size: 20px;
-  }
   header div div:nth-child(1) a{
-    width:0;
     font-size: 25px;
     padding-left: 0px;
   }

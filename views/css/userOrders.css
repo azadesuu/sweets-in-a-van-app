@@ -1,14 +1,16 @@
 @import url("main.css");
 
-.details-card{
-  width:100%;
-  background-color: #fff;
+a{
+  text-decoration:none;
+  color:black
 }
-
+a:hover{
+  color:orange;
+}
 table{
   border-radius:15pt;
   background-color: #fff;
-  margin:auto;
+  margin: auto;
   width:80%;
   border: 1px solid gray;
 }
@@ -31,12 +33,19 @@ tr td:nth-child(2){
 }
 
 .bottip {
+  height:fit-content;
   font-size:40px;
   padding:20px 0px;
   background-color:#FFAD12;
   justify-content: center;
   color:white;
-  position:fixed; bottom:0; width:900px; margin: auto; text-align:center;
+  position:fixed; bottom:0; width:900px; 
+  margin: auto; text-align:center;
+}
+
+.bottip:hover{
+  font-size: 45px;
+  color:white;
 }
 
 @media screen and (max-width:900px){
