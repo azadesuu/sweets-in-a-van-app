@@ -112,6 +112,14 @@ module.exports = function(passport) {
                         console.log("Password too short");
                         return done(null, false, req.flash('signupMessage', 'Password too short'));
                     }
+                    if (! /\d/.test(password)) {
+                        console.log("No digit");
+                        return done(null, false, req.flash('signupMessage', 'No digit'));
+                    }
+                    if (! /[a-zA-Z]/.test(password)) {
+                        console.log("No alpha");
+                        return done(null, false, req.flash('signupMessage', 'No alpha'));
+                    }
                     else {
                         // otherwise
                         // create a new user

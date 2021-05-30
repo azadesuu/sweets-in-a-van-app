@@ -99,6 +99,10 @@ app.use('/vendor', vendorRouter)
 // customer routes
 app.use('/customer', menuRouter)
 
+app.get('*', function(req, res) {
+  res.redirect("/");
+});
+
 
 app.listen(port, () => {
 	console.log('Snacks in a van server is listening for requests ...')
