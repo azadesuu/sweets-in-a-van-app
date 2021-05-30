@@ -23,6 +23,7 @@ Remember that _"this document"_ can use `different formats` to **highlight** imp
 * [Adding Images](#image-preview)
 * [Postman Requests](#postman-instructions)
 * [Login Details](#login-details)
+* [Final Submission](#final-submission)
 
 ## Team Members
 
@@ -100,9 +101,17 @@ connectionURL = 'mongodb+srv://anything30005:F5Nruod8fTvdNTCz@info30005-1.xpxvw.
 |Show a list of outstanding orders| Assumes for a particular van.   vendor/:van_ID/orders | N/A. Should not show any records with status: “Completed”/ “Cancelled” (can compare with all-orders)|
 |Mark an order as fulfilled| vendor/:van_ID/orders/:order_ID/fulfilled | order_ID=6081b276ea8823579899a240 , changes the status of the order to "Fulfilled" no matter the previous value | 
 
-## Login Details
-email: eu.lacus.Quisque@auctor.net
-password: 12345
+## Login Details (Customer)
+email: test@123.com
+password: AbC@1098A_
+
+## Final Submission
+Commit ID: 
+URL: https://t16-anything-info30005.herokuapp.com/
+ConnectionString: "mongodb+srv://anything30005:F5Nruod8fTvdNTCz@info30005-1.xpxvw.mongodb.net/test?authSource=admin&replicaSet=atlas-va9h06-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true"
+
+## Unit and Integration Tests
+Sorry, we didn't manage to write one..
 
 **Now Get ready to complete all the tasks:**
 
@@ -110,6 +119,6 @@ password: 12345
 - [x] User Interface (UI)mockup
 - [x] App server mockup
 - [x] Front-end + back-end (one feature)
-- [ ] Complete system + source code
-- [ ] Report on your work(+ test1 feature)
+- [x] Complete system + source code
+- [x] Report on your work(+ test1 feature)
 
