@@ -239,6 +239,9 @@ const getAllUserOrders = async (req, res) => {
                 i--;
             }
         }
+        ordersRaw.sort(function(a,b) {
+            return (b.when.getTime() - a.when.getTime());
+        });
         var orders = [];
         for (var i=0;i<ordersRaw.length;i++) {
             orders[i] = {
