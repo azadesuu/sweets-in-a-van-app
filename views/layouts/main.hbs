@@ -5,16 +5,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Snacks in a Van</title>
-    <style>
-    </style>
     <link rel="stylesheet" href="/css/main.css">
+    <style>
+        @media screen and (max-width: 1024px){
+            .button-container, .content-card{
+                width:100%
+            }
+        }
+    </style>
 </head>
 <body>
     <div class='content-card'>
         <header>
-            <div style="padding-top: 5px;">
-                <div class='container' onclick="openNav()"><a>&#9776;</a></div>
-                <div class='container'><p style="text-align: center;">SNACKS IN A VAN</p><div>
+            <div style'width: 100%; background-color: #555; overflow: auto;'>
+                <div class='container' onclick="openNav()" style='float:left'><a>&#9776;</a></div> 
+                <div class='container'><a href='/vendor/home'><img class='icon' src='/css/images/icon.png'></a><div>
             </div>
         </header>
         <main>
@@ -24,6 +29,7 @@
                 <a href="/vendor/">Home</a>
                 <a href="/vendor/{{vendor.van_ID}}/orders">Unfulfilled Orders</a>
                 <a href="/vendor/{{vendor.van_ID}}/all-orders">All Orders</a>
+                <a href="/vendor/{{vendor.van_ID}}/setLocation">Set Location</a>
                 <a href="javascript:void(0);" onclick="logout()">Logout</a>
             <form method="post" action="/vendor/logout" id="logoutform">
                 <input type="hidden"/>

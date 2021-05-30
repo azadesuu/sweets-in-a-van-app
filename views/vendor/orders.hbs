@@ -1,37 +1,41 @@
-<link rel="stylesheet" href='/css/userOrders.css'
-<body>
-    <div class = "top">
+
+<link rel="stylesheet" href='/css/login.css'>
+<link rel="stylesheet" href='/css/userOrders.css'>
+<style>
+    th, td {
+        padding: 15px 20px;
+        text-align: center;
+        font-size: large;
+    }
+</style>
+<div class='content-card'>
+    <div style='padding:15px'>
+    <h2 style='text-align:center'>ALL ORDERS</h2>
         <form method="post" action="/vendor/{{vendor.van_ID}}/orders/search">
-            <input type="search" size="10" name="order_ID" placeholder="start typing" autofocus>
-            <label for="fulfilled"> fulfilled</span> </label> 
-            <input type="checkbox" name="fulfilled">
-            <label for="complete"> complete</span> </label> 
-            <input type="checkbox" name="complete">
-            <input type="submit" value="Search">
+            <input type="text" size="10" name="order_ID" placeholder="Enter Order ID/Date" autofocus>
+                <div style='text-align:center'>
+                    <label for="fulfilled">Fulfilled</span> </label> 
+                    <input type="checkbox" name="fulfilled">
+                    <label for="complete">Complete</span> </label> 
+                    <input type="checkbox" name="complete">
+                </div>
+                <div style='text-align:center'>
+                    <input type="submit" value="Search" style='padding:'>
+                </div>
         </form>
-        <div text-align='left'><a href="/vendor/">< </a></div>
-        <div>
-            <p>ORDERS</p>
+    <table>
+        <tr><th style='; text-align:left'>ORDER ID</th><th style='text-align:center; width:fit-content'>DATE</th><th style='text-align:right; width:25%'>STATUS</th></tr>
+        {{#each orders}}
+        <div class='details-card'>
+            <tr>
+                <td class = "orderID"> <a href="orders/{{this.order_ID}}">ORDER#{{this.order_ID}}</a></td>
+                <td class = "date">{{this.when}}</td>
+                <td  onLoad='colorChange()' id='order-status' class = "status">{{this.status}}</td>
+            </tr>
         </div>
+        {{/each}}   
+    </table>
+    
     </div>
-    <div class= "card">
-        <div >
-            <p>ORDERID</p>
-        </div>
-        <div >
-            <p>DATE</p>
-        </div>
-    </div>
-    <ul>
-            {{#each orders}}
-            <li class='li-wrap'>
-                <div class = "left">
-                    <a href="orders/{{this.order_ID}}">ORDER #{{this.order_ID}}</a>
-                </div>
-                <div class = "right">
-                    {{this.when}}
-                </div>
-            </li>
-            {{/each}}            
-    </ul>
-</body>
+</div>
+
