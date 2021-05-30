@@ -25,46 +25,41 @@
             <div><p style='font-weight:unset; margin:5px'>Total: ${{order.paymentTotal}}</p></div>
         </div>
 
-        {{#if complete}}
-            <div class='bottip' style='background-color:gray'>
-                <a href="/customer/my-orders">BACK</a>
-            </div>
-        {{else}}
-            <div class='bottom-buttons' style='display:block; text-align:center'>
-                
-                <div style='display:inline-block'>
-                    <form method="post" action="/customer/my-orders/cancel" id="cancelform">
-                        <input type="hidden" name="cancelID" id="cancelID" value={{order.order_ID}} />
-                        {{#if hasTimeLeft}}
-                        
-                        <button class='normal-button' style='background-color:white; color:#000; font-size:24px' type='submit'>CANCEL<div id = "timeChange">15:00</div></button>
-                        {{else}}
-                    <div class='bottom-button inactive'>
-                            <p>CANCEL</p>
-                            <p>00:00</p>
-                        </div>
-                        {{/if}}
-                    </form>
-                </div>
 
-                <div style='display:inline-block'>
-                    <form method="post" action="/customer/my-orders/change" id="changeform">
-                        <input type="hidden" name="changeID" id="changeID" value={{order.order_ID}} />
-                        {{#if hasTimeLeft}}
-                        <button class='normal-button' style='font-size:24px' type='submit'>CHANGE <div id = "timeChange">15:00</div></button>
-                            
-                        </div>
-                        {{else}}
-                        <div class='bottom-button inactive'>
-                            <p>CHANGE</p>
-                            <p>00:00</p>
-                        </div>
-                        {{/if}}
-                    </form>
-                </div>
+        <div class='bottom-buttons' style='display:block; text-align:center'>
+            
+            <div style='display:inline-block'>
+                <form method="post" action="/customer/my-orders/cancel" id="cancelform">
+                    <input type="hidden" name="cancelID" id="cancelID" value={{order.order_ID}} />
+                    {{#if hasTimeLeft}}
+                    
+                    <button class='normal-button' style='background-color:white; color:#000; font-size:24px' type='submit'>CANCEL<div id = "timeCancel">15:00</div></button>
+                    {{else}}
+                <div class='bottom-button inactive'>
+                        <p>CANCEL</p>
+                        <p>00:00</p>
+                    </div>
+                    {{/if}}
+                </form>
             </div>
-            <input type="hidden" name="timeRemaining" id="timeRemaining" value={{timeRemaining}}>
-        {{/if}}
+
+            <div style='display:inline-block'>
+                <form method="post" action="/customer/my-orders/change" id="changeform">
+                    <input type="hidden" name="changeID" id="changeID" value={{order.order_ID}} />
+                    {{#if hasTimeLeft}}
+                    <button class='normal-button' style='font-size:24px' type='submit'>CHANGE <div id = "timeChange">15:00</div></button>
+                        
+                    </div>
+                    {{else}}
+                    <div class='bottom-button inactive'>
+                        <p>CHANGE</p>
+                        <p>00:00</p>
+                    </div>
+                    {{/if}}
+                </form>
+            </div>
+        </div>
+        <input type="hidden" name="timeRemaining" id="timeRemaining" value={{timeRemaining}}>
     </div>
 </div>
 
