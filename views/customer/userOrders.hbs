@@ -5,8 +5,10 @@
         <tr><th style='text-align:left'>ORDER ID</th><th style='text-align:right; width:auto'>DATE</th></tr>
         {{#each orders}}
         <div class='details-card'>
-            <td class = "orderID"> <a href="my-orders/{{this.order_ID}}">ORDER#{{this.order_ID}}</a></td>
-            <td class = "date">{{this.when}} </td>
+            <tr>
+                <td class = "orderID"> <a href="my-orders/{{this.order_ID}}">ORDER#{{this.order_ID}}</a></td>
+                <td class = "date">{{this.when}} </td>
+            </tr>
         </div>
         {{/each}}   
     </table>
