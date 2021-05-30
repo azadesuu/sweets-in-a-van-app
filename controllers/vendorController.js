@@ -38,7 +38,6 @@ const getOneOrder = async(req,res)=>{
         if(order.late_fulfillment){
             totalPayment = 0.8 * order.paymentTotal;
         }
-        console.log(totalPayment)
         var timeCreated = order.when;
         timeCreated = timeCreated.getTime()/1000;
         var timeRemaining = 900 - (Date.now()/1000 - timeCreated)
