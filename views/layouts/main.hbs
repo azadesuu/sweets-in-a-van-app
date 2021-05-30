@@ -19,7 +19,7 @@
         <header>
             <div style'width: 100%; background-color: #555; overflow: auto;'>
                 <div class='container' onclick="openNav()" style='float:left'><a>&#9776;</a></div> 
-                <div class='container'><a href='/vendor/home'><img class='icon' src='/css/images/icon.png'></a><div>
+                <div class='container'><a href='/vendor'><img class='icon' src='/css/images/icon.png'></a><div>
             </div>
         </header>
         <main>
@@ -27,9 +27,9 @@
             <div id="mySidenav" class="sidenav">
                 <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
                 <a href="/vendor/">Home</a>
-                <a href="/vendor/{{vendor.van_ID}}/orders">Unfulfilled Orders</a>
-                <a href="/vendor/{{vendor.van_ID}}/all-orders">All Orders</a>
-                <a href="/vendor/{{vendor.van_ID}}/setLocation">Set Location</a>
+                <a href="/vendor/orders">Unfulfilled Orders</a>
+                <a href="/vendor/all-orders">All Orders</a>
+                <a href="/vendor/setLocation">Set Location</a>
                 <a href="javascript:void(0);" onclick="logout()">Logout</a>
             <form method="post" action="/vendor/logout" id="logoutform">
                 <input type="hidden"/>
