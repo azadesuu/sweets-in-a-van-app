@@ -96,6 +96,11 @@ const myProfile = async (req, res) => {
     }
 }
 
+/**
+ * Check if the password entered by users is valid
+ * @param {String} password 
+ * @returns {boolean}
+ */
 function isValidPsw(password) {
     if (password.length < 8) {
         return false;
