@@ -25,14 +25,23 @@
 
         <div class='details-card' style='padding:20px'>
             <div><p style='display:inline' class='title'>Payment Summary</p></div>
-            <div><p style='font-weight:unset; margin:5px'>Late Fulfillment Discount: {{order.discount}}</p><br></div>
-            <div><p style='font-weight:unset; margin:5px'>Total: ${{order.paymentTotal}}</p></div>
+            <div><p style='font-weight:unset; margin:5px'>Late Fulfillment Discount: {{order.late_fulfillment}}</p><br></div>
+            {{#if hasTimeLeft}}
+                <div><p style='font-weight:unset; margin:5px'>Total: ${{order.paymentTotal}}</p></div>
+            {{else}}
+                <div><p style='font-weight:unset; margin:5px'>Total: ${{order.paymentTotal}}</p></div>
+            {{/if}}
         </div>
 
         {{#if isUnfulfilled}}
             <div style='display:block; text-align:center; justify-content: center'>
                 <form style='display:inline-block' action="/vendor/{{vendor.van_ID}}/orders/{{order.order_ID}}/fulfilled" method="POST">
                     <input class='normal-button' style='background-color: green; font-size:20px;text-transform:uppercase' type="submit" value="Mark as Fulfilled">
+                    {{#if hasTimeLeft}}
+                        <input type="hidden" name = "lateFulfillment" id ="lateFulfillment" value = "false">
+                    {{else}}
+                        <input type="hidden" name = "lateFulfillment" id ="lateFulfillment" value = "true">
+                    {{/if}}
                 </form>
             </div>
         {{/if}}
