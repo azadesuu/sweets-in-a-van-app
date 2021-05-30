@@ -156,6 +156,12 @@ const getAllOutstandingOrders = async(req, res)=>{
     try{
         const vendor = await Vendor.findOne( {van_ID: req.params.van_ID} ).lean()
         ordersRaw = await Order.find({van_ID: req.params.van_ID, status :{$in: ['Unfulfilled']}}).lean()
+        for (var i=0;i<ordersRaw.length;i++) {
+            if (ordersRaw[i].status === "Cancelled") {
+                ordersRaw.splice(i, 1);
+                i--;
+            }
+        }
         ordersRaw.sort(function(a,b){
             return (a.when.getTime() - b.when.getTime());
         })
@@ -179,6 +185,12 @@ const getAllOrders = async(req, res)=>{
     try{
         const vendor = await Vendor.findOne( {van_ID: req.params.van_ID} ).lean()
         ordersRaw = await Order.find({van_ID: req.params.van_ID}).lean();
+        for (var i=0;i<ordersRaw.length;i++) {
+            if (ordersRaw[i].status === "Cancelled") {
+                ordersRaw.splice(i, 1);
+                i--;
+            }
+        }
         ordersRaw.sort(function(a,b){
             return (a.when.getTime() - b.when.getTime());
         })
