@@ -102,7 +102,7 @@ const postHomePage = async(req, res) => {
 
 const myProfile = async (req, res) => {
     var name = await User.findOne({email: req.session.email}, {_id:false, first_name: true, last_name: true});
-    return res.render('customer/myProfile', {"email":req.session.email, "first_name":name.first_name, "last_name":name.last_name});
+    return res.render('customer/myProfile', {"email":req.session.email, "first_name":name.first_name, "last_name":name.last_name, layout:'customer_main'});
 }
 
 const myProfileEdit = async (req, res) => {
@@ -115,7 +115,7 @@ const myProfileEdit = async (req, res) => {
             }
         }
     );
-    return res.render('customer/home');
+    return res.render('customer/home', {layout:'customer_main'});
 }
 
 const getVanDetail = async (req, res) => {
@@ -213,21 +213,40 @@ const getAllItems = async (req, res) => {
     }
 }
 
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+    if (month.length < 2) {
+        month = '0' + month;
+    }
+    if (day.length < 2) {
+        day = '0' + day;
+    }
+    return [day, month, year].join('/');
+}
+
 //get all orders related to user
 const getAllUserOrders = async (req, res) => {
     try {
         user = await User.findOne({email: req.session.email}, {}).lean()
-        orders = await Order.find({user_ID: user.user_ID}, {}).lean()
-        // console.log(orders);
-        for (var i=0;i<orders.length;i++) {
-            // console.log(i);
-            // console.log(orders[i].status);
-            if (orders[i].status === "Cancelled") {
-                orders.splice(i, 1);
+        ordersRaw = await Order.find({user_ID: user.user_ID}, {_id: false, order_ID: true, when: true, status: true}).lean()
+        // console.log(ordersRaw);
+        for (var i=0;i<ordersRaw.length;i++) {
+            if (ordersRaw[i].status === "Cancelled") {
+                ordersRaw.splice(i, 1);
                 i--;
             }
         }
-        return res.render('customer/userOrders', {orders})
+        var orders = [];
+        for (var i=0;i<ordersRaw.length;i++) {
+            orders[i] = {
+                order_ID : ordersRaw[i].order_ID,
+                when : formatDate(ordersRaw[i].when)
+            }
+        }
+        return res.render('customer/userOrders', {orders, layout:'customer_main', "loggedin": req.isAuthenticated()})
     } catch (err) {
         res.status(400)
         return res.send("Database query failed")
