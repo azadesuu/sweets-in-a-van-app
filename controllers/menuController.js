@@ -259,19 +259,46 @@ const getItemDetail = async (req, res) => {
     }
 }
 
+function formatTime(date) {
+    var d = new Date(date),
+        minute = '' +d.getMinutes(),
+        hour = '' + d.getHours(),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+    if (month.length < 2) {
+        month = '0' + month;
+    }
+    if (day.length < 2) {
+        day = '0' + day;
+    }
+    var time = "";
+    time = [hour, minute].join(':');
+    var dateStr = "";
+    dateStr = [day, month, year].join('/');
+    return [time, dateStr].join(' ');
+}
+
 const getOrderDetail = async(req,res)=>{
     if (!req.isAuthenticated()) {
         res.redirect('/customer/login');
     } else{
         try{
-            const order = await Order.findOne( {order_ID: req.params.order_ID}).lean()
-            const van = await Vendor.findOne( {van_ID: order.van_ID}).lean()
-            var timeCreated = order.when;
+            const orderRaw = await Order.findOne( {order_ID: req.params.order_ID}).lean();
+            const van = await Vendor.findOne( {van_ID: orderRaw.van_ID}).lean()
+            var timeCreated = orderRaw.when;
             timeCreated = timeCreated.getTime() / 1000;
             var timeRemaining = 900 - (Date.now()/1000 - timeCreated);
             var hasTimeLeft = false;
             if (timeRemaining > 0) {
                 hasTimeLeft = true;
+            }
+            var order = {
+                order_ID : orderRaw.order_ID,
+                orderItems : orderRaw.orderItems,
+                paymentTotal: orderRaw.paymentTotal,
+                when : formatTime(orderRaw.when)
+
             }
             return res.render('customer/orderDetail', {layout:'customer_main', "loggedin": req.isAuthenticated(), order, van, timeRemaining, hasTimeLeft})
         }catch(err){

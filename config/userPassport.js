@@ -108,6 +108,10 @@ module.exports = function(passport) {
                         console.log("existing");
                         return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
                     }
+                    if (password.length < 8) {
+                        console.log("Password too short");
+                        return done(null, false, req.flash('signupMessage', 'Password too short'));
+                    }
                     else {
                         // otherwise
                         // create a new user
