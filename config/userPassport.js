@@ -91,22 +91,18 @@ module.exports = function(passport) {
                         return done(err);
                     }
                     if (existingUser) {
-                        console.log("existing");
                         return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
                     }
                     // Password length checking
                     if (password.length < 8) {
-                        console.log("Password too short");
                         return done(null, false, req.flash('signupMessage', 'Password too short'));
                     }
                     // Password contains at least one digit checking
                     if (! /\d/.test(password)) {
-                        console.log("No digit");
                         return done(null, false, req.flash('signupMessage', 'No digit'));
                     }
                     // Password contains at least one letter checking
                     if (! /[a-zA-Z]/.test(password)) {
-                        console.log("No alpha");
                         return done(null, false, req.flash('signupMessage', 'No alpha'));
                     }
                     else {
