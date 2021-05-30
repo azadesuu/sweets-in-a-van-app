@@ -323,6 +323,10 @@ const getOrderDetail = async(req,res)=>{
             if (timeRemaining > 0) {
                 hasTimeLeft = true;
             }
+            discount = "No";
+            if (orderRaw.late_fulfillment) {
+                discount = "Yes";
+            }
             var order = {
                 order_ID : orderRaw.order_ID,
                 status : orderRaw.status,
@@ -331,7 +335,7 @@ const getOrderDetail = async(req,res)=>{
                 when : formatTime(orderRaw.when)
 
             }
-            return res.render('customer/orderDetail', {layout:'customer_main', "loggedin": req.isAuthenticated(), order, van, timeRemaining, hasTimeLeft});
+            return res.render('customer/orderDetail', {layout:'customer_main', "loggedin": req.isAuthenticated(), order, van, timeRemaining, hasTimeLeft, discount});
         }catch(err){
             console.log(err)
         }
