@@ -8,7 +8,6 @@ const Vendor = mongoose.model("vendors")
 // middleware to ensure vendor is open
 async function checkIsOpen(req, res, next){
     const vendor = await Vendor.findOne( {van_ID: req.params.van_ID} ).lean();
-    console.log(vendor)
     if (vendor.isOpen)
         return next();
     // if not open, redirect to location form
@@ -18,7 +17,6 @@ async function checkIsOpen(req, res, next){
 // get details of a vendor
 const getOneVendor = async(req,res)=>{
     try{
-        console.log(req.params.van_ID);
         vendor = await Vendor.findOne( {van_ID: req.params.van_ID} )
         if (vendor== null) res.send("Queried vendor not found");
         else res.send(vendor);
@@ -30,10 +28,12 @@ const getOneVendor = async(req,res)=>{
 //get details of an order (of the van)
 const getOneOrder = async(req,res)=>{
     try{
-        console.log(req.params)
-        order = await Order.findOne( {van_ID: req.params.van_ID, order_ID: req.params.order_ID}).lean()
-        vendor = await Vendor.findOne( {van_ID: req.params.van_ID} ).lean()
-        res.render('vendor/orderDetail',{"order":order, "vendor":vendor})
+        const order = await Order.findOne( {van_ID: req.params.van_ID, order_ID: req.params.order_ID}).lean()
+        const vendor = await Vendor.findOne( {van_ID: req.params.van_ID} ).lean()
+        var timeCreated = order.when;
+        timeCreated = timeCreated.getTime()/1000;
+        var timeRemaining = 900 - (Date.now()/1000 - timeCreated)
+        return res.render('vendor/orderDetail',{"order":order, "vendor":vendor,"timeRemaining": timeRemaining,"loggedin":req.isAuthenticated()})
     }catch(err){
         console.log(err)
     }
@@ -44,7 +44,7 @@ const updateOrderStatus = async(req,res)=>{
     try{
         await Order.findOneAndUpdate({_id: req.params.order_id}, {status: req.body.status}, {returnNewDocument: true}, function (err){
         if (err) res.send('failed to update');
-        else {res.render('vendor/orders');}
+        else {res.render('vendor/orders',{"loggedin":req.isAuthenticated()});}
         })
     }catch(err){
         console.log(err)
@@ -54,11 +54,10 @@ const updateOrderStatus = async(req,res)=>{
 //marks an order as Fulfilled
 const markAsFulfilled = async(req,res)=>{
     try{
-        console.log(req.params)
         const orders = await Order.find({van_ID: req.params.van_ID, status :{$in: ['Unfulfilled']}}).lean()
         await Order.findOneAndUpdate({order_ID: req.params.order_ID}, {status: "Fulfilled"}, {returnNewDocument: true}, function (err){
         if (err) res.send('failed to update');
-        else {res.render('vendor/orders',{"orders":orders});}
+        else {res.render('vendor/orders',{"orders":orders,"loggedin":req.isAuthenticated()});}
         })
     }catch(err){
         console.log(err)
@@ -68,11 +67,10 @@ const markAsFulfilled = async(req,res)=>{
 //marks an order as Complete
 const markAsComplete = async(req,res)=>{
     try{
-        console.log(req.params.order_ID)
         const orders = await Order.find({van_ID: req.params.van_ID, status :{$in: ['Unfulfilled']}}).lean()
         await Order.findOneAndUpdate({order_ID: req.params.order_ID}, {status: "Complete"}, {returnNewDocument: true}, function (err){
         if (err) res.send('failed to update');
-        else {res.render('vendor/orders',{"orders":orders});}
+        else {res.render('vendor/orders',{"orders":orders,"loggedin":req.isAuthenticated()});}
         })
     }catch(err){
         console.log(err)
@@ -83,9 +81,7 @@ const markAsComplete = async(req,res)=>{
 const showSetVanStatus = async (req,res) => {
     try {
         const vendor = await Vendor.findOne( {van_ID: req.params.van_ID} ).lean()
-        console.log(vendor)
-        console.log(vendor.isOpen)
-        res.render("vendor/setLocation", {vendor,"isOpen": vendor.isOpen});
+        res.render("vendor/setLocation", {vendor,"isOpen": vendor.isOpen,"loggedin":req.isAuthenticated()});
     }
     catch(err){
         console.log(err)
@@ -96,10 +92,7 @@ const showSetVanStatus = async (req,res) => {
 // set the status of the van
 const SetVanStatus = async (req,res) => {
     try {
-        console.log(req.params)
-        console.log(req.body)
-        console.log("setting location");
-        const vendor = await Vendor.findOneAndUpdate({van_ID: req.params.van_ID},
+        await Vendor.findOneAndUpdate({van_ID: req.params.van_ID},
             {latitude: req.body.latitude, longitude: req.body.longitude,
                 isOpen: true, locDescription: req.body.locDescription}).lean()
         res.redirect('/vendor')
@@ -110,7 +103,7 @@ const SetVanStatus = async (req,res) => {
 
 const markLeavingLocation = async (req,res) => {
     try {
-        const vendor = await Vendor.findOneAndUpdate({van_ID: req.params.van_ID},
+        await Vendor.findOneAndUpdate({van_ID: req.params.van_ID},
             {latitude: req.body.latitude, longitude: req.body.longitude,
                 isOpen: false, locDescription: req.body.locDescription}).lean()
         res.redirect('/vendor')
@@ -122,12 +115,12 @@ const markLeavingLocation = async (req,res) => {
 //get all outstanding orders of a vendor (unfulfilled/fulfilled)
 const getAllOutstandingOrders = async(req, res)=>{
     try{
-        const vendor = await Vendor.findOne( {van_ID: req.params.van_ID} )
+        const vendor = await Vendor.findOne( {van_ID: req.params.van_ID} ).lean()
         const orders = await Order.find({van_ID: req.params.van_ID, status :{$in: ['Unfulfilled']}}).lean()
         orders.sort(function(a,b){
-           return parseInt(a.when) - parseInt(b.when);
+            return (a.when.getTime() - b.when.getTime());
         })
-       res.render('vendor/orders',{"orders": orders,"vendor":vendor})
+       res.render('vendor/orders',{"orders": orders,"vendor":vendor,"loggedin":req.isAuthenticated()})
     //    res.send(await Order.find({van_ID: req.params.van_ID}));
     }catch(err){
         console.log(err)
@@ -139,7 +132,10 @@ const getAllOrders = async(req, res)=>{
     try{
         const vendor = await Vendor.findOne( {van_ID: req.params.van_ID} ).lean()
         orders = await Order.find({van_ID: req.params.van_ID}).lean();
-        res.render('vendor/orders',{"orders": orders, "vendor":vendor})
+        orders.sort(function(a,b){
+            return (a.when.getTime() - b.when.getTime());
+        })
+        res.render('vendor/orders',{"orders": orders, "vendor":vendor,"loggedin":req.isAuthenticated()})
     }catch(err){
         console.log(err)
     }
@@ -148,7 +144,6 @@ const getAllOrders = async(req, res)=>{
 const searchOrder = async (req, res) => { // search database for foods
 
 	// if we get this far, there are no validation errors, so proceed to do the search ...
-    console.log(req.body)
 	var query = {}
     const vendor = await Vendor.findOne( {van_ID: req.params.van_ID} ).lean()
     query["van_ID"] = vendor.van_ID
@@ -165,9 +160,7 @@ const searchOrder = async (req, res) => { // search database for foods
 
 	try {
 		const orders = await Order.find(query).lean()
-        console.log(query)
-        console.log(orders)
-		res.render('vendor/orders', {"orders": orders, "vendor": vendor})
+		res.render('vendor/orders', {"orders": orders, "vendor": vendor,"loggedin":req.isAuthenticated()})
 	} catch (err) {
 		console.log(err)
 	}
