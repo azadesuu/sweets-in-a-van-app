@@ -1,27 +1,78 @@
-<h1>Home Page</h1>
-<p>Welcome to T16-Anything's landing page!</p>
-<p>This page only has links for GET requests</p>
-<h2>Customer</h2>
+<link rel="stylesheet" href="/css/profile.css">
+<style>
+    header{
+        display:none;
+    }
+    .normal-button{
+        background: #97c83e;
+        text-align: center;
+        width: 149px;
+        height: 149px;
+        border-radius: 100%;
+        display: inline-flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-size: 35px;
+        color: white;
+        font-weight: bold;
+        text-decoration: none
+    }
+    .normal-button:hover{
+        background: #4a6b0c;
+        text-align: center;
+        width: 149px;
+        height: 149px;
+        border-radius: 100%;
+        display: inline-flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-size: 35px;
+        color: white;
+        font-weight: bold;
+        text-decoration: none
+    }
+    .flex-container {
+        display: flex;
+        flex-direction: row;
+        font-size: 30px;
+        text-align: center;
+    }
 
-<form class="login-form" action="/customer/home" method="post">
-    <input id='latitude' name="latitude" value="" hidden>
-    <input id='longitude' name="longitude" value="" hidden>
-    <button type="button" onclick="geoFindMe()">Share my location</button>
-    <button type="submit">Go to customer app</button>
+    .flex-item-left {
+        padding: 10px;
+        flex: 50%;
+    }
 
-</form>
-{{!-- <button type="button" onclick="geoFindMe()">Share my location</button> --}}
-
-
-<h2>Vendor</h2>
-<ul>
-<li><a href="/vendor/VAN11">View Van Details</a> </li>
-<li><a href="/vendor/VAN11/orders">View Van's Outstanding Orders</a> </li>
-<li><a href="/vendor/VAN11/all-orders">View ALL of Van's Orders</a> </li>
-</ul>
-
-<h3>Authors:</h3>
-<p>Ying Shan, Yue Teng, Zixuan Liu, Bo Cheng, WenYao Li</p>
+    .flex-item-right {
+        padding: 10px;
+        flex: 50%;
+    }
+    img.icon{
+        height:100px;
+    }
+    img.icon:hover{
+        height:150px;
+    }
+    @media (max-width: 450px) {
+        .flex-container {
+            flex-direction: column;
+        }
+    }
+</style>
+<div class='content-card' style='text-align:center;'>
+    <div class='container'><img class='icon' src='/css/images/icon.png'></div>
+    <h1 style='text-align:center; padding:30px'>You Are A:</h1>
+    <div class='flex-container'>
+        <div class='flex-item-left'>
+            <div class='button'><a class='normal-button' href="/vendor/home">VENDOR</a></div>
+        </div>
+        <div class='flex-item-right'>
+            <div class='button'><a class='normal-button' href="/customer/home">CUSTOMER</a></div>
+        </div>
+    </div>
+</div>
 
 <script>
     function geoFindMe() {
