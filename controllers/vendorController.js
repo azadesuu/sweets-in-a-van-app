@@ -4,6 +4,20 @@ const mongoose = require("mongoose")
 const Order = mongoose.model("orders")
 const Vendor = mongoose.model("vendors")
 
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+    if (month.length < 2) {
+        month = '0' + month;
+    }
+    if (day.length < 2) {
+        day = '0' + day;
+    }
+    return [day, month, year].join('/');
+}
+
 
 // middleware to ensure vendor is open
 async function checkIsOpen(req, res, next){
@@ -133,7 +147,8 @@ const getAllOutstandingOrders = async(req, res)=>{
         for (var i=0;i<ordersRaw.length;i++) {
             orders[i] = {
                 order_ID : ordersRaw[i].order_ID,
-                when : formatDate(ordersRaw[i].when)
+                when : formatDate(ordersRaw[i].when),
+                status : ordersRaw.status
             }
         }
        res.render('vendor/orders',{"orders": orders,"vendor":vendor,"loggedin":req.isAuthenticated()})
@@ -192,39 +207,8 @@ const searchOrder = async (req, res) => { // search database for foods
 }
 
 
-function formatDate(date) {
-    var d = new Date(date),
-        month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
-        year = d.getFullYear();
-    if (month.length < 2) {
-        month = '0' + month;
-    }
-    if (day.length < 2) {
-        day = '0' + day;
-    }
-    return [day, month, year].join('/');
-}
 
-function formatTime(date) {
-    var d = new Date(date),
-        minute = '' +d.getMinutes(),
-        hour = '' + d.getHours(),
-        month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
-        year = d.getFullYear();
-    if (month.length < 2) {
-        month = '0' + month;
-    }
-    if (day.length < 2) {
-        day = '0' + day;
-    }
-    var time = "";
-    time = [hour, minute].join(':');
-    var dateStr = "";
-    dateStr = [day, month, year].join('/');
-    return [time, dateStr].join(' ');
-}
+
 
 
 module.exports = {
