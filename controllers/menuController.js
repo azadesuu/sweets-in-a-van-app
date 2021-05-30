@@ -51,7 +51,6 @@ const postHomePage = async(req, res) => {
                     }
                 }
             );
-            console.log("After updating")
             var user = await User.findOne({email: req.session.email}, {}).lean();
         } else {
             var user = new User();
