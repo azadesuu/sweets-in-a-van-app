@@ -60,7 +60,14 @@ const getOneOrder = async(req,res)=>{
 //marks an order as Fulfilled
 const markAsFulfilled = async(req,res)=>{
     try{
-        console.log(req.body)
+        var lateFulfillment;
+        if(req.body.lateFulfillment === "true"){
+            console.log("true")
+            lateFulfillment = true;
+        }else{
+            console.log("false")
+            lateFulfillment = false;
+        }
         const ordersRaw = await Order.find({van_ID: req.params.van_ID, status :{$in: ['Unfulfilled']}}).lean()
         ordersRaw.sort(function(a,b){
             return (a.when.getTime() - b.when.getTime());
@@ -73,7 +80,7 @@ const markAsFulfilled = async(req,res)=>{
                 status : ordersRaw[i].status
             }
         }
-        await Order.findOneAndUpdate({order_ID: req.params.order_ID}, {status: "Fulfilled"}, {returnNewDocument: true}, function (err){
+        await Order.findOneAndUpdate({order_ID: req.params.order_ID}, {status: "Fulfilled", late_fulfillment: lateFulfillment}, {returnNewDocument: true}, function (err){
         if (err) res.send('failed to update');
         else {res.render('vendor/orders',{"orders":orders,"loggedin":req.isAuthenticated()});}
         })
