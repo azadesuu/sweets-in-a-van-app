@@ -20,16 +20,24 @@ const getHomePage = async(req, res) => {
     }
     var vans = await Vendor.find({}, {}).lean();
     var i = 0;
-    var index = 0;
     for (i=0;i<vans.length;i++) {
         if (vans[i].latitude === null) {
-            vans.splice(i, 1)
+            vans.splice(i, 1);
+            i--;
+        } 
+        if (vans[i].isOpen === true) {
+            continue;
         }
+        vans.splice(i, 1);
+        i--;
+
     }
     vans.sort(function(a,b) {
         return ((a.latitude-user.latitude)**2+(a.longitude-user.longitude)**2)-((b.latitude-user.latitude)**2+(b.longitude-user.longitude)**2)
     })
-    vans = vans.slice(0,5);
+    if (vans.length > 5) {
+        vans = vans.slice(0,5);
+    }
     return res.render('customer/home', {req, "loggedin": req.isAuthenticated(), van: vans, layout:'customer_main'});
 }
 
@@ -68,13 +76,22 @@ const postHomePage = async(req, res) => {
     var i = 0;
     for (i=0;i<vans.length;i++) {
         if (vans[i].latitude === null) {
-            vans.splice(i, 1)
+            vans.splice(i, 1);
+            i--;
+        } 
+        if (vans[i].isOpen === true) {
+            continue;
         }
+        vans.splice(i, 1);
+        i--;
+
     }
     vans.sort(function(a,b) {
         return ((a.latitude-user.latitude)**2+(a.longitude-user.longitude)**2)-((b.latitude-user.latitude)**2+(b.longitude-user.longitude)**2)
     })
-    vans = vans.slice(0,5);
+    if (vans.length > 5) {
+        vans = vans.slice(0,5);
+    }
     return res.render('customer/home', {req, "loggedin": req.isAuthenticated(), van: vans, layout:'customer_main'});
 }
 
