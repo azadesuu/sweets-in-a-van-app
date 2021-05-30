@@ -18,19 +18,13 @@ const getHomePage = async(req, res) => {
         user.latitude = 0;
         user.longitude = 0;
     }
-    var vans = await Vendor.find({}, {}).lean();
+    var vans = await Vendor.find({isOpen : true}, {}).lean();
     var i = 0;
     for (i=0;i<vans.length;i++) {
         if (vans[i].latitude === null) {
             vans.splice(i, 1);
             i--;
         } 
-        if (vans[i].isOpen === true) {
-            continue;
-        }
-        vans.splice(i, 1);
-        i--;
-
     }
     vans.sort(function(a,b) {
         return ((a.latitude-user.latitude)**2+(a.longitude-user.longitude)**2)-((b.latitude-user.latitude)**2+(b.longitude-user.longitude)**2)
@@ -72,19 +66,13 @@ const postHomePage = async(req, res) => {
             user.longitude = 0;
         }
     }
-    var vans = await Vendor.find({}, {}).lean();
+    var vans = await Vendor.find({isOpen : true}, {}).lean();
     var i = 0;
     for (i=0;i<vans.length;i++) {
         if (vans[i].latitude === null) {
             vans.splice(i, 1);
             i--;
         } 
-        if (vans[i].isOpen === true) {
-            continue;
-        }
-        vans.splice(i, 1);
-        i--;
-
     }
     vans.sort(function(a,b) {
         return ((a.latitude-user.latitude)**2+(a.longitude-user.longitude)**2)-((b.latitude-user.latitude)**2+(b.longitude-user.longitude)**2)
