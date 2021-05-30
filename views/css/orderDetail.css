@@ -1,4 +1,7 @@
 @import url("main.css");
+p{
+  margin:5px;
+}
 .details-card{
   font-size:18px;
   padding:5px;
@@ -12,7 +15,6 @@
 p.title{
   font-size: large;
   font-weight: bold;
-
 }
 .detail-card div{
   display:inline-block;
@@ -45,15 +47,16 @@ td{
 
 .bottom-buttons{
   width: 100%;
+  padding:15px;
   display: inline-block;
-  font-size: 30px;
+  font-size: 24px;
   font-weight:bold;
   text-transform:capitalize;
 }
 
 .bottom-button{
+  padding:0px 30px;
   border-radius:5pt;
-  padding: 0px 15px;
   text-align:center;
 }
 

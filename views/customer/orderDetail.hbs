@@ -27,7 +27,7 @@
 
         {{#if complete}}
             <div class='bottip' style='background-color:gray'>
-                <a href="/customer/my-orders"> BACK</a>
+                <a href="/customer/my-orders">BACK</a>
             </div>
         {{else}}
             <div class='bottom-buttons' style='display:block; text-align:center'>
@@ -36,10 +36,8 @@
                     <form method="post" action="/customer/my-orders/cancel" id="cancelform">
                         <input type="hidden" name="cancelID" id="cancelID" value={{order.order_ID}} />
                         {{#if hasTimeLeft}}
-                        <div class='bottom-button'>
-                            <button type='submit'>CANCEL</button>
-                            <div id = "timeCancel">15:00</div>
-                        </div>
+                        
+                        <button class='normal-button' style='background-color:white; color:#000; font-size:24px' type='submit'>CANCEL<div id = "timeChange">15:00</div></button>
                         {{else}}
                     <div class='bottom-button inactive'>
                             <p>CANCEL</p>
@@ -53,9 +51,8 @@
                     <form method="post" action="/customer/my-orders/change" id="changeform">
                         <input type="hidden" name="changeID" id="changeID" value={{order.order_ID}} />
                         {{#if hasTimeLeft}}
-                        <div class='bottom-button'>
-                            <button type='submit'>CHANGE</button>
-                            <div id = "timeChange">15:00</div>
+                        <button class='normal-button' style='font-size:24px' type='submit'>CHANGE <div id = "timeChange">15:00</div></button>
+                            
                         </div>
                         {{else}}
                         <div class='bottom-button inactive'>

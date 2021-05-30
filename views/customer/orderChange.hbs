@@ -1,6 +1,7 @@
 <link rel="stylesheet" href="/css/menu.css">
+<link rel="stylesheet" href="/css/orderDetail.css">
 <style>
-   div button.normal-button{
+    .normal-button.add{
        background-color: gray;
    }
 </style>
@@ -14,18 +15,22 @@
                 <p class='item-price'>$ {{this.item_price}}</p>
                 <img src={{this.item_photo}} class="browsePage">
             <input type="number" min="0" oninput="this.value =this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null" id={{this.item_ID}} value="" placeholder = "0"/>
-            <button class='normal-button' style= 'padding:5px;' type='button' onclick="saveToCart({{this.item_ID}})">ADD TO CART</button>
+            <button class='normal-button add' style= 'padding:5px;' type='button' onclick="saveToCart({{this.item_ID}})">ADD TO CART</button>
             </div>
         {{/each}}
     </div>
-</div>
        
 
 <form class="cart-form" action="/customer/my-orders/update" method="post">
     <input type = "hidden" id="cart" name="cart" value=""/>
     <input type = "hidden" id="updateID" name="updateID" value={{order.order_ID}} />
-    <button type="submit" onclick="saveOrder()">Change Order</button>
+    <div style='text-align:center'>
+        <div class='floating-button'> 
+            <button class='normal-button' style='font-size:24px' type="submit" onclick="saveOrder()">Change Order</button>
+        </div>
+    </div>
 </form>
+</div>
 
 <script >
     function saveToCart(id) {
