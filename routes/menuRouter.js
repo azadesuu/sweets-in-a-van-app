@@ -20,9 +20,9 @@ menuRouter.post("/home", menuController.postHomePage);
 
 menuRouter.get("/login", (req, res) => {
     if (req.isAuthenticated()) {
-        res.redirect('/customer/home');
+        res.redirect('/customer/home', {layout:'customer_main'});
     } else {
-        res.render('customer/login');
+        res.render('customer/login', {layout:'customer_main'});
     }
 });
 
@@ -39,9 +39,9 @@ menuRouter.post('/login', passport.authenticate('local-login', {
 // http:localhost:5000/customer/register
 menuRouter.get("/register", (req, res) => {
     if (req.isAuthenticated()) {
-        res.redirect('/customer/home');
+        res.redirect('/customer/home', {layout:'customer_main'});
     } else {
-        return res.render('customer/register');
+        return res.render('customer/register', {layout:'customer_main'});
     }
 });
 
@@ -67,7 +67,11 @@ menuRouter.get('/logout', function(req, res) {
 
 menuRouter.get('/my-profile', menuController.myProfile);
 menuRouter.get('/my-profile/edit', (req, res) => {
-    return res.render('customer/myProfileEdit');
+    if (!req.isAuthenticated()) {
+        res.redirect('/customer/login');
+    } else {
+        return res.render('customer/myProfileEdit', {layout:'customer_main', "loggedin": req.isAuthenticated()});
+    }
 });
 menuRouter.post('/my-profile/edit', menuController.myProfileEdit);
 menuRouter.get('/my-orders', menuController.getAllUserOrders);
