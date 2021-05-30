@@ -325,6 +325,7 @@ const getOrderDetail = async(req,res)=>{
             }
             var order = {
                 order_ID : orderRaw.order_ID,
+                status : orderRaw.status,
                 orderItems : orderRaw.orderItems,
                 paymentTotal: orderRaw.paymentTotal,
                 when : formatTime(orderRaw.when)

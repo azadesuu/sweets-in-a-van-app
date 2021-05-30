@@ -13,7 +13,7 @@
         <div style='text-align:center;height:fit-content;margin:10px'><p style='font-weight:bold;margin:10px'>STATUS:</p><br><p style='font-size:xx-large; margin:10px'>{{order.status}}</p></div>
         <spacer>&nbsp;</spacer>
         <table>
-            <tr><th>Food Name</th> <th>Unit Price</th <th>Quantity</th></tr>
+            <tr><th>Food Name</th> <th>Unit Price</th> <th>Quantity</th></tr>
             {{#each order.orderItems}}
                 <tr> <td>{{this.item_name}}</td> <td>{{this.price}}</td> <td>{{this.quantity}}</td> </tr>
             {{/each}}
