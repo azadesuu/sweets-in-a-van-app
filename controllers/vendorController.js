@@ -21,7 +21,7 @@ function formatDate(date) {
 
 // middleware to ensure vendor is open
 async function checkIsOpen(req, res, next){
-    const vendor = await Vendor.findOne( {van_ID: req.params.van_ID} ).lean();
+    const vendor = await Vendor.findOne( {van_first_name: req.session.van_first_name, van_last_name:req.session.van_last_name} ).lean();
     if (vendor.isOpen)
         return next();
     // if not open, redirect to location form
@@ -32,8 +32,8 @@ async function checkIsOpen(req, res, next){
 //get details of an order (of the van)
 const getOneOrder = async(req,res)=>{
     try{
-        const order = await Order.findOne( {van_ID: req.params.van_ID, order_ID: req.params.order_ID}).lean()
-        const vendor = await Vendor.findOne( {van_ID: req.params.van_ID} ).lean()
+        const vendor = await Vendor.findOne( {van_first_name: req.session.van_first_name, van_last_name:req.session.van_last_name} ).lean()
+        const order = await Order.findOne( {van_ID:vendor.van_ID, order_ID: req.params.order_ID}).lean()
         var totalPayment = order.paymentTotal
         if(order.late_fulfillment){
             totalPayment = 0.8 * order.paymentTotal;
@@ -53,7 +53,8 @@ const getOneOrder = async(req,res)=>{
         if(timeRemaining > 0){
             hasTimeLeft = true;
         }
-        return res.render('vendor/orderDetail',{"order":order, "vendor":vendor,"timeRemaining": timeRemaining,"loggedin":req.isAuthenticated(),
+        console.log(req.isAuthenticated())
+        return res.render('vendor/orderDetail',{order,vendor,timeRemaining,"loggedin":req.isAuthenticated(),
         isFulfilled, isUnfulfilled, isCancelledorComplete, hasTimeLeft, totalPayment})
     }catch(err){
         console.log(err)
@@ -66,13 +67,11 @@ const markAsFulfilled = async(req,res)=>{
     try{
         var lateFulfillment;
         if(req.body.lateFulfillment === "true"){
-            console.log("true")
             lateFulfillment = true;
         }else{
-            console.log("false")
             lateFulfillment = false;
         }
-        const ordersRaw = await Order.find({van_ID: req.params.van_ID, status :{$in: ['Unfulfilled']}}).lean()
+        const ordersRaw = await Order.find({van_first_name: req.session.van_first_name, van_last_name:req.session.van_last_name, status :{$in: ['Unfulfilled']}}).lean()
         ordersRaw.sort(function(a,b){
             return (a.when.getTime() - b.when.getTime());
         })
@@ -86,7 +85,7 @@ const markAsFulfilled = async(req,res)=>{
         }
         await Order.findOneAndUpdate({order_ID: req.params.order_ID}, {status: "Fulfilled", late_fulfillment: lateFulfillment}, {returnNewDocument: true}, function (err){
         if (err) res.send('failed to update');
-        else {res.render('vendor/orders',{"orders":orders,"loggedin":req.isAuthenticated()});}
+        else {res.redirect('/vendor/orders')}
         })
     }catch(err){
         console.log(err)
@@ -96,7 +95,7 @@ const markAsFulfilled = async(req,res)=>{
 //marks an order as Complete
 const markAsComplete = async(req,res)=>{
     try{
-        const ordersRaw = await Order.find({van_ID: req.params.van_ID, status :{$in: ['Unfulfilled']}}).lean()
+        const ordersRaw = await Order.find({van_first_name: req.session.van_first_name, van_last_name:req.session.van_last_name, status :{$in: ['Unfulfilled']}}).lean()
         ordersRaw.sort(function(a,b){
             return (a.when.getTime() - b.when.getTime());
         })
@@ -110,7 +109,7 @@ const markAsComplete = async(req,res)=>{
         }
         await Order.findOneAndUpdate({order_ID: req.params.order_ID}, {status: "Complete"}, {returnNewDocument: true}, function (err){
         if (err) res.send('failed to update');
-        else {res.render('vendor/orders',{"orders":orders,"loggedin":req.isAuthenticated()});}
+        else {res.redirect('/vendor/orders')}
         })
     }catch(err){
         console.log(err)
@@ -120,7 +119,7 @@ const markAsComplete = async(req,res)=>{
 // set the status of the van
 const showSetVanStatus = async (req,res) => {
     try {
-        const vendor = await Vendor.findOne( {van_ID: req.params.van_ID} ).lean()
+        const vendor = await Vendor.findOne( {van_first_name: req.session.van_first_name, van_last_name:req.session.van_last_name} ).lean()
         res.render("vendor/setLocation", {vendor,"isOpen": vendor.isOpen,"loggedin":req.isAuthenticated()});
     }
     catch(err){
@@ -132,7 +131,7 @@ const showSetVanStatus = async (req,res) => {
 // set the status of the van
 const SetVanStatus = async (req,res) => {
     try {
-        await Vendor.findOneAndUpdate({van_ID: req.params.van_ID},
+        await Vendor.findOneAndUpdate({van_first_name: req.session.van_first_name, van_last_name:req.session.van_last_name},
             {latitude: req.body.latitude, longitude: req.body.longitude,
                 isOpen: true, locDescription: req.body.locDescription}).lean()
         res.redirect('/vendor')
@@ -143,7 +142,7 @@ const SetVanStatus = async (req,res) => {
 
 const markLeavingLocation = async (req,res) => {
     try {
-        await Vendor.findOneAndUpdate({van_ID: req.params.van_ID},
+        await Vendor.findOneAndUpdate({van_first_name: req.session.van_first_name, van_last_name:req.session.van_last_name},
             {isOpen: false}).lean()
         res.redirect('/vendor')
     }catch(err){
@@ -154,8 +153,8 @@ const markLeavingLocation = async (req,res) => {
 //get all outstanding orders of a vendor (unfulfilled/fulfilled)
 const getAllOutstandingOrders = async(req, res)=>{
     try{
-        const vendor = await Vendor.findOne( {van_ID: req.params.van_ID} ).lean()
-        ordersRaw = await Order.find({van_ID: req.params.van_ID, status :{$in: ['Unfulfilled']}}).lean()
+        const vendor = await Vendor.findOne( {van_first_name: req.session.van_first_name, van_last_name:req.session.van_last_name} ).lean()
+        ordersRaw = await Order.find({van_ID:vendor.van_ID, status :{$in: ['Unfulfilled']}}).lean()
         for (var i=0;i<ordersRaw.length;i++) {
             if (ordersRaw[i].status === "Cancelled") {
                 ordersRaw.splice(i, 1);
@@ -183,8 +182,8 @@ const getAllOutstandingOrders = async(req, res)=>{
 //get all orders of a vendor
 const getAllOrders = async(req, res)=>{
     try{
-        const vendor = await Vendor.findOne( {van_ID: req.params.van_ID} ).lean()
-        ordersRaw = await Order.find({van_ID: req.params.van_ID}).lean();
+        const vendor = await Vendor.findOne( {van_first_name: req.session.van_first_name, van_last_name:req.session.van_last_name} ).lean()
+        ordersRaw = await Order.find({van_ID: vendor.van_ID}).lean();
         for (var i=0;i<ordersRaw.length;i++) {
             if (ordersRaw[i].status === "Cancelled") {
                 ordersRaw.splice(i, 1);
@@ -212,7 +211,7 @@ const searchOrder = async (req, res) => { // search database for foods
 
 	// if we get this far, there are no validation errors, so proceed to do the search ...
 	var query = {}
-    const vendor = await Vendor.findOne( {van_ID: req.params.van_ID} ).lean()
+    const vendor = await Vendor.findOne( {van_first_name: req.session.van_first_name, van_last_name:req.session.van_last_name} ).lean()
     query["van_ID"] = vendor.van_ID
 	if (req.body.order_ID !== '') {
 		query["order_ID"] = req.body.order_ID

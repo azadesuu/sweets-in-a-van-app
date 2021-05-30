@@ -35,7 +35,7 @@
 
         {{#if isUnfulfilled}}
             <div style='display:block; text-align:center; justify-content: center'>
-                <form style='display:inline-block' action="/vendor/{{vendor.van_ID}}/orders/{{order.order_ID}}/fulfilled" method="POST">
+                <form style='display:inline-block' action="/vendor/orders/{{order.order_ID}}/fulfilled" method="POST">
                     <input class='normal-button' style='background-color: green; font-size:20px;text-transform:uppercase' type="submit" value="Mark as Fulfilled">
                     {{#if hasTimeLeft}}
                         <input type="hidden" name = "lateFulfillment" id ="lateFulfillment" value = "false">
@@ -47,7 +47,7 @@
         {{/if}}
         {{#if isFulfilled}}
             <div style='display:block; text-align:center; justify-content: center'>
-                  <form style='display:inline-block' action="/vendor/{{vendor.van_ID}}/orders/{{order.order_ID}}/complete" method="POST">
+                  <form style='display:inline-block' action="/vendor/orders/{{order.order_ID}}/complete" method="POST">
                     <input class='normal-button' style='font-size:20px; text-transform:uppercase'type="submit" value="Mark as Complete">
                 </form>
             </div>

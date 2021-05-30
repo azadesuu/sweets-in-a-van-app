@@ -1,12 +1,12 @@
 <link rel="stylesheet" href="/css/profile.css">
 <div class='content-card'>
-    
+
     {{#if loggedin}}
         <h2 style='text-align: center;'>Welcome, {{vendor.van_first_name}} {{vendor.van_last_name}}!</h2>
         <div class='card' >
-            <div style='height:fit-content; padding:20px 0;'><a class= 'normal-button' href="/vendor/{{vendor.van_ID}}/orders">Unfulfilled Orders</a></div>
-            <div style='height:fit-content;padding:20px 0;'><a class= 'normal-button' href="/vendor/{{vendor.van_ID}}/all-orders">All Orders</a></div>
-            <div style='height:fit-content;padding:20px 0;'><a class= 'normal-button' href="/vendor/{{vendor.van_ID}}/setLocation">Set Location</a></div>
+            <div style='height:fit-content; padding:20px 0;'><a class= 'normal-button' href="/vendor/orders">Unfulfilled Orders</a></div>
+            <div style='height:fit-content;padding:20px 0;'><a class= 'normal-button' href="/vendor/all-orders">All Orders</a></div>
+            <div style='height:fit-content;padding:20px 0;'><a class= 'normal-button' href="/vendor/setLocation">Set Location</a></div>
         </div>
         <spacer>&nbsp;</spacer>
         {{else}}

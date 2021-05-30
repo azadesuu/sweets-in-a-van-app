@@ -61,6 +61,7 @@ module.exports = function(passport) {
                         // all this is handled by the session middleware that we are using
                         // req.session.van_last_name = van_last_name;
                         // req.session.van_ID = van_ID;
+                        req.session.van_last_name = van_last_name;
                         req.session.van_first_name = van_first_name; // for demonstration of using express-session
                         // done() is used by the strategy to set the authentication status with
                         // details of the vendor who was authenticated

@@ -5,14 +5,14 @@
         {{#if isOpen}}
             <h2 style="text-align: center;">OPEN FOR BUSINESS</h2>
             <div style='text-align:center'>
-            <form class="leave-form" action="/vendor/{{vendor.van_ID}}/setLocation/leave" method="post">
+            <form class="leave-form" action="/vendor/setLocation/leave" method="post">
                 <input class='normal-button' type="submit" value="Mark As Closed">
             </form>
             </div>
         {{else}}
         <h2 style="text-align: center;">CLOSED</h2>
         <div style='text-align:center'>
-        <form class="Loc" action="/vendor/{{vendor.van_ID}}/setLocation" method="post">
+        <form class="Loc" action="/vendor/setLocation" method="post">
             <label for="locDescription">Location:</label><br>
             <textarea rows="2" cols="30" id='locDescription' name="locDescription" value="" placeholder="Enter your park location"></textarea><br>
             <input id = "latitude" name = "latitude" hidden>

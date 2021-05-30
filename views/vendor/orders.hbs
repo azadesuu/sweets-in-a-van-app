@@ -10,14 +10,14 @@
 <div class='content-card'>
     <div style='padding:15px'>
     <h2 style='text-align:center'>ALL ORDERS</h2>
-        <form method="post" action="/vendor/{{vendor.van_ID}}/orders/search">
+        <form method="post" action="/vendor/orders/search">
             <input type="text" size="10" name="order_ID" placeholder="Enter Order ID/Date" autofocus>
                 <div style='text-align:center'>
-                    <label for="unfulfilled">Unfulfilled</span></label> 
+                    <label for="unfulfilled">Unfulfilled</span></label>
                     <input type="checkbox" name="unfulfilled">
-                    <label for="fulfilled">Fulfilled</span> </label> 
+                    <label for="fulfilled">Fulfilled</span> </label>
                     <input type="checkbox" name="fulfilled">
-                    <label for="complete">Complete</span> </label> 
+                    <label for="complete">Complete</span> </label>
                     <input type="checkbox" name="complete">
                 </div>
                 <div style='text-align:center'>
@@ -34,7 +34,7 @@
                 <td class = "status"><a href="orders/{{this.order_ID}}">{{this.status}}</a></td>
             </tr>
         </div>
-        {{/each}}   
+        {{/each}}
     </table>
 
     </div>

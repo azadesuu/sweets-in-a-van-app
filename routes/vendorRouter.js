@@ -24,7 +24,7 @@ vendorRouter.post('/login', passport.authenticate('local-login-vendor', {
 
 
 vendorRouter.get("/",async(req,res)=>{
-    const vendor = await Vendor.findOne( {van_first_name: req.session.van_first_name}).lean()
+    const vendor = await Vendor.findOne( {van_first_name: req.session.van_first_name, van_last_name:req.session.van_last_name}).lean()
     return res.render('vendor/vendor-home',{"vendor":vendor,"loggedin":req.isAuthenticated()})
 })
 
@@ -34,28 +34,28 @@ vendorRouter.post('/logout', function(req, res) {
     res.redirect('/');
 });
 
-vendorRouter.get('/:van_ID/setLocation',utilities.vendorIsLoggedIn, vendorController.showSetVanStatus)
+vendorRouter.get('/setLocation',utilities.vendorIsLoggedIn, vendorController.showSetVanStatus)
 
 // handle the PUT request to update one vendor's status
-vendorRouter.post('/:van_ID/setLocation',utilities.vendorIsLoggedIn, vendorController.SetVanStatus)
+vendorRouter.post('/setLocation',utilities.vendorIsLoggedIn, vendorController.SetVanStatus)
 
-vendorRouter.post('/:van_ID/setLocation/leave', utilities.vendorIsLoggedIn,vendorController.markLeavingLocation)
+vendorRouter.post('/setLocation/leave', utilities.vendorIsLoggedIn,vendorController.markLeavingLocation)
 
-vendorRouter.post('/:van_ID/orders/search', utilities.vendorIsLoggedIn,vendorController.searchOrder)
+vendorRouter.post('/orders/search', utilities.vendorIsLoggedIn,vendorController.searchOrder)
 
 // handle the GET request to get all of a vendor's orders
-vendorRouter.get('/:van_ID/all-orders',utilities.vendorIsLoggedIn,vendorController.getAllOrders)
+vendorRouter.get('/all-orders',utilities.vendorIsLoggedIn,vendorController.getAllOrders)
 
 // handle the GET request to get all of a vendor's outstanding orders
-vendorRouter.get('/:van_ID/orders',utilities.vendorIsLoggedIn, vendorController.checkIsOpen,vendorController.getAllOutstandingOrders)
+vendorRouter.get('/orders',utilities.vendorIsLoggedIn, vendorController.checkIsOpen,vendorController.getAllOutstandingOrders)
 
 // handle the GET request to get one order of a vendor
-vendorRouter.get('/:van_ID/orders/:order_ID',utilities.vendorIsLoggedIn,vendorController.getOneOrder)
+vendorRouter.get('/orders/:order_ID',utilities.vendorIsLoggedIn,vendorController.getOneOrder)
 
 // handle the PUT request to update one vendor's order status to fulfilled
-vendorRouter.post('/:van_ID/orders/:order_ID/fulfilled',utilities.vendorIsLoggedIn,vendorController.markAsFulfilled)
+vendorRouter.post('/orders/:order_ID/fulfilled',utilities.vendorIsLoggedIn,vendorController.markAsFulfilled)
 
 // handle the PUT request to update one vendor's order status to complete
-vendorRouter.post('/:van_ID/orders/:order_ID/complete',utilities.vendorIsLoggedIn,vendorController.markAsComplete)
+vendorRouter.post('/orders/:order_ID/complete',utilities.vendorIsLoggedIn,vendorController.markAsComplete)
 
 module.exports = vendorRouter
