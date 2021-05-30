@@ -25,19 +25,9 @@ async function checkIsOpen(req, res, next){
     if (vendor.isOpen)
         return next();
     // if not open, redirect to location form
-    res.render('vendor/setLocation',{"vendor":vendor});
+    res.render('vendor/setLocation',{"vendor":vendor,"loggedin":req.isAuthenticated()});
 }
 
-// get details of a vendor
-const getOneVendor = async(req,res)=>{
-    try{
-        vendor = await Vendor.findOne( {van_ID: req.params.van_ID} )
-        if (vendor== null) res.send("Queried vendor not found");
-        else res.send(vendor);
-    }catch(err){
-        console.log(err)
-    }
-}
 
 //get details of an order (of the van)
 const getOneOrder = async(req,res)=>{
@@ -62,17 +52,6 @@ const getOneOrder = async(req,res)=>{
     }
 }
 
-// update the status of the order
-const updateOrderStatus = async(req,res)=>{
-    try{
-        await Order.findOneAndUpdate({_id: req.params.order_id}, {status: req.body.status}, {returnNewDocument: true}, function (err){
-        if (err) res.send('failed to update');
-        else {res.render('vendor/orders',{"loggedin":req.isAuthenticated()});}
-        })
-    }catch(err){
-        console.log(err)
-    }
-}
 
 //marks an order as Fulfilled
 const markAsFulfilled = async(req,res)=>{
@@ -212,11 +191,9 @@ const searchOrder = async (req, res) => { // search database for foods
 
 
 module.exports = {
-    getOneVendor,
     getOneOrder,
     showSetVanStatus,
     SetVanStatus,
-    updateOrderStatus,
     markAsFulfilled,
     markAsComplete,
     getAllOutstandingOrders,
