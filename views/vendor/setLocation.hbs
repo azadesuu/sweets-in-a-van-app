@@ -10,17 +10,6 @@
             {{#if isOpen}}
             <form class="leave-form" action="/vendor/{{vendor.van_ID}}/setLocation/leave" method="post">
                 <p class="submit-btn">
-                    <div>
-                        <label for="">
-                            <p>leaving Location:</p>
-                            <p>
-                                <input id='locDescription' name="locDescription" value="" placeholder="Enter your park location">
-                            </p>
-                            <input id = "latitude" name = "latitude" hidden>
-                            <input id = "longitude" name = "longitude" hidden>
-                            <button type = "button" onclick="getLocation()">get location</button>
-                        </label>
-                    </div>
                         <button type='submit'>leave for business</button>
                 </p>
             </form>

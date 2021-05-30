@@ -104,8 +104,7 @@ const SetVanStatus = async (req,res) => {
 const markLeavingLocation = async (req,res) => {
     try {
         await Vendor.findOneAndUpdate({van_ID: req.params.van_ID},
-            {latitude: req.body.latitude, longitude: req.body.longitude,
-                isOpen: false, locDescription: req.body.locDescription}).lean()
+            {isOpen: false}).lean()
         res.redirect('/vendor')
     }catch(err){
         console.log(err)
@@ -147,17 +146,19 @@ const searchOrder = async (req, res) => { // search database for foods
 	var query = {}
     const vendor = await Vendor.findOne( {van_ID: req.params.van_ID} ).lean()
     query["van_ID"] = vendor.van_ID
-	if (req.body.Order_ID !== '') {
+	if (req.body.order_ID !== '') {
 		query["order_ID"] = req.body.order_ID
 	}
+    if(req.body.unfulfilled){
+        query["status"] = "Unfulfilled"
+    }
     if (req.body.fulfilled){
-        query["status"] = "fulfilled"
+        query["status"] = "Fulfilled"
         if(req.body.complete){
-            query["status"] = "complete"
+            query["status"] = "Complete"
         }
     }
 	// the query has been constructed - now execute against the database
-
 	try {
 		const orders = await Order.find(query).lean()
 		res.render('vendor/orders', {"orders": orders, "vendor": vendor,"loggedin":req.isAuthenticated()})

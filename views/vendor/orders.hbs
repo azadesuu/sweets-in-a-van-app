@@ -3,9 +3,11 @@
     <div class = "top">
         <form method="post" action="/vendor/{{vendor.van_ID}}/orders/search">
             <input type="search" size="10" name="order_ID" placeholder="start typing" autofocus>
-            <label for="fulfilled"> fulfilled</span> </label> 
+            <label for="unfulfilled">unfulfilled</label></span></label>
+            <input type="checkbox" name = "unfulfilled">
+            <label for="fulfilled"> fulfilled</span> </label>
             <input type="checkbox" name="fulfilled">
-            <label for="complete"> complete</span> </label> 
+            <label for="complete"> complete</span> </label>
             <input type="checkbox" name="complete">
             <input type="submit" value="Search">
         </form>
@@ -32,6 +34,6 @@
                     {{this.when}}
                 </div>
             </li>
-            {{/each}}            
+            {{/each}}
     </ul>
 </body>
