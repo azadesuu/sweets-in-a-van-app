@@ -114,7 +114,9 @@ ConnectionString: "mongodb+srv://anything30005:F5Nruod8fTvdNTCz@info30005-1.xpxv
 
 
 ## Unit and Integration Tests
-Sorry, we didn't manage to write one..
+Guide for testing setLocation1.js (Integration Test)
+1. cd into "tests/vendor_tests"
+2. use command "npm test" in the cmd
 
 **Now Get ready to complete all the tasks:**
 

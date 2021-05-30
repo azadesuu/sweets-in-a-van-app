@@ -1,4 +1,0 @@
-//This is the guidence for testing setLocation.js
-* Step 1: cd to the project file, ready to install Jest adn Supertest
-* Step 2: use command line "npm install -D jest supertest"
-* Step 3: cd into the "__tests__/vendor" and use command "npm test"
