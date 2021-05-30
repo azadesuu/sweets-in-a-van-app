@@ -149,7 +149,8 @@ const getAllOrders = async(req, res)=>{
         for (var i=0;i<ordersRaw.length;i++) {
             orders[i] = {
                 order_ID : ordersRaw[i].order_ID,
-                when : formatDate(ordersRaw[i].when)
+                when : formatDate(ordersRaw[i].when),
+                status : ordersRaw[i].status
             }
         }
         res.render('vendor/orders',{"orders": orders, "vendor":vendor,"loggedin":req.isAuthenticated()})

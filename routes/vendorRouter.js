@@ -24,22 +24,15 @@ vendorRouter.post('/login', passport.authenticate('local-login-vendor', {
 
 
 vendorRouter.get("/",async(req,res)=>{
-    // console.log(req.session)
     const vendor = await Vendor.findOne( {vanname: req.session.vanname}).lean()
-    // console.log(vendor)
-    // console.log(req.isAuthenticated())
     return res.render('vendor/vendor-home',{"vendor":vendor,"loggedin":req.isAuthenticated()})
 })
 
 vendorRouter.post('/logout', function(req, res) {
-    // save the favourites
     req.logout();
     req.flash('');
     res.redirect('/');
 });
-
-// handle the GET request to get one vendor
-vendorRouter.get('/:van_ID',utilities.vendorIsLoggedIn,vendorController.getOneVendor)
 
 vendorRouter.get('/:van_ID/setLocation',utilities.vendorIsLoggedIn, vendorController.showSetVanStatus)
 
@@ -58,9 +51,6 @@ vendorRouter.get('/:van_ID/orders',utilities.vendorIsLoggedIn, vendorController.
 
 // handle the GET request to get one order of a vendor
 vendorRouter.get('/:van_ID/orders/:order_ID',utilities.vendorIsLoggedIn,vendorController.getOneOrder)
-
-// // handle the PUT request to update one vendor's order status (flexible)
-// vendorRouter.put('/:van_ID/orders/:order_ID/change-status',utilities.vendorIsLoggedIn, vendorController.checkIsOpen,vendorController.updateOrderStatus)
 
 // handle the PUT request to update one vendor's order status to fulfilled
 vendorRouter.post('/:van_ID/orders/:order_ID/fulfilled',utilities.vendorIsLoggedIn,vendorController.markAsFulfilled)
