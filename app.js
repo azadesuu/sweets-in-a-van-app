@@ -99,9 +99,9 @@ app.use('/vendor', vendorRouter)
 // customer routes
 app.use('/customer', menuRouter)
 
-app.get('*', function(req, res) {
-  res.redirect("/");
-});
+// app.get('*', function(req, res) {
+//   res.redirect("/");
+// });
 
 
 app.listen(port, () => {
