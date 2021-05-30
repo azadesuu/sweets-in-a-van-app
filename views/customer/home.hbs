@@ -14,11 +14,9 @@
     <spacer>&nbsp;</spacer>
     <table>
         <th>Van ID</th>
-        <th>Van Name</th>
         {{#each van}}
             <tr class="li-wrap">
                 <td><a style='text-decoration:none' href="/customer/van/{{this.van_ID}}">{{this.van_ID}}</a></td>
-                <td><a style='text-decoration:none' href="/customer/van/{{this.van_ID}}">{{this.van_first_name}} {{this.van_last_name}}</a></td>
             </tr>
         {{/each}}
     </table>
