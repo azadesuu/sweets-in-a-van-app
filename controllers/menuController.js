@@ -97,21 +97,46 @@ const myProfile = async (req, res) => {
 }
 
 /**
+ * Check if the password entered by users is valid
+ * @param {String} password 
+ * @returns {boolean}
+ */
+function isValidPsw(password) {
+    if (password.length < 8) {
+        return false;
+    }
+    // Password contains at least one digit checking
+    if (! /\d/.test(password)) {
+        return false;
+    }
+    // Password contains at least one letter checking
+    if (! /[a-zA-Z]/.test(password)) {
+        return false;
+    }
+}
+
+/**
  * Based on the req.body, update the logged in user's editable info
  */
 const myProfileEdit = async (req, res) => {
-    if (req.body.first_name) {
-        await User.updateOne(
-            {"email" : req.session.email},
-            {"$set" : { 
-                "first_name" : req.body.first_name,
-                "last_name" : req.body.last_name,
-                "password" : bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
+    if (req.body.first_name && req.body.last_name && req.body.password) {
+        if (isValidPsw(req.body.password)) {
+            await User.updateOne(
+                {"email" : req.session.email},
+                {"$set" : { 
+                    "first_name" : req.body.first_name,
+                    "last_name" : req.body.last_name,
+                    "password" : bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
+                    }
                 }
-            }
-        );
+            );
+            return res.render('customer/home', {layout:'customer_main', "loggedin": req.isAuthenticated()});
+        } else {
+            return res.render('customer/myProfileEdit', {layout:'customer_main', "loggedin": req.isAuthenticated()});
+        }
+    } else {
+        return res.render('customer/myProfileEdit', {layout:'customer_main', "loggedin": req.isAuthenticated()});
     }
-    return res.render('customer/home', {layout:'customer_main', "loggedin": req.isAuthenticated()});
 }
 
 /**
@@ -323,6 +348,10 @@ const getOrderDetail = async(req,res)=>{
             if (timeRemaining > 0) {
                 hasTimeLeft = true;
             }
+            discount = "No";
+            if (orderRaw.late_fulfillment) {
+                discount = "Yes";
+            }
             var order = {
                 order_ID : orderRaw.order_ID,
                 status : orderRaw.status,
@@ -331,7 +360,7 @@ const getOrderDetail = async(req,res)=>{
                 when : formatTime(orderRaw.when)
 
             }
-            return res.render('customer/orderDetail', {layout:'customer_main', "loggedin": req.isAuthenticated(), order, van, timeRemaining, hasTimeLeft});
+            return res.render('customer/orderDetail', {layout:'customer_main', "loggedin": req.isAuthenticated(), order, van, timeRemaining, hasTimeLeft, discount});
         }catch(err){
             console.log(err)
         }
