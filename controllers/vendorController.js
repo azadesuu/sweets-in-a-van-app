@@ -33,7 +33,16 @@ const getOneOrder = async(req,res)=>{
         var timeCreated = order.when;
         timeCreated = timeCreated.getTime()/1000;
         var timeRemaining = 900 - (Date.now()/1000 - timeCreated)
-        return res.render('vendor/orderDetail',{"order":order, "vendor":vendor,"timeRemaining": timeRemaining,"loggedin":req.isAuthenticated()})
+        var isFulfilled = false, isUnfulfilled = false, isCancelledorComplete = false;
+        if(order.status === 'Fulfilled'){
+            isFulfilled = true
+        }else if(order.status === 'Unfulfilled'){
+            isUnfulfilled = true
+        }else{
+            isCancelledorComplete
+        }
+        return res.render('vendor/orderDetail',{"order":order, "vendor":vendor,"timeRemaining": timeRemaining,"loggedin":req.isAuthenticated(),
+        isFulfilled, isUnfulfilled, isCancelledorComplete})
     }catch(err){
         console.log(err)
     }
@@ -54,6 +63,7 @@ const updateOrderStatus = async(req,res)=>{
 //marks an order as Fulfilled
 const markAsFulfilled = async(req,res)=>{
     try{
+        console.log(req.body)
         const orders = await Order.find({van_ID: req.params.van_ID, status :{$in: ['Unfulfilled']}}).lean()
         await Order.findOneAndUpdate({order_ID: req.params.order_ID}, {status: "Fulfilled"}, {returnNewDocument: true}, function (err){
         if (err) res.send('failed to update');
@@ -115,10 +125,17 @@ const markLeavingLocation = async (req,res) => {
 const getAllOutstandingOrders = async(req, res)=>{
     try{
         const vendor = await Vendor.findOne( {van_ID: req.params.van_ID} ).lean()
-        const orders = await Order.find({van_ID: req.params.van_ID, status :{$in: ['Unfulfilled']}}).lean()
-        orders.sort(function(a,b){
+        ordersRaw = await Order.find({van_ID: req.params.van_ID, status :{$in: ['Unfulfilled']}}).lean()
+        ordersRaw.sort(function(a,b){
             return (a.when.getTime() - b.when.getTime());
         })
+        var orders = []
+        for (var i=0;i<ordersRaw.length;i++) {
+            orders[i] = {
+                order_ID : ordersRaw[i].order_ID,
+                when : formatDate(ordersRaw[i].when)
+            }
+        }
        res.render('vendor/orders',{"orders": orders,"vendor":vendor,"loggedin":req.isAuthenticated()})
     //    res.send(await Order.find({van_ID: req.params.van_ID}));
     }catch(err){
@@ -130,10 +147,17 @@ const getAllOutstandingOrders = async(req, res)=>{
 const getAllOrders = async(req, res)=>{
     try{
         const vendor = await Vendor.findOne( {van_ID: req.params.van_ID} ).lean()
-        orders = await Order.find({van_ID: req.params.van_ID}).lean();
-        orders.sort(function(a,b){
+        ordersRaw = await Order.find({van_ID: req.params.van_ID}).lean();
+        ordersRaw.sort(function(a,b){
             return (a.when.getTime() - b.when.getTime());
         })
+        var orders = []
+        for (var i=0;i<ordersRaw.length;i++) {
+            orders[i] = {
+                order_ID : ordersRaw[i].order_ID,
+                when : formatDate(ordersRaw[i].when)
+            }
+        }
         res.render('vendor/orders',{"orders": orders, "vendor":vendor,"loggedin":req.isAuthenticated()})
     }catch(err){
         console.log(err)
@@ -166,6 +190,42 @@ const searchOrder = async (req, res) => { // search database for foods
 		console.log(err)
 	}
 }
+
+
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+    if (month.length < 2) {
+        month = '0' + month;
+    }
+    if (day.length < 2) {
+        day = '0' + day;
+    }
+    return [day, month, year].join('/');
+}
+
+function formatTime(date) {
+    var d = new Date(date),
+        minute = '' +d.getMinutes(),
+        hour = '' + d.getHours(),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+    if (month.length < 2) {
+        month = '0' + month;
+    }
+    if (day.length < 2) {
+        day = '0' + day;
+    }
+    var time = "";
+    time = [hour, minute].join(':');
+    var dateStr = "";
+    dateStr = [day, month, year].join('/');
+    return [time, dateStr].join(' ');
+}
+
 
 module.exports = {
     getOneVendor,
