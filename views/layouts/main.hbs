@@ -20,16 +20,19 @@
         <main>
             {{#if loggedin}}
             <div id="mySidenav" class="sidenav">
-            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-            <a href="/vendor/">Home</a>
-            <a href="/vendor/{{vendor.van_ID}}/orders">Unfulfilled Orders</a>
-            <a href="/vendor/{{vendor.van_ID}}/all-orders">All Orders</a>
-            <a href="/vendor/logout">Logout</a>
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                <a href="/vendor/">Home</a>
+                <a href="/vendor/{{vendor.van_ID}}/orders">Unfulfilled Orders</a>
+                <a href="/vendor/{{vendor.van_ID}}/all-orders">All Orders</a>
+                <a href="javascript:void(0);" onclick="logout()">Logout</a>
+            <form method="post" action="/vendor/logout" id="logoutform">
+                <input type="hidden"/>
+            </form>
             </div>
             {{else}}
             <div id="mySidenav" class="sidenav">
-            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-            <a href="/vendor/login">Log in</a>
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                <a href="/vendor/login">Log in</a>
             </div>
             {{/if}}
             {{{body}}}
@@ -46,4 +49,10 @@
     function closeNav() {
     document.getElementById("mySidenav").style.width = "0";
     }
+    
+     function logout(){
+        localStorage.clear();
+        // submit a hidden form with the food ids. You could use fetch to submit the data to API as well.
+        document.getElementById("logoutform").submit();
+    }        
 </script>

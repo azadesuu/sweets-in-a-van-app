@@ -1,25 +1,17 @@
-
-<p>Customer Homepage (Temporary)</p>
-
-<script>
-     function logout(){
-        localStorage.clear();
-        // submit a hidden form with the food ids. You could use fetch to submit the data to API as well.
-        document.getElementById("logoutform").submit();
-    }        
-</script>
-
-{{#if loggedin}}
-    <p>Welcome, {{vendor.van_first_name}} {{vendor.van_last_name}}!</p>
-    <ul>
-        <li> <a href="/vendor/{{vendor.van_ID}}/orders">Click here to view unfulfilled orders</a></li>
-        <li> <a href="/vendor/{{vendor.van_ID}}/all-orders">Click here to view all orders</a></li>
-        <li> <a href="/vendor/{{vendor.van_ID}}/setLocation">Click here to set location</a></li>
-        <li> <a href="javascript:void(0);" onclick="logout()">Click here to logout</a></li>
-    </ul>
-    <form method="post" action="/vendor/logout" id="logoutform">
-        <input type="hidden"/>
-    </form>
-{{else}}
-    <p><a href="/vendor/login">Click here to login</a></p>
-{{/if}}
+<link rel="stylesheet" href="/css/profile.css">
+<div class='content-card'>
+    {{#unless loggedin}}
+        <div class='card'>
+            <div style='height:fit-content;padding:20px 0;'><a class= 'normal-button' href="/vendor/login">Click here to Login</a></div>
+        </div>
+    {{/unless}}
+    {{#if loggedin}}
+        <h2 style='text-align: center;'>Welcome, {{vendor.van_first_name}} {{vendor.van_last_name}}!</h2>
+        <div class='card' >
+            <div style='height:fit-content; padding:20px 0;'><a class= 'normal-button' href="/vendor/{{vendor.van_ID}}/orders">Unfulfilled Orders</a></div>
+            <div style='height:fit-content;padding:20px 0;'><a class= 'normal-button' href="/vendor/{{vendor.van_ID}}/all-orders">All Orders</a></div>
+            <div style='height:fit-content;padding:20px 0;'><a class= 'normal-button' href="/vendor/{{vendor.van_ID}}/setLocation">Set Location</a></div>
+        </div>
+        <spacer>&nbsp;</spacer>
+    {{/if}}
+</div>
