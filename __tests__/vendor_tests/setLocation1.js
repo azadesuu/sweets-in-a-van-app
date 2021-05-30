@@ -1,7 +1,6 @@
 const request = require('supertest')
 //need export app from app.js 
 const app = require('../../app');
-const Vendor = require('../../models/Vendor');
 
 /*------------------------------------This is Integration test part--------------------------------- */
 describe('Integration test: set locations',()=>{

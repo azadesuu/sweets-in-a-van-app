@@ -71,7 +71,7 @@ app.use('/customer', menuRouter)
 ## Image Preview
 <p> Here's a preview of our home page. Only has get requests</p>
 <p align="center">
-  <img src="static/github-images/deliv2-landingpage.png"  width="300" >
+  <img src="static/github-images/new-landing-page.png"  width="300" >
 </p>
 
 ## Postman Instructions
@@ -111,7 +111,10 @@ URL: https://t16-anything-info30005.herokuapp.com/
 ConnectionString: "mongodb+srv://anything30005:F5Nruod8fTvdNTCz@info30005-1.xpxvw.mongodb.net/test?authSource=admin&replicaSet=atlas-va9h06-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true"
 
 ## Unit and Integration Tests
-Sorry, we didn't manage to write one..
+Guide for testing setLocation1.js (Integration Test)
+1. cd into "__tests__/vendor_tests"
+2. use command "npm test" in the cmd
+
 
 **Now Get ready to complete all the tasks:**
 
