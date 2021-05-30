@@ -34,6 +34,11 @@ const getOneOrder = async(req,res)=>{
     try{
         const order = await Order.findOne( {van_ID: req.params.van_ID, order_ID: req.params.order_ID}).lean()
         const vendor = await Vendor.findOne( {van_ID: req.params.van_ID} ).lean()
+        var totalPayment = order.paymentTotal
+        if(order.late_fulfillment){
+            totalPayment = 0.8 * order.paymentTotal;
+        }
+        console.log(totalPayment)
         var timeCreated = order.when;
         timeCreated = timeCreated.getTime()/1000;
         var timeRemaining = 900 - (Date.now()/1000 - timeCreated)
@@ -50,7 +55,7 @@ const getOneOrder = async(req,res)=>{
             hasTimeLeft = true;
         }
         return res.render('vendor/orderDetail',{"order":order, "vendor":vendor,"timeRemaining": timeRemaining,"loggedin":req.isAuthenticated(),
-        isFulfilled, isUnfulfilled, isCancelledorComplete, hasTimeLeft})
+        isFulfilled, isUnfulfilled, isCancelledorComplete, hasTimeLeft, totalPayment})
     }catch(err){
         console.log(err)
     }

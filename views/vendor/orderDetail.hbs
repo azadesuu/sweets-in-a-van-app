@@ -27,9 +27,9 @@
             <div><p style='display:inline' class='title'>Payment Summary</p></div>
             <div><p style='font-weight:unset; margin:5px'>Late Fulfillment Discount: {{order.late_fulfillment}}</p><br></div>
             {{#if hasTimeLeft}}
-                <div><p style='font-weight:unset; margin:5px'>Total: ${{order.paymentTotal}}</p></div>
+                <div><p style='font-weight:unset; margin:5px'>Total: ${{totalPayment}}</p></div>
             {{else}}
-                <div><p style='font-weight:unset; margin:5px'>Total: ${{order.paymentTotal}}</p></div>
+                <div><p style='font-weight:unset; margin:5px'>Total: ${{totalPayment}}</p></div>
             {{/if}}
         </div>
 
