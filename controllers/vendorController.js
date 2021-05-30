@@ -53,7 +53,6 @@ const getOneOrder = async(req,res)=>{
         if(timeRemaining > 0){
             hasTimeLeft = true;
         }
-        console.log(req.isAuthenticated())
         return res.render('vendor/orderDetail',{order,vendor,timeRemaining,"loggedin":req.isAuthenticated(),
         isFulfilled, isUnfulfilled, isCancelledorComplete, hasTimeLeft, totalPayment})
     }catch(err){
