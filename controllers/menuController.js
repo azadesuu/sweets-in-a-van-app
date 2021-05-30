@@ -318,7 +318,7 @@ const cancelOrder = async(req, res)=> {
             }
         );
     }
-    return res.redirect('/customer/my-orders', {layout:'customer_main', "loggedin": req.isAuthenticated()});
+    return res.redirect('/customer/my-orders');
 }
 const changeOrder = async(req, res)=> {
     if (!req.isAuthenticated()) {

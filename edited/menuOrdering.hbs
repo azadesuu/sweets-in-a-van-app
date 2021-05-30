@@ -20,9 +20,9 @@
     </div>
 </div>
        
-<form class="cart-form" action="/customer/{{van_id}}/menu/order/payment" method="post">
+<form class="cart-form" action="/customer/van/{{van_id}}/menu/order/payment" method="post">
     <input type = "hidden" id="cart" name="cart" value="">
-    <div class='floating-button'><button class='normal-button' type="submit" onclick="saveOrder()">Make Order</button></div>
+    <div class='floating-button'><button class='normal-button' type="button" onclick="saveOrder()">Make Order</button></div>
 </form>
 <script >
     function saveToCart(id) {
@@ -43,7 +43,12 @@
     }
 
     function saveOrder() {
-        document.getElementById("cart").value = JSON.parse(JSON.stringify(localStorage.getItem("cart")));
-        localStorage.clear();
+        if (localStorage.getItem("cart") === []) {
+            return;
+        } else {
+            document.getElementById("cart").value = JSON.parse(JSON.stringify(localStorage.getItem("cart")));
+            localStorage.clear();
+            document.getElementById("cart-form").submit();    
+        }
     }
 </script>

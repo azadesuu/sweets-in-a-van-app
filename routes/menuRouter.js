@@ -79,10 +79,10 @@ menuRouter.get('/my-orders/:order_ID', menuController.getOrderDetail);
 menuRouter.post('/my-orders/cancel', menuController.cancelOrder);
 menuRouter.post('/my-orders/change', menuController.changeOrder);
 menuRouter.post('/my-orders/update', menuController.updateOrder);
-menuRouter.get('/:van_id', menuController.getVanDetail);
-menuRouter.get('/:van_id/menu', menuController.getVanMenu);
-menuRouter.get('/:van_id/menu/order', menuController.orderInVanMenu);
-menuRouter.post('/:van_id/menu/order/payment', menuController.payInVan);
+menuRouter.get('/van/:van_id', menuController.getVanDetail);
+menuRouter.get('/van/:van_id/menu', menuController.getVanMenu);
+menuRouter.get('/van/:van_id/menu/order', menuController.orderInVanMenu);
+menuRouter.post('/van/:van_id/menu/order/payment', menuController.payInVan);
 
 // menuRouter.get('/:user_id/my-orders', utilities.customerIsLoggedIn, menuController.getAllUserOrders);
 
@@ -91,7 +91,9 @@ menuRouter.post('/:van_id/menu/order/payment', menuController.payInVan);
 // menuRouter.get('/:van_id/order-now', utilities.customerIsLoggedIn, menuController.displayMenu_order);
 // menuRouter.get('/:van_id/order-now/cart', utilities.customerIsLoggedIn, menuController.showCart);
 
-
+// menuRouter.get('*', (req, res) => {
+//     return res.render('customer/home', {layout:'customer_main'});
+// });
 // export the router    
 module.exports = menuRouter
 
