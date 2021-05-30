@@ -54,3 +54,10 @@ tr td:nth-child(2){
   }
 }
 
+@media screen and (max-width:450px){
+  th, td {
+    padding: 20px 0px;
+    text-align: center;
+    font-size: medium;
+  }
+}
