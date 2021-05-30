@@ -29,7 +29,6 @@ async function checkIsOpen(req, res, next){
 }
 
 
-
 //get details of an order (of the van)
 const getOneOrder = async(req,res)=>{
     try{

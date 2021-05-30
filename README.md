@@ -71,7 +71,7 @@ app.use('/customer', menuRouter)
 ## Image Preview
 <p> Here's a preview of our home page. Only has get requests</p>
 <p align="center">
-  <img src="static/github-images/new-landing-page.png"  width="300" >
+  <img src="static/github-images/deliv2-landingpage.png"  width="300" >
 </p>
 
 ## Postman Instructions
@@ -114,10 +114,7 @@ ConnectionString: "mongodb+srv://anything30005:F5Nruod8fTvdNTCz@info30005-1.xpxv
 
 
 ## Unit and Integration Tests
-Guide for testing setLocation1.js (Integration Test)
-1. cd into "__tests__/vendor_tests"
-2. use command "npm test" in the cmd
-
+Sorry, we didn't manage to write one..
 
 **Now Get ready to complete all the tasks:**
 
