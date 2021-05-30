@@ -1,10 +1,6 @@
 <link rel="stylesheet" href="/css/profile.css">
 <div class='content-card'>
-    {{#unless loggedin}}
-        <div class='card'>
-            <div style='height:fit-content;padding:20px 0;'><a class= 'normal-button' href="/vendor/login">Click here to Login</a></div>
-        </div>
-    {{/unless}}
+    
     {{#if loggedin}}
         <h2 style='text-align: center;'>Welcome, {{vendor.van_first_name}} {{vendor.van_last_name}}!</h2>
         <div class='card' >
@@ -13,5 +9,9 @@
             <div style='height:fit-content;padding:20px 0;'><a class= 'normal-button' href="/vendor/{{vendor.van_ID}}/setLocation">Set Location</a></div>
         </div>
         <spacer>&nbsp;</spacer>
+        {{else}}
+        <div class='card'>
+            <div style='height:fit-content;padding:20px 0;'><a class= 'normal-button' href="/vendor/login">Click here to Login</a></div>
+        </div>
     {{/if}}
 </div>

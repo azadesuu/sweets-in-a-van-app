@@ -1,50 +1,44 @@
-{{!-- <link rel="stylesheet" href="/css/reset.css">
-<link rel="stylesheet" href="/css/orderDetail.css"> --}}
-<body>
-    <div class = "top">
-        <div text-align='left'><a href="/vendor/{{vendor.van_ID}}/orders">< </a></div>
-        {{!-- <div> </div> --}}
-        <div>
-            <p>ORDER #{{order.order_ID}}</p>
-        </div>
-    </div>
-    <div class='cards'>
-                <div>
-                     {{!-- <p>Order time: {{order.when}}</p> --}}
-                     {{!-- <p>Van Name: {{order.van_ID}}</p> --}}
-                {{!-- need van location in modal --}}
-                    {{!-- <p>order ID: {{order.order_ID}}</p> --}}
-                    <p>customer given name: {{order.customerGivenName}}</p>
-                    {{!-- <p>Van Location: {{order.van_latitude}}, {{order.van_lontitude}}</p> --}}
-                    <p >time remain before discount: <span id = "time">15:00</span></p>
-                </div>
-    </div>
-    <div class='card'>
-        <div>
-            <table>
-                <tbody>
-                    <tr><th>Food Name</th> <th> Quantity</th></tr>
-                    {{#each order.orderItems}}
-                    <tr> <td>{{this.item_name}}</td> <td>{{this.quantity}}</td> </tr>
-                    {{/each}}
-                </tbody>
-            </table>
-        </div>
-    </div>
+<link rel="stylesheet" href="/css/profile.css">
+<link rel="stylesheet" href="/css/orderDetail.css">
 
-    <div >
-        <form action="/vendor/{{vendor.van_ID}}/orders/{{order.order_ID}}/fulfilled" method="POST">
-        <p class="submit-btn">
-            <button type='submit'>mark this order fulfilled</button>
-        </p>
-        </form>
-        <form action="/vendor/{{vendor.van_ID}}/orders/{{order.order_ID}}/complete" method="POST">
-        <p class="submit-btn">
-            <button type='submit'>mark this order completed</button>
-        </p>
-        </form>
+<div class='content-card'>
+    <div style='padding:30px'>
+        <h2 style="text-align: center;">ORDER #{{order.order_ID}}</h2>
+        <div class='details-card' style='display:block'>
+            <div style='display: inline-block; float:left'><p style='font-weight:bold; margin:5px'>Customer Name:</p><p>{{order.customerGivenName}}</p></div>
+            <div style='display: inline-block;float:right'><p style='font-weight:bold; margin:5px'>Time Remaining:</p><p><span id = "time">15:00</span></p></div><br>
+            <div style='text-align:center;height:fit-content;margin:10px'><p style='font-weight:bold;margin:10px'>STATUS:</p><br><p style='font-size:xx-large; margin:10px'>{{order.status}}</p></div>
+        </div>
+        <spacer>&nbsp;</spacer>
+        <table>
+                <tr><th>Food Name</th> <th>Price</th> <th>Quantity</th></tr>
+                {{#each order.orderItems}}
+                    <tr> <td>{{this.item_name}}</td> <td>{{this.price}}</td> <td>{{this.quantity}}</td> </tr>
+                {{/each}}
+        </table>
+
+        <div class='details-card' style='padding:20px'>
+            <div><p style='display:inline' class='title'>Payment Summary</p></div>
+            <div><p style='font-weight:unset; margin:5px'>Late Fulfillment Discount: {{order.discount}}</p><br></div>
+            <div><p style='font-weight:unset; margin:5px'>Total: ${{order.paymentTotal}}</p></div>
+        </div>
+
+        {{#if isUnfulfilled}}
+            <div style='display:block; text-align:center; justify-content: center'>
+                <form style='display:inline-block' ="/vendor/{{vendor.van_ID}}/orders/{{order.order_ID}}/fulfilled" method="POST">
+                    <input class='normal-button' style='background-color: green; font-size:20px;text-transform:uppercase' type="submit" value="Mark as Fulfilled">
+                </form>
+            </div>
+        {{/if}}
+        {{#if isFulfilled}}
+            <div style='display:block; text-align:center; justify-content: center'>
+                  <form style='display:inline-block' action="/vendor/{{vendor.van_ID}}/orders/{{order.order_ID}}/complete" method="POST">
+                    <input class='normal-button' style='font-size:20px; text-transform:uppercase'type="submit" value="Mark as Complete">
+                </form>
+            </div>
+        {{/if}}
     </div>
-</body>
+</div>
 
 <script>
     {{!-- const mongoose = require("mongoose")
