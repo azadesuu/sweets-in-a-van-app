@@ -408,7 +408,6 @@ const updateOrder = async(req, res)=> {
         res.redirect('/customer/login');
     } else {
         var cart = JSON.parse(req.body.cart);
-        // console.log(cart);
         var newOrders = [];
         var totalPay = 0;
         for (var i = 0;i<cart.length;i++) {
@@ -444,11 +443,11 @@ const updateOrder = async(req, res)=> {
             {"$set" : { 
                 "orderItems" : newOrders,
                 "paymentTotal" : totalPay,
-                "when" : Date.now
+                "when" : Date.now()
                 }
             }
         );
-        return res.redirect('/customer/home', {layout:'customer_main', "loggedin": req.isAuthenticated()});
+        return res.redirect('/customer/home');
     }
 }
 
