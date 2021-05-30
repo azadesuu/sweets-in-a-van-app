@@ -107,3 +107,4 @@ app.get('*', function(req, res) {
 app.listen(port, () => {
 	console.log('Snacks in a van server is listening for requests ...')
 })
+module.exports = app;
