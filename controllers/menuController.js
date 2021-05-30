@@ -1,16 +1,17 @@
 const mongoose = require("mongoose")
-var mongo = require('mongodb');
 // import models
 const Menu = mongoose.model("menu")
 const Order = mongoose.model("orders")
 const User = mongoose.model("users");
 const Vendor = mongoose.model("vendors");
-const OrderItem = require("../models/order");
 const bcrypt = require('bcrypt-nodejs');
 const { nanoid } = require('nanoid'); // for hashing id
 
+/**
+ * Based on user's location in database or default location (0,0)
+ * Send a sorted list of vans, with amount less or equal to 5, from closest to farthest
+ */
 const getHomePage = async(req, res) => {
-    // console.log("gethome");
     if (req.session.email) {
         var user = await User.findOne({email: req.session.email}, {}).lean();
     } else {
@@ -27,7 +28,7 @@ const getHomePage = async(req, res) => {
         } 
     }
     vans.sort(function(a,b) {
-        return ((a.latitude-user.latitude)**2+(a.longitude-user.longitude)**2)-((b.latitude-user.latitude)**2+(b.longitude-user.longitude)**2)
+        return ((a.latitude-user.latitude)**2+(a.longitude-user.longitude)**2)-((b.latitude-user.latitude)**2+(b.longitude-user.longitude)**2);
     })
     if (vans.length > 5) {
         vans = vans.slice(0,5);
@@ -35,9 +36,11 @@ const getHomePage = async(req, res) => {
     return res.render('customer/home', {req, "loggedin": req.isAuthenticated(), van: vans, layout:'customer_main'});
 }
 
-
+/**
+ * Based on user's location or default location (0,0) (the location user just shared)
+ * Send a sorted list of vans, with amount less or equal to 5, from closest to farthest
+ */
 const postHomePage = async(req, res) => {
-    // console.log("posthome");
     if (req.body.latitude !== null) {
         if (req.session.email) {
             await User.updateOne(
@@ -50,8 +53,6 @@ const postHomePage = async(req, res) => {
             );
             console.log("After updating")
             var user = await User.findOne({email: req.session.email}, {}).lean();
-            console.log(user.latitude);
-            console.log(user.longitude);
         } else {
             var user = new User();
             user.latitude = parseFloat(req.body.latitude);
@@ -75,7 +76,7 @@ const postHomePage = async(req, res) => {
         } 
     }
     vans.sort(function(a,b) {
-        return ((a.latitude-user.latitude)**2+(a.longitude-user.longitude)**2)-((b.latitude-user.latitude)**2+(b.longitude-user.longitude)**2)
+        return ((a.latitude-user.latitude)**2+(a.longitude-user.longitude)**2)-((b.latitude-user.latitude)**2+(b.longitude-user.longitude)**2);
     })
     if (vans.length > 5) {
         vans = vans.slice(0,5);
@@ -83,11 +84,9 @@ const postHomePage = async(req, res) => {
     return res.render('customer/home', {req, "loggedin": req.isAuthenticated(), van: vans, layout:'customer_main'});
 }
 
-
-
-
-
-
+/**
+ * Based on the logged in user's email, send back the editable info of this individual
+ */
 const myProfile = async (req, res) => {
     if (!req.isAuthenticated()) {
         res.redirect('/customer/login');
@@ -97,6 +96,9 @@ const myProfile = async (req, res) => {
     }
 }
 
+/**
+ * Based on the req.body, update the logged in user's editable info
+ */
 const myProfileEdit = async (req, res) => {
     if (req.body.first_name) {
         await User.updateOne(
@@ -112,17 +114,25 @@ const myProfileEdit = async (req, res) => {
     return res.render('customer/home', {layout:'customer_main', "loggedin": req.isAuthenticated()});
 }
 
+/**
+ * Based on the req.params, send back the van document queried 
+ */
 const getVanDetail = async (req, res) => {
     var van = await Vendor.findOne({van_ID : req.params.van_id}, {}).lean();
     return res.render('customer/van', {layout:'customer_main', "loggedin": req.isAuthenticated(), van});
 }
 
+/**
+ * Send back the whole menu and the van provided in req.params
+ */
 const getVanMenu = async (req, res) => {
     var van = await Vendor.findOne({van_ID : req.params.van_id}, {}).lean();
     menu_items = await Menu.find().lean();
     return res.render('customer/menu', {layout:'customer_main', "loggedin": req.isAuthenticated(), van, menu_items});
 }
-
+/**
+ * Send back the whole menu and the van provided in req.params
+ */
 const orderInVanMenu = async (req, res) => {
     if (!req.isAuthenticated()) {
         res.redirect('/customer/login');
@@ -131,7 +141,10 @@ const orderInVanMenu = async (req, res) => {
     return res.render('customer/menuOrdering', {layout:'customer_main', "loggedin": req.isAuthenticated(), van_id: req.params.van_id, menu_items});
     }
 }
-
+/**
+ * Based on the order info provided in req.body, create a new
+ * order document and store it in database
+ */
 const payInVan = async (req, res) => {
     if (!req.isAuthenticated()) {
         res.redirect('/customer/login');
@@ -142,7 +155,7 @@ const payInVan = async (req, res) => {
         var totalPay = 0;
         for (var i = 0;i<cart.length;i++) {
             // console.log(i)
-            var hasItem = false
+            var hasItem = false;
             var index = 0;
             var next = await Menu.findOne({item_ID : cart[i]}, {}).lean();
             for (var j=0;j<newOrders.length;j++) {
@@ -167,8 +180,8 @@ const payInVan = async (req, res) => {
             }
         }
         var newOrder = new Order();
-        var orderingCustomer = await User.findOne({email: req.session.email}, {})
-        newOrder.user_ID = orderingCustomer.user_ID
+        var orderingCustomer = await User.findOne({email: req.session.email}, {});
+        newOrder.user_ID = orderingCustomer.user_ID;
         newOrder.van_ID = req.params.van_id;
         newOrder.order_ID = nanoid();
         newOrder.orderItems = newOrders;
@@ -179,27 +192,31 @@ const payInVan = async (req, res) => {
     }
 }
 
-//returns detail of a user
+// Used for debugging, not for project's feature
 const getOneUser = async (req, res) => {
     try {
-        return res.send(await User.findOne({_id: new mongoose.Types.ObjectId(req.body.user_id)}))
+        return res.send(await User.findOne({_id: new mongoose.Types.ObjectId(req.body.user_id)}));
     } catch (err) {
-        res.status(400)
-        return res.send("Database query failed")
+        res.status(400);
+        return res.send("Database query failed");
     }
 }
 
-// get all item records
+// Used for debugging, not for project's feature
 const getAllItems = async (req, res) => {
     try {
-        const menu_items = await Menu.find()
-        return res.send(menu_items)
+        const menu_items = await Menu.find();
+        return res.send(menu_items);
     } catch (err) {
-        res.status(400)
-        return res.send("Database query failed")
+        res.status(400);
+        return res.send("Database query failed");
     }
 }
-
+/**
+ * Returns a formatted string of date
+ * @param {Date} date 
+ * @returns {String} 
+ */
 function formatDate(date) {
     var d = new Date(date),
         month = '' + (d.getMonth() + 1),
@@ -214,15 +231,19 @@ function formatDate(date) {
     return [day, month, year].join('/');
 }
 
-//get all orders related to user
+/**
+ * Based on the user info provided in req.body, send back
+ * a list of past orders
+ * Cancelled orders will be filtered out
+ * Order will be sorted based on creation time, with latest being the first
+ */
 const getAllUserOrders = async (req, res) => {
     if (!req.isAuthenticated()) {
         res.redirect('/customer/login');
     } else {
         try {
-            user = await User.findOne({email: req.session.email}, {}).lean()
-            ordersRaw = await Order.find({user_ID: user.user_ID}, {_id: false, order_ID: true, when: true, status: true}).lean()
-            // console.log(ordersRaw);
+            user = await User.findOne({email: req.session.email}, {}).lean();
+            ordersRaw = await Order.find({user_ID: user.user_ID}, {_id: false, order_ID: true, when: true, status: true}).lean();
             for (var i=0;i<ordersRaw.length;i++) {
                 if (ordersRaw[i].status === "Cancelled") {
                     ordersRaw.splice(i, 1);
@@ -239,26 +260,31 @@ const getAllUserOrders = async (req, res) => {
                     when : formatDate(ordersRaw[i].when)
                 }
             }
-            return res.render('customer/userOrders', {orders, layout:'customer_main', "loggedin": req.isAuthenticated()})
+            return res.render('customer/userOrders', {orders, layout:'customer_main', "loggedin": req.isAuthenticated()});
         } catch (err) {
             res.status(400)
-            return res.send("Database query failed")
+            return res.send("Database query failed");
         }
     }
 }
 
-// get one food - user specifies its name
+// Used for debugging, not for project's feature
 const getItemDetail = async (req, res) => {
-    item_name = (req.params.snack_name).toLowerCase()
+    item_name = (req.params.snack_name).toLowerCase();
     try {
-        const menu_items = await Menu.find({item_name: item_name}, {})
-        return res.send(menu_items)
+        const menu_items = await Menu.find({item_name: item_name}, {});
+        return res.send(menu_items);
     } catch (err) {
-        res.status(400)
-        return res.send("Database query failed")
+        res.status(400);
+        return res.send("Database query failed");
     }
 }
 
+/**
+ * Returns a formatted string of date-time
+ * @param {Date} date 
+ * @returns {String} 
+ */
 function formatTime(date) {
     var d = new Date(date),
         minute = '' +d.getMinutes(),
@@ -279,13 +305,17 @@ function formatTime(date) {
     return [time, dateStr].join(' ');
 }
 
+/**
+ * Based on the order info provided in req.body, send back
+ * all the detail of this order
+ */
 const getOrderDetail = async(req,res)=>{
     if (!req.isAuthenticated()) {
         res.redirect('/customer/login');
     } else{
         try{
             const orderRaw = await Order.findOne( {order_ID: req.params.order_ID}).lean();
-            const van = await Vendor.findOne( {van_ID: orderRaw.van_ID}).lean()
+            const van = await Vendor.findOne( {van_ID: orderRaw.van_ID}).lean();
             var timeCreated = orderRaw.when;
             timeCreated = timeCreated.getTime() / 1000;
             var timeRemaining = 900 - (Date.now()/1000 - timeCreated);
@@ -300,15 +330,18 @@ const getOrderDetail = async(req,res)=>{
                 when : formatTime(orderRaw.when)
 
             }
-            return res.render('customer/orderDetail', {layout:'customer_main', "loggedin": req.isAuthenticated(), order, van, timeRemaining, hasTimeLeft})
+            return res.render('customer/orderDetail', {layout:'customer_main', "loggedin": req.isAuthenticated(), order, van, timeRemaining, hasTimeLeft});
         }catch(err){
             console.log(err)
         }
     }
 }
 
+/**
+ * Based on the order info provided in req.body, mark the specified
+ * order's status as 'Cancelled'
+ */
 const cancelOrder = async(req, res)=> {
-    // console.log(req.body.cancelID);
     if (req.body.status) {
         await Order.updateOne(
             {"order_ID" : req.body.cancelID},
@@ -320,6 +353,11 @@ const cancelOrder = async(req, res)=> {
     }
     return res.redirect('/customer/my-orders');
 }
+
+/**
+ * Based on the order info provided in req.body, send back the whole menu
+ * to users and allow them to update their order
+ */
 const changeOrder = async(req, res)=> {
     if (!req.isAuthenticated()) {
         res.redirect('/customer/login');
@@ -330,6 +368,11 @@ const changeOrder = async(req, res)=> {
     }
 }
 
+/**
+ * Based on the new order info provided in req.body, update
+ * the specified order with new order info
+ * Reset the creation time
+ */
 const updateOrder = async(req, res)=> {
     if (!req.isAuthenticated()) {
         res.redirect('/customer/login');
@@ -340,7 +383,7 @@ const updateOrder = async(req, res)=> {
         var totalPay = 0;
         for (var i = 0;i<cart.length;i++) {
             // console.log(i)
-            var hasItem = false
+            var hasItem = false;
             var index = 0;
             var next = await Menu.findOne({item_ID : cart[i]}, {}).lean();
             for (var j=0;j<newOrders.length;j++) {

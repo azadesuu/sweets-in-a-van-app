@@ -1,4 +1,4 @@
-// Using code from week 9's demo
+// Used code from week 9's demo, made changes according to specs
 
 const { nanoid } = require('nanoid'); // for hashing user id
 const LocalStrategy = require('passport-local').Strategy;
