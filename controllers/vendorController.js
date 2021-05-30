@@ -57,7 +57,18 @@ const getOneOrder = async(req,res)=>{
 const markAsFulfilled = async(req,res)=>{
     try{
         console.log(req.body)
-        const orders = await Order.find({van_ID: req.params.van_ID, status :{$in: ['Unfulfilled']}}).lean()
+        const ordersRaw = await Order.find({van_ID: req.params.van_ID, status :{$in: ['Unfulfilled']}}).lean()
+        ordersRaw.sort(function(a,b){
+            return (a.when.getTime() - b.when.getTime());
+        })
+        var orders = []
+        for (var i=0;i<ordersRaw.length;i++) {
+            orders[i] = {
+                order_ID : ordersRaw[i].order_ID,
+                when : formatDate(ordersRaw[i].when),
+                status : ordersRaw[i].status
+            }
+        }
         await Order.findOneAndUpdate({order_ID: req.params.order_ID}, {status: "Fulfilled"}, {returnNewDocument: true}, function (err){
         if (err) res.send('failed to update');
         else {res.render('vendor/orders',{"orders":orders,"loggedin":req.isAuthenticated()});}
@@ -70,7 +81,18 @@ const markAsFulfilled = async(req,res)=>{
 //marks an order as Complete
 const markAsComplete = async(req,res)=>{
     try{
-        const orders = await Order.find({van_ID: req.params.van_ID, status :{$in: ['Unfulfilled']}}).lean()
+        const ordersRaw = await Order.find({van_ID: req.params.van_ID, status :{$in: ['Unfulfilled']}}).lean()
+        ordersRaw.sort(function(a,b){
+            return (a.when.getTime() - b.when.getTime());
+        })
+        var orders = []
+        for (var i=0;i<ordersRaw.length;i++) {
+            orders[i] = {
+                order_ID : ordersRaw[i].order_ID,
+                when : formatDate(ordersRaw[i].when),
+                status : ordersRaw[i].status
+            }
+        }
         await Order.findOneAndUpdate({order_ID: req.params.order_ID}, {status: "Complete"}, {returnNewDocument: true}, function (err){
         if (err) res.send('failed to update');
         else {res.render('vendor/orders',{"orders":orders,"loggedin":req.isAuthenticated()});}
