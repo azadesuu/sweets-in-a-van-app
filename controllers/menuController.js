@@ -318,7 +318,7 @@ const getOrderDetail = async(req,res)=>{
             const van = await Vendor.findOne( {van_ID: orderRaw.van_ID}).lean();
             var timeCreated = orderRaw.when;
             timeCreated = timeCreated.getTime() / 1000;
-            var timeRemaining = 900 - (Date.now()/1000 - timeCreated);
+            var timeRemaining = 600 - (Date.now()/1000 - timeCreated);
             var hasTimeLeft = false;
             if (timeRemaining > 0) {
                 hasTimeLeft = true;
