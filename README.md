@@ -101,9 +101,17 @@ connectionURL = 'mongodb+srv://anything30005:F5Nruod8fTvdNTCz@info30005-1.xpxvw.
 |Show a list of outstanding orders| Assumes for a particular van.   vendor/:van_ID/orders | N/A. Should not show any records with status: “Completed”/ “Cancelled” (can compare with all-orders)|
 |Mark an order as fulfilled| vendor/:van_ID/orders/:order_ID/fulfilled | order_ID=6081b276ea8823579899a240 , changes the status of the order to "Fulfilled" no matter the previous value | 
 
-## Login Details (Customer)
+## Login Details
+Customer
+
 email: test@123.com
+
 password: AbC@1098A_
+
+Vendor
+First Name: Smooth
+
+Last Name: Purple
 
 ## Final Submission
 Commit ID: e8714c0d9405e06543b207b1a3dd7897a52c63fe
