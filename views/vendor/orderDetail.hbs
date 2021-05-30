@@ -11,11 +11,12 @@
         </div>
         <spacer>&nbsp;</spacer>
         <table>
-                <tr><th>Food Name</th> <th>Price</th> <th>Quantity</th></tr>
+                <tr><th>Food Name</th> <th>Unit Price</th> <th>Quantity</th></tr>
                 {{#each order.orderItems}}
                     <tr> <td>{{this.item_name}}</td> <td>{{this.price}}</td> <td>{{this.quantity}}</td> </tr>
                 {{/each}}
         </table>
+        <spacer>&nbsp;</spacer>
 
         <div class='details-card' style='padding:20px'>
             <div><p style='display:inline' class='title'>Payment Summary</p></div>

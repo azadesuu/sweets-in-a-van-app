@@ -10,8 +10,10 @@
             <div><p style='font-weight:bold;'>Van Location:</p><p>{{van.latitude}}, {{van.longitude}}</p></div>
         </div>
         <spacer>&nbsp;</spacer>
+        <div style='text-align:center;height:fit-content;margin:10px'><p style='font-weight:bold;margin:10px'>STATUS:</p><br><p style='font-size:xx-large; margin:10px'>{{order.status}}</p></div>
+        <spacer>&nbsp;</spacer>
         <table>
-            <tr><th>Food Name</th> <th>Price</th> <th>Quantity</th></tr>
+            <tr><th>Food Name</th> <th>Unit Price</th <th>Quantity</th></tr>
             {{#each order.orderItems}}
                 <tr> <td>{{this.item_name}}</td> <td>{{this.price}}</td> <td>{{this.quantity}}</td> </tr>
             {{/each}}
@@ -24,41 +26,47 @@
         </div>
 
         {{#if complete}}
-            <div>
+            <div class='bottip' style='background-color:gray'>
                 <a href="/customer/my-orders"> BACK</a>
             </div>
         {{else}}
-            <div class='bottom-buttons'>
-                <form method="post" action="/customer/my-orders/cancel" id="cancelform">
-                    <input type="hidden" name="cancelID" id="cancelID" value={{order.order_ID}} />
-                    {{#if hasTimeLeft}}
-                    <div class='bottom-button'>
-                        <button type='submit'>CANCEL</button>
-                        <div id = "timeCancel">15:00</div>
-                    </div>
-                    {{else}}
+            <div class='bottom-buttons' style='display:block; text-align:center'>
+                
+                <div style='display:inline-block'>
+                    <form method="post" action="/customer/my-orders/cancel" id="cancelform">
+                        <input type="hidden" name="cancelID" id="cancelID" value={{order.order_ID}} />
+                        {{#if hasTimeLeft}}
+                        <div class='bottom-button'>
+                            <button type='submit'>CANCEL</button>
+                            <div id = "timeCancel">15:00</div>
+                        </div>
+                        {{else}}
                     <div class='bottom-button inactive'>
-                        <p>CANCEL</p>
-                        <p>00:00</p>
-                    </div>
-                    {{/if}}
-                </form>
-                <form method="post" action="/customer/my-orders/change" id="changeform">
-                    <input type="hidden" name="changeID" id="changeID" value={{order.order_ID}} />
-                    {{#if hasTimeLeft}}
-                    <div class='bottom-button'>
-                        <button type='submit'>CHANGE</button>
-                        <div id = "timeChange">15:00</div>
-                    </div>
-                    {{else}}
-                    <div class='bottom-button inactive'></div>
-                        <p>CHANGE</p>
-                        <p>00:00</p>
-                    </div>
-                    {{/if}}
-                </form>
-                <input type="hidden" name="timeRemaining" id="timeRemaining" value={{timeRemaining}}>
+                            <p>CANCEL</p>
+                            <p>00:00</p>
+                        </div>
+                        {{/if}}
+                    </form>
+                </div>
+
+                <div style='display:inline-block'>
+                    <form method="post" action="/customer/my-orders/change" id="changeform">
+                        <input type="hidden" name="changeID" id="changeID" value={{order.order_ID}} />
+                        {{#if hasTimeLeft}}
+                        <div class='bottom-button'>
+                            <button type='submit'>CHANGE</button>
+                            <div id = "timeChange">15:00</div>
+                        </div>
+                        {{else}}
+                        <div class='bottom-button inactive'>
+                            <p>CHANGE</p>
+                            <p>00:00</p>
+                        </div>
+                        {{/if}}
+                    </form>
+                </div>
             </div>
+            <input type="hidden" name="timeRemaining" id="timeRemaining" value={{timeRemaining}}>
         {{/if}}
     </div>
 </div>

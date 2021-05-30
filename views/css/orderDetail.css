@@ -52,7 +52,8 @@ td{
 }
 
 .bottom-button{
-  width:50%;
+  border-radius:5pt;
+  padding: 0px 15px;
   text-align:center;
 }
 
