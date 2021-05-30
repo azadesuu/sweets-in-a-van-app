@@ -20,7 +20,7 @@ label, input[type=text], .other-button, input[type=submit] {
 label{
   font-weight:bold;
 }
-.login-form {
+form {
   margin-top: 5%;
 }
 .login-form div {

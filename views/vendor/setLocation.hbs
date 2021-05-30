@@ -1,41 +1,29 @@
-{{!-- <link rel="stylesheet" href="/css/reset.css">
-<link rel="stylesheet" href="/css/login.css"> --}}
-<body>
-    <div class="top">
-        <div text-align='left'><a href="/vendor/">< </a></div>
-        <div>set location</div>
-    </div>
-    <div class="setLoc-card">
-        <div class="setLoc-content">
-            {{#if isOpen}}
+<link rel="stylesheet" href="/css/login.css">
+
+<div class="content-card">
+        <h1 style="text-align: center;">STATUS:</h1>
+        {{#if isOpen}}
+            <h2 style="text-align: center;">OPEN FOR BUSINESS</h2>
+            <div style='text-align:center'>
             <form class="leave-form" action="/vendor/{{vendor.van_ID}}/setLocation/leave" method="post">
-                <p class="submit-btn">
-                        <button type='submit'>leave for business</button>
-                </p>
+                <input class='normal-button' type="submit" value="Mark As Closed">
             </form>
-            {{else}}
-            <form class="Loc" action="/vendor/{{vendor.van_ID}}/setLocation" method="post">
-                    <div>
-                        <label for="">
-                            <p>Location:</p>
-                            <p>
-                                <input id='locDescription' name="locDescription" value="" placeholder="Enter your park location">
-                            </p>
-                            <input id = "latitude" name = "latitude" hidden>
-                            <input id = "longitude" name = "longitude" hidden>
-                            <button type = "button" onclick="getLocation()">get location</button>
-                        </label>
-                    </div>
-                    <p class="submit-btn">
-                        <button type='submit'>ready for business</button>
-                    </p>
-            </form>
-            {{/if}}
+            </div>
+        {{else}}
+        <h2 style="text-align: center;">CLOSED</h2>
+        <div style='text-align:center'>
+        <form class="Loc" action="/vendor/{{vendor.van_ID}}/setLocation" method="post">
+            <label for="locDescription">Location:</label><br>
+            <textarea rows="2" cols="30" id='locDescription' name="locDescription" value="" placeholder="Enter your park location"></textarea><br>
+            <input id = "latitude" name = "latitude" hidden>
+            <input id = "longitude" name = "longitude" hidden>
+            <button class='normal-button' style='padding:5px' type="button" onclick="getLocation()">Get Location</button><br>
+            <input class='normal-button' type="submit" value="Mark As Open!">
+        </form>
         </div>
+        {{/if}}
     </div>
-<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="../js/fontresize.js"></script>
-</body>
+</div>
 
 <script>
     function getLocation(){
