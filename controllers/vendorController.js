@@ -173,13 +173,24 @@ const searchOrder = async (req, res) => { // search database for foods
     }
     if (req.body.fulfilled){
         query["status"] = "Fulfilled"
-        if(req.body.complete){
-            query["status"] = "Complete"
-        }
+    }
+    if(req.body.complete){
+        query["status"] = "Complete"
     }
 	// the query has been constructed - now execute against the database
 	try {
-		const orders = await Order.find(query).lean()
+		const ordersRaw = await Order.find(query).lean()
+        ordersRaw.sort(function(a,b){
+            return (a.when.getTime() - b.when.getTime());
+        })
+        var orders = []
+        for (var i=0;i<ordersRaw.length;i++) {
+            orders[i] = {
+                order_ID : ordersRaw[i].order_ID,
+                when : formatDate(ordersRaw[i].when),
+                status : ordersRaw[i].status
+            }
+        }
 		res.render('vendor/orders', {"orders": orders, "vendor": vendor,"loggedin":req.isAuthenticated()})
 	} catch (err) {
 		console.log(err)
