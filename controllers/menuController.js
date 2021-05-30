@@ -372,7 +372,7 @@ const getOrderDetail = async(req,res)=>{
  * order's status as 'Cancelled'
  */
 const cancelOrder = async(req, res)=> {
-    if (req.body.status) {
+    if (req.body.cancelID) {
         await Order.updateOne(
             {"order_ID" : req.body.cancelID},
             {"$set" : { 
