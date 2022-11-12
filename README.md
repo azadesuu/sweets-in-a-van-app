@@ -1,11 +1,14 @@
 **The University of Melbourne**
-# BEFORE YOU PROCEED
+# ⚠️ BEFORE YOU PROCEED ⚠️
 (March-July 2021)
+
 This project was made with a group of 5... while we were very new to Web Development. 
 There is no separate client/server directory, no backend authentication, and the CSS is pretty bad as well (sorry).
-Butm it represents a stage of my life. It was the type of environment required us to learn tools at a fast pace independently.
+But yet, it represents an important stage of my life. 
+It was the type of environment that required us to learn tools at a fast pace independently, just like the real world.
 And so here we are, my first ever Web Development project.
-NOTE: would not recommend anyone look at the code for this as reference, ever.
+NOTE: I would not recommend anyone look at the code for this as reference, ever.
+
 ----- END -----
 
 # INFO30005 – Web Information Technologies
