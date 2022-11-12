@@ -7,7 +7,8 @@ There is no separate client/server directory, no backend authentication, and the
 But yet, it represents an important stage of my life. 
 It was the type of environment that required us to learn tools at a fast pace independently, just like the real world.
 And so here we are, my first ever Web Development project.
-NOTE: I would not recommend anyone look at the code for this as reference, ever.
+
+**NOTE**: I would not recommend anyone look at the code for this as reference, ever.
 
 ----- END -----
 
