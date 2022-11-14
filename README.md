@@ -91,15 +91,6 @@ app.use('/customer', menuRouter)
 
 URL: https://t16-anything-info30005.herokuapp.com/
 
-**MongoDB**
-
-ID=anything30005
-
-Password=F5Nruod8fTvdNTCz
-
-**Full URL**
-
-connectionURL = 'mongodb+srv://anything30005:F5Nruod8fTvdNTCz@info30005-1.xpxvw.mongodb.net/app-server'
 
 `Postman Summary`
 | Request | URL | Input |
@@ -126,11 +117,7 @@ First Name: Smooth
 Last Name: Purple
 
 ## Final Submission
-Commit ID: f670c202359fdd85808347f9cc88359cc2e6e971
-
-URL: https://t16-anything-info30005.herokuapp.com/
-
-ConnectionString: "mongodb+srv://anything30005:F5Nruod8fTvdNTCz@info30005-1.xpxvw.mongodb.net/test?authSource=admin&replicaSet=atlas-va9h06-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true"
+N/A
 
 
 ## Unit and Integration Tests
